@@ -8,20 +8,24 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const capabilityLinks = [
-    { name: "Solar PV EPC", href: "/en/services#solar-epc" },
-    { name: "Electromechanical Works (MEP)", href: "/en/services#mep" },
-    { name: "HVAC Engineering", href: "/en/services#hvac" },
-    { name: "Substations & Infrastructure", href: "/en/services#substations" },
-    { name: "Operations & Maintenance (O&M)", href: "/en/services#om" },
+    { name: "Solar PV EPC", href: "/services#solar-epc" },
+    { name: "Electromechanical Works (MEP)", href: "/services#mep" },
+    { name: "HVAC Engineering", href: "/services#hvac" },
+    { name: "Substations & Infrastructure", href: "/services#substations" },
+    { name: "Operations & Maintenance (O&M)", href: "/services#om" },
+    { name: "Wind Energy Solutions", href: "/services#wind-energy" },
   ];
 
   const companyLinks = [
-    { name: "About Us", href: "/en/about" },
-    { name: "Our Capabilities", href: "/en/services" },
-    { name: "Projects", href: "/en/projects" },
-    { name: "Our Team", href: "/en/team" },
-    { name: "Solar Calculator", href: "/en/solar-calculator" },
-    { name: "Contact HQ", href: "/en/contact" },
+    { name: "About Us", href: "/about" },
+    { name: "Our Capabilities", href: "/services" },
+    { name: "Projects", href: "/projects" },
+    { name: "Sustainability", href: "/sustainability" },
+    { name: "Appreciation", href: "/appreciation" },
+    { name: "Our Team", href: "/team" },
+    { name: "Solar Calculator", href: "/solar-calculator" },
+    { name: "Contact HQ", href: "/contact" },
+    { name: "Login", href: "/login" },
   ];
 
   const certificationLinks = [
@@ -57,7 +61,7 @@ export default function Footer() {
 
           <div className="relative z-10 flex-shrink-0">
             <Link 
-              href="/en/solar-calculator" 
+              href="/solar-calculator" 
               className="inline-flex items-center gap-3 px-8 py-4 bg-ras-gold hover:bg-white hover:text-ras-charcoal text-ras-charcoal font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group/btn"
             >
               <span>Calculate Savings</span>

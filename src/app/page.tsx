@@ -5,6 +5,9 @@ import InteractiveMap from "@/components/InteractiveMap";
 import HighlighterServices from "@/components/HighlighterServices";
 import ProjectsSlider from "@/components/ProjectsSlider";
 import LatestNews from "@/components/LatestNews";
+import ClientLogos from "@/components/ClientLogos";
+import SustainabilityPreview from "@/components/SustainabilityPreview";
+import AnertPartner from "@/components/AnertPartner";
 
 export default function Home() {
   return (
@@ -14,6 +17,9 @@ export default function Home() {
 
       {/* Expertise Slider Carousel */}
       <ExpertiseSlider />
+
+      {/* Trusted Client Logo Carousel */}
+      <ClientLogos />
 
       {/* Stats and Figure Analytics Card */}
       <StatsSection />
@@ -26,6 +32,12 @@ export default function Home() {
 
       {/* Featured Operational Projects Slider */}
       <ProjectsSlider />
+
+      {/* Sustainability Preview Section */}
+      <SustainabilityPreview />
+
+      {/* ANERT Supporting Partner */}
+      <AnertPartner variant="light" />
 
       {/* Latest Publications and News Grid */}
       <LatestNews />

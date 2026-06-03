@@ -3,29 +3,29 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { ChevronDown, Menu, X, ArrowUpRight } from "lucide-react";
+import { ChevronDown, Menu, X, ArrowUpRight, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
+  { name: "About Us", href: "/about" },
   {
-    name: "Our Services",
-    href: "/en/services",
+    name: "Services",
+    href: "/services",
     dropdown: [
-      { name: "Solar PV EPC", href: "/en/services#solar-epc" },
-      { name: "Electromechanical Works (MEP)", href: "/en/services#mep" },
-      { name: "HVAC Engineering", href: "/en/services#hvac" },
-      { name: "Substations & Infrastructure", href: "/en/services#substations" },
-      { name: "Operations & Maintenance (O&M)", href: "/en/services#om" },
+      { name: "Solar PV EPC", href: "/services#solar-epc" },
+      { name: "Electromechanical Works (MEP)", href: "/services#mep" },
+      { name: "HVAC Engineering", href: "/services#hvac" },
+      { name: "Substations & Infrastructure", href: "/services#substations" },
+      { name: "Operations & Maintenance (O&M)", href: "/services#om" },
+      { name: "Wind Energy Solutions", href: "/services#wind-energy" },
     ]
   },
-  { name: "Projects", href: "/en/projects" },
-  { name: "Our Team", href: "/en/team" },
-  {
-    name: "Solar Calculator",
-    href: "/en/solar-calculator"
-  },
-  { name: "About Us", href: "/en/about" },
-  { name: "Contact Us", href: "/en/contact" }
+  { name: "Projects", href: "/projects" },
+  { name: "Sustainability", href: "/sustainability" },
+  { name: "Appreciation", href: "/appreciation" },
+  { name: "Our Team", href: "/team" },
+  { name: "Solar Calculator", href: "/solar-calculator" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -34,19 +34,31 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname() || "";
 
+  // Normalize pathname — strip /en prefix for matching
+  const normalizedPath = pathname.replace(/^\/en/, "") || "/";
+
   // Active Link State Helper
   const isLinkActive = (href: string) => {
-    if (href === "/en" || href === "/") {
-      return pathname === "/" || pathname === "/en";
+    if (href === "/") {
+      return normalizedPath === "/";
     }
-    return pathname === href || pathname.startsWith(href + "/") || pathname.startsWith(href + "#") || pathname.replace(/^\/en/, "") === href.replace(/^\/en/, "");
+    const normalizedHref = href.replace(/^\/en/, "");
+    return normalizedPath === normalizedHref || normalizedPath.startsWith(normalizedHref + "/") || normalizedPath.startsWith(normalizedHref + "#");
   };
 
-  // Pages that feature transparent headers initially (Home page and dark subpages)
-  const isTransparentHeaderPage = pathname === "/" || pathname === "/en" || pathname.includes("/projects") || pathname.includes("/team");
+  // Pages that feature transparent headers initially (hero extends behind navbar)
+  const isTransparentHeaderPage =
+    normalizedPath === "/" ||
+    normalizedPath.includes("/about") ||
+    normalizedPath.includes("/services") ||
+    normalizedPath.includes("/projects") ||
+    normalizedPath.includes("/sustainability") ||
+    normalizedPath.includes("/appreciation") ||
+    normalizedPath.includes("/team");
 
   const hasHeaderBg = scrolled || !isTransparentHeaderPage;
-  const isTextWhite = (pathname.includes("/projects") || pathname.includes("/team")) && !scrolled;
+  // All inner-page heroes are now light-themed — no pages need white nav text
+  const isTextWhite = false;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,7 +95,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <nav className="hidden lg:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center space-x-7">
           {navLinks.map((link) => (
             <div
               key={link.name}
@@ -96,7 +108,7 @@ export default function Navbar() {
                 className="flex items-center text-sm font-medium transition-colors hover:text-ras-gold tracking-tight relative pb-1"
                 style={{ color: isLinkActive(link.href) ? '#C5A880' : (isTextWhite ? '#FCFCFC' : '#121212') }}
               >
-                {navLinks.find(nl => nl.name === link.name)?.name}
+                {link.name}
                 {link.dropdown && (
                   <ChevronDown className="ml-1 h-4 w-4 transition-transform group-hover:rotate-180" />
                 )}
@@ -130,15 +142,21 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Action Button & Language */}
-        <div className="hidden lg:flex items-center space-x-6">
-          <div className="flex space-x-2 text-xs font-semibold">
-            <span className="text-ras-gold cursor-pointer hover:underline font-bold">EN</span>
-            <span style={{ color: isTextWhite ? 'rgba(252,252,252,0.4)' : 'rgba(18,18,18,0.3)' }}>/</span>
-            <span className="text-ras-charcoal cursor-pointer hover:underline" style={{ color: isTextWhite ? '#FCFCFC' : '#121212' }}>AR</span>
-          </div>
+        {/* Action Buttons — Solar Inquiry + Login */}
+        <div className="hidden lg:flex items-center space-x-4">
           <Link
-            href="/en/contact"
+            href="/login"
+            className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium rounded-full border transition-all duration-300 hover:scale-105"
+            style={{
+              color: isTextWhite ? '#FCFCFC' : '#121212',
+              borderColor: isTextWhite ? 'rgba(252,252,252,0.3)' : 'rgba(18,18,18,0.15)',
+            }}
+          >
+            <User className="h-4 w-4" />
+            Login
+          </Link>
+          <Link
+            href="/contact"
             className="px-5 py-2.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-ras-charcoal hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
           >
             Solar Inquiry
@@ -199,15 +217,17 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div className="flex flex-col space-y-6 border-t border-ras-grey/25 pt-6">
-              {/* Language Selection */}
-              <div className="flex space-x-4 justify-center text-sm font-semibold">
-                <span className="text-ras-gold font-bold">English</span>
-                <span className="text-ras-grey">|</span>
-                <span className="text-ras-charcoal hover:text-ras-gold cursor-pointer">العربية</span>
-              </div>
+            <div className="flex flex-col space-y-4 border-t border-ras-grey/25 pt-6">
               <Link
-                href="/en/contact"
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-3 border border-ras-charcoal/15 text-ras-charcoal text-center font-semibold rounded-full flex items-center justify-center gap-2"
+              >
+                <User className="h-4 w-4" />
+                Login
+              </Link>
+              <Link
+                href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full py-4 bg-ras-gold text-ras-charcoal text-center font-bold rounded-full shadow-lg"
               >

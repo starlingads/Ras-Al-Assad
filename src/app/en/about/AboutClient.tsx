@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Shield, Award, Users, CheckCircle2, ArrowRight } from "lucide-react";
+import { Shield, Award, Users, CheckCircle2, ArrowRight, Target, Eye } from "lucide-react";
 
 export default function AboutPage() {
   const fadeInUp = {
@@ -21,158 +21,163 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="bg-ras-light min-h-screen pt-28 pb-20">
-      {/* Elegant Hero Header */}
-      <section className="relative px-6 lg:px-8 py-20 bg-gradient-to-b from-ras-sand/50 to-transparent overflow-hidden">
-        {/* Abstract background solar grid pattern */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="solar-grid-about" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#solar-grid-about)" />
-          </svg>
+    <div className="bg-ras-light min-h-screen pb-20">
+      {/* ═══════════════════ HERO SECTION ═══════════════════ */}
+      <section className="relative min-h-[65vh] flex items-end overflow-hidden">
+        {/* Full-width background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/Projects/SINGAPORE  PAVILION_x4.jpg"
+            alt="Ras Al Assad engineering excellence — Singapore Pavilion project"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Light overlay for readability */}
+          <div className="absolute inset-0 bg-white/45" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F0F1F3] via-[#F0F1F3]/60 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <motion.div 
-              className="lg:col-span-7"
-              initial="initial"
-              animate="animate"
-              variants={stagger}
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pb-16 pt-40 w-full">
+          <motion.span
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xs font-bold uppercase tracking-[0.25em] text-ras-gold mb-4 block"
+          >
+            Pioneering Engineering
+          </motion.span>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-ras-charcoal leading-[1.1] mb-6"
+          >
+            About{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-ras-gold via-ras-goldDark to-ras-gold">
+              Ras Al Assad
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.25 }}
+            className="text-base md:text-lg text-ras-grey max-w-2xl leading-relaxed"
+          >
+            A premier Dubai-based engineering firm and DEWA-certified Solar PV contractor, delivering over 15 years of electromechanical and solar integration excellence.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Mission & Vision Section */}
+      <section className="px-6 lg:px-8 py-24 bg-white border-y border-ras-grey/10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="text-center max-w-2xl mx-auto mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">What Drives Us</span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">Our Mission & Vision</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <motion.div
+              className="bg-white p-10 rounded-2xl shadow-sm border border-ras-grey/5"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.span 
-                variants={fadeInUp}
-                className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block"
-              >
-                Pioneering Engineering
-              </motion.span>
-              <motion.h1 
-                variants={fadeInUp}
-                className="text-4xl md:text-6xl font-extrabold tracking-tight text-ras-charcoal leading-tight mb-6"
-              >
-                Engineering the <span className="text-transparent bg-clip-text bg-gradient-to-r from-ras-gold via-ras-goldDark to-ras-green">Future of Energy</span>
-              </motion.h1>
-              <motion.p 
-                variants={fadeInUp}
-                className="text-base md:text-lg text-ras-grey max-w-2xl leading-relaxed mb-8"
-              >
-                Ras Al Assad Electromechanical Works L.L.C (RAAEW) is a premier Dubai-based engineering firm and DEWA-certified Solar PV contractor. We bring over 15 years of electromechanical and solar integration excellence to the Gulf.
-              </motion.p>
-              
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
-                <Link
-                  href="/en/contact"
-                  className="px-6 py-3.5 bg-ras-charcoal text-white text-sm font-semibold rounded-full hover:bg-ras-gold hover:shadow-lg transition-all duration-300 flex items-center gap-2 group"
-                >
-                  Work With Us
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="/en/services"
-                  className="px-6 py-3.5 bg-white border border-ras-grey/20 text-ras-charcoal text-sm font-semibold rounded-full hover:border-ras-gold transition-all duration-300"
-                >
-                  Explore Services
-                </Link>
-              </motion.div>
+              <div className="w-14 h-14 rounded-xl bg-ras-gold/10 flex items-center justify-center mb-6">
+                <Target className="h-7 w-7 text-ras-gold" />
+              </div>
+              <h3 className="text-xl font-bold text-ras-charcoal mb-4">Our Mission</h3>
+              <p className="text-sm md:text-base text-ras-grey leading-relaxed">
+                To deliver world-class electromechanical and renewable energy engineering solutions that empower businesses, communities, and governments across the UAE and beyond. We are committed to precision, compliance, and sustainability in every project we undertake.
+              </p>
             </motion.div>
 
-            <motion.div 
-              className="lg:col-span-5 relative"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            <motion.div
+              className="bg-white p-10 rounded-2xl shadow-sm border border-ras-grey/5"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="relative w-full h-[400px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                <Image
-                  src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop"
-                  alt="Modern architectural structure and clean solar panels"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ras-charcoal/40 to-transparent" />
+              <div className="w-14 h-14 rounded-xl bg-ras-gold/10 flex items-center justify-center mb-6">
+                <Eye className="h-7 w-7 text-ras-gold" />
               </div>
-              
-              {/* Decorative Floating Luxury Stat */}
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-5 border border-ras-sand max-w-[200px] animate-bounce-slow">
-                <p className="text-3xl font-extrabold text-ras-gold">100%</p>
-                <p className="text-xs font-bold text-ras-charcoal uppercase tracking-wider mt-1">DEWA SHAMS Approved</p>
-                <p className="text-[10px] text-ras-grey mt-1">Certified grid-tied Solar PV design & execution</p>
-              </div>
+              <h3 className="text-xl font-bold text-ras-charcoal mb-4">Our Vision</h3>
+              <p className="text-sm md:text-base text-ras-grey leading-relaxed">
+                To be the UAE&apos;s most trusted and innovative electromechanical and renewable energy EPC contractor — pioneering clean energy infrastructure that drives economic growth while protecting our environment for future generations.
+              </p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* The Corporate DNA & Executive Vision */}
-      <section className="px-6 lg:px-8 py-24 bg-white border-y border-ras-grey/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            {/* Navas Komu MD Block */}
-            <div className="lg:col-span-5 space-y-6">
-            <div className="relative w-full h-[380px] rounded-2xl overflow-hidden shadow-lg border border-ras-gold/15 bg-[#f5f3ef]">
-                <Image
-                  src="/assets/Team/Navas Komu.jpg"
-                  alt="Managing Director, Mr. Navas Komu"
-                  fill
-                  className="object-cover object-center"
-                  style={{ objectPosition: '50% 10%' }}
-                />
-              </div>
-              <div className="border-l-4 border-ras-gold pl-4 py-1">
-                <h4 className="text-lg font-bold text-ras-charcoal">Mr. Navas Komu</h4>
-                <p className="text-xs font-semibold text-ras-gold uppercase tracking-widest">Managing Director</p>
-              </div>
-              <p className="text-sm text-ras-grey italic leading-relaxed">
-                "Our vision has always been to build a legacy of uncompromising engineering accuracy and sustainable advancement. Every project we design under the UAE sky is a testament to electromechanical innovation and green energy empowerment."
-              </p>
-            </div>
+      {/* Company History & Corporate Narrative */}
+      <section className="px-6 lg:px-8 py-24 bg-ras-sand/20">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-2 block">Our Journey</span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight mb-8">From Mechanical Precision to Solar Excellence</h2>
+          </motion.div>
+          
+          <motion.div
+            className="space-y-6 text-ras-grey text-sm md:text-base leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p>
+              Founded in 2013 in Dubai, Ras Al Assad Electromechanical Works L.L.C began with a core focus on complex electromechanical (MEP) infrastructure, high-voltage substations, and industrial HVAC installations. Over the years, we established our reputation as a trusted partner for commercial developers, industrial firms, and government enterprises in the UAE.
+            </p>
+            <p>
+              Anticipating the global energy transition, we launched our specialized <strong>Solar PV Integration division in 2017</strong>. Since then, we have grown into one of Dubai&apos;s preeminent DEWA-certified Solar contractors, delivering fully integrated solar EPC (Engineering, Procurement, and Construction) designs for luxury estates, manufacturing hubs, and corporate parks.
+            </p>
+            <p>
+              Today, RAAEW stands as a symbol of technological reliability, licensed by Dubai Municipality, fully accredited by <strong>DEWA (Shams Dubai)</strong>, and recognized by <strong>Etihad ESCO</strong> to lead energy efficiency audits and solar retrofitting campaigns.
+            </p>
+          </motion.div>
 
-            {/* Corporate Narrative Details */}
-            <div className="lg:col-span-7 space-y-8">
+          <motion.div
+            className="grid grid-cols-2 gap-6 pt-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-ras-sand flex items-center justify-center text-ras-gold">
+                <Shield className="h-5 w-5" />
+              </div>
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-2 block">Our Journey</span>
-                <h3 className="text-3xl font-bold text-ras-charcoal tracking-tight">From Mechanical Precision to Solar Excellence</h3>
-              </div>
-              
-              <div className="space-y-6 text-ras-grey text-sm md:text-base leading-relaxed">
-                <p>
-                  Founded in 2013 in Dubai, Ras Al Assad Electromechanical Works L.L.C began with a core focus on complex electromechanical (MEP) infrastructure, high-voltage substations, and industrial HVAC installations. Over the years, we established our reputation as a trusted partner for commercial developers, industrial firms, and government enterprises in the UAE.
-                </p>
-                <p>
-                  Anticipating the global energy transition, we launched our specialized **Solar PV Integration division in 2017**. Since then, we have grown into one of Dubai's preeminent DEWA-certified Solar contractors, delivering fully integrated solar EPC (Engineering, Procurement, and Construction) designs for luxury estates, manufacturing hubs, and corporate parks.
-                </p>
-                <p>
-                  Today, RAAEW stands as a symbol of technological reliability, licensed by Dubai Municipality, fully accredited by **DEWA (Shams Dubai)**, and recognized by **Etihad ESCO** to lead energy efficiency audits and solar retrofitting campaigns.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6 pt-4">
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-ras-sand flex items-center justify-center text-ras-gold">
-                    <Shield className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h5 className="text-sm font-bold text-ras-charcoal">DEWA Certified</h5>
-                    <p className="text-xs text-ras-grey mt-0.5">Shams Dubai grid-connection compliance</p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-ras-sand flex items-center justify-center text-ras-gold">
-                    <Award className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h5 className="text-sm font-bold text-ras-charcoal">Etihad ESCO</h5>
-                    <p className="text-xs text-ras-grey mt-0.5">Approved energy efficiency contractor</p>
-                  </div>
-                </div>
+                <h5 className="text-sm font-bold text-ras-charcoal">DEWA Certified</h5>
+                <p className="text-xs text-ras-grey mt-0.5">Shams Dubai grid-connection compliance</p>
               </div>
             </div>
-          </div>
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-ras-sand flex items-center justify-center text-ras-gold">
+                <Award className="h-5 w-5" />
+              </div>
+              <div>
+                <h5 className="text-sm font-bold text-ras-charcoal">Etihad ESCO</h5>
+                <p className="text-xs text-ras-grey mt-0.5">Approved energy efficiency contractor</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -181,7 +186,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">Corporate Pillars</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">The Principles Driving Our Operations</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">The Principles Driving Our Operations</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -230,6 +235,34 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ANERT Supporting Partner Section */}
+      <section className="px-6 lg:px-8 py-16 bg-ras-sand/20">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="flex flex-col items-center text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-6 block">Supporting Partner</span>
+            <div className="relative w-[180px] h-[80px] mb-6">
+              <Image
+                src="/assets/Logos/Anert.png"
+                alt="ANERT - Agency for Non-conventional Energy and Rural Technology"
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+            <h3 className="text-lg font-bold text-ras-charcoal mb-2">ANERT Partnership</h3>
+            <p className="text-sm text-ras-grey max-w-xl leading-relaxed">
+              We are proud to partner with the Agency for Non-conventional Energy and Rural Technology (ANERT) — strengthening our commitment to renewable energy adoption, sustainable infrastructure, and clean technology advocacy across the region.
+            </p>
+          </motion.div>
         </div>
       </section>
 

@@ -104,7 +104,7 @@ export default function InteractiveMap() {
             
             <div>
               <Link
-                href="/en/projects"
+                href="/projects"
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-ras-charcoal text-xs font-bold uppercase tracking-wider rounded-full hover:bg-ras-charcoal hover:text-white shadow-sm border border-ras-grey/10 transition-all duration-300"
               >
                 Discover all our projects

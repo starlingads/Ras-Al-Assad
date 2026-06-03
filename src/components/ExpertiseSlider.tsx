@@ -14,31 +14,31 @@ if (typeof window !== "undefined") {
 const cards = [
   {
     title: "Renewable Energy & Solar EPC",
-    image: "/assets/Ras Images/REMASTERED/SINGAPORE  PAVILION_x4.jpg",
+    image: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",
     icon: <Sun className="w-6 h-6 text-ras-gold" />,
     desc: "Design, engineering, installation, and commissioning of on-grid, off-grid, and hybrid solar systems for commercial, industrial, and utility-scale applications.",
-    href: "/en/services#solar-epc"
+    href: "/services#solar-epc"
   },
   {
     title: "Electrical Infrastructure",
-    image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x16.07.33 PM (1).jpg",
+    image: "/assets/Projects/al-garhoud-grid-substation-support.jpg",
     icon: <Zap className="w-6 h-6 text-ras-gold" />,
     desc: "HV, MV, and LV systems, generators, transformers, cable laying, and integrated power distribution solutions executed in compliance with UAE regulatory standards.",
-    href: "/en/services#substations"
+    href: "/services#substations"
   },
   {
     title: "Electromechanical Works",
-    image: "/assets/Ras Images/REMASTERED/SOBHA HEARTLAND.jpg",
+    image: "/assets/Projects/SOBHA HEARTLAND.jpg",
     icon: <Cpu className="w-6 h-6 text-ras-gold" />,
     desc: "Installation and integration of complex electromechanical systems delivered with technical precision and disciplined project management.",
-    href: "/en/services#mep"
+    href: "/services#mep"
   },
   {
     title: "AMC & Technical Consultancy",
-    image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.57.35 PM.jpg",
+    image: "/assets/Projects/operations-maintenance.jpg",
     icon: <Clipboard className="w-6 h-6 text-ras-gold" />,
     desc: "Preventive maintenance, breakdown services, engineering consultancy, and compliance assessments ensuring long-term operational reliability.",
-    href: "/en/services#om"
+    href: "/services#om"
   }
 ];
 
@@ -136,7 +136,7 @@ export default function ExpertiseSlider() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Link
-            href="/en/services"
+            href="/services"
             className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
           >
             <span>Explore all services</span>

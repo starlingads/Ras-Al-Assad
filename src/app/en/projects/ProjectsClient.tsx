@@ -10,8 +10,9 @@ const projects = [
   {
     id: 1,
     name: "Singapore Pavilion, Expo 2020 Dubai",
-    category: "mep",
-    image: "/assets/Ras Images/REMASTERED/SINGAPORE  PAVILION_x4.jpg",
+    category: "infrastructure",
+    subCategory: "government",
+    image: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",
     location: "Expo City, Dubai, UAE",
     client: "Government of Singapore / Expo Commission",
     capacity: "209 kWp Solar PV + Complete Pavilion MEP Integration",
@@ -28,7 +29,8 @@ const projects = [
     id: 2,
     name: "PNCA-SOBHA HARTLAND-2 Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/REMASTERED/SOBHA HEARTLAND.jpg",
+    oem: "Trina",
+    image: "/assets/Projects/SOBHA HEARTLAND.jpg",
     location: "Sobha Hartland, Dubai, UAE",
     client: "Sobha Group / Etihad ESCO",
     capacity: "376.2 kWp Rooftop Solar PV System",
@@ -44,8 +46,9 @@ const projects = [
   {
     id: 3,
     name: "ADNOC Substation & Infrastructure Projects",
-    category: "substation",
-    image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.07.35 PM (1).jpg",
+    category: "infrastructure",
+    subCategory: "industrial",
+    image: "/assets/Projects/adnoc-substation-infrastructure-projects.jpg",
     location: "Al Ruwais, Abu Dhabi, UAE",
     client: "ADNOC / Infrastructure Division",
     capacity: "Medium & High Voltage Substation Support",
@@ -62,7 +65,8 @@ const projects = [
     id: 4,
     name: "HSBC Jebel Ali Solar PV Complex",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.33 PM.jpeg",
+    oem: "JA Solar",
+    image: "/assets/Projects/hsbc-jebel-ali-solar-pv-complex.jpeg",
     location: "Jafza Gate 3, Dubai, UAE",
     client: "HSBC Middle East / Facilities Management",
     capacity: "300 kWp Commercial Rooftop Array",
@@ -79,7 +83,8 @@ const projects = [
     id: 5,
     name: "Dubai Government 5000 Villas Roof Solar",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.35 PM (1).jpeg",
+    oem: "LONGi",
+    image: "/assets/Projects/dubai-government-5000-villas-roof-solar.jpeg",
     location: "Mizhar, Muhaisnah & Qusais, Dubai, UAE",
     client: "Etihad ESCO / DEWA",
     capacity: "2.145 MWp Distributed Rooftop Solar PV",
@@ -95,8 +100,9 @@ const projects = [
   {
     id: 6,
     name: "Al Garhoud Grid Substation Support",
-    category: "substation",
-    image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x16.07.33 PM (1).jpg",
+    category: "infrastructure",
+    subCategory: "government",
+    image: "/assets/Projects/al-garhoud-grid-substation-support.jpg",
     location: "Al Garhoud, Dubai, UAE",
     client: "Municipal Utilities & Infrastructure Development / DEWA",
     capacity: "132 kV / 11 kV Substation Works",
@@ -113,7 +119,8 @@ const projects = [
     id: 7,
     name: "Blue Deebaj FZCO Industrial Solar",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.32 PM (1).jpeg",
+    oem: "Trina",
+    image: "/assets/Projects/blue-deebaj-fzco-industrial-solar.jpeg",
     location: "Jafza, Jebel Ali, Dubai, UAE",
     client: "Blue Deebaj FZCO",
     capacity: "294 kWp Industrial Rooftop Array",
@@ -129,8 +136,9 @@ const projects = [
   {
     id: 8,
     name: "Dubai South District Cooling Network",
-    category: "hvac",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.38 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "industrial",
+    image: "/assets/Projects/dubai-south-district-cooling-network.jpeg",
     location: "Dubai South Industrial District, UAE",
     client: "Dubai South Development Consortium",
     capacity: "2.5km Pre-insulated Pipe Grid & District Loop",
@@ -147,7 +155,8 @@ const projects = [
     id: 9,
     name: "Camelicious Solar PV Facility",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.31 PM (1).jpeg",
+    oem: "JA Solar",
+    image: "/assets/Projects/camelicious-solar-pv-facility.jpeg",
     location: "Umm Nahad, Dubai, UAE",
     client: "Camelicious (Emirates Industry for Camel Milk)",
     capacity: "56 kWp Behind-the-Meter Solar PV",
@@ -163,8 +172,9 @@ const projects = [
   {
     id: 10,
     name: "Chalhoub Group Head Office Solar & MEP",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.36 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/chalhoub-group-head-office-solar-mep.jpeg",
     location: "Jebel Ali Free Zone, Dubai, UAE",
     client: "Chalhoub Group",
     capacity: "Commercial Solar PV & Electromechanical Integration",
@@ -181,7 +191,8 @@ const projects = [
     id: 11,
     name: "Al Habtoor Al Quoz Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.34 PM.jpeg",
+    oem: "Jinko",
+    image: "/assets/Projects/al-habtoor-al-quoz-solar-pv.jpeg",
     location: "Al Quoz Industrial Area, Dubai, UAE",
     client: "Al Habtoor Group",
     capacity: "485.19 kWp Rooftop Solar PV System",
@@ -198,7 +209,8 @@ const projects = [
     id: 12,
     name: "Euro Emirates DIP Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.37 PM.jpeg",
+    oem: "Trina",
+    image: "/assets/Projects/euro-emirates-dip-solar-pv.jpeg",
     location: "Dubai Investments Park (DIP), Dubai, UAE",
     client: "Euro Emirates LLC",
     capacity: "89.4 kWp Commercial Rooftop Array",
@@ -215,7 +227,8 @@ const projects = [
     id: 13,
     name: "Emirates Hills Premium Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.39 PM (1).jpeg",
+    oem: "Canadian Solar",
+    image: "/assets/Projects/emirates-hills-premium-solar-pv.jpeg",
     location: "Emirates Hills, Dubai, UAE",
     client: "Wattz Energy Solutions (for Private Client)",
     capacity: "41.3 kWp Residential Rooftop Solar",
@@ -232,7 +245,8 @@ const projects = [
     id: 14,
     name: "Dubai Living Legends Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.29 PM.jpeg",
+    oem: "JA Solar",
+    image: "/assets/Projects/dubai-living-legends-solar-pv.jpeg",
     location: "Living Legends, Dubailand, Dubai, UAE",
     client: "Wattz Energy Solutions",
     capacity: "12.34 kWp Residential Solar Integration",
@@ -249,7 +263,8 @@ const projects = [
     id: 15,
     name: "Dubai Hills Luxury Villa Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.30 PM.jpeg",
+    oem: "LONGi",
+    image: "/assets/Projects/dubai-hills-luxury-villa-solar-pv.jpeg",
     location: "Dubai Hills Estate, Dubai, UAE",
     client: "Private Residence / Wattz Energy",
     capacity: "14.82 kWp Rooftop Solar Installation",
@@ -266,7 +281,8 @@ const projects = [
     id: 16,
     name: "ADNOC Al-Qusais Service Station Solar",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.35 PM.jpeg",
+    oem: "Jinko",
+    image: "/assets/Projects/adnoc-al-qusais-service-station-solar.jpeg",
     location: "Al-Qusais, Dubai, UAE",
     client: "ADNOC / Infrastructure Division",
     capacity: "94 kWp Rooftop Solar PV Installation",
@@ -283,7 +299,8 @@ const projects = [
     id: 17,
     name: "ADNOC DIP Service Station Solar",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.36 PM.jpeg",
+    oem: "Trina",
+    image: "/assets/Projects/adnoc-dip-service-station-solar.jpeg",
     location: "Dubai Investments Park (DIP), Dubai, UAE",
     client: "ADNOC",
     capacity: "114 kWp Solar Canopy Integration",
@@ -300,7 +317,8 @@ const projects = [
     id: 18,
     name: "Chalhoub Umm Eselay Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.32 PM.jpeg",
+    oem: "Canadian Solar",
+    image: "/assets/Projects/chalhoub-umm-eselay-solar-pv.jpeg",
     location: "Umm Eselay, Dubai, UAE",
     client: "Chalhoub Group",
     capacity: "91 kWp Agricultural & Commercial Solar",
@@ -317,7 +335,8 @@ const projects = [
     id: 19,
     name: "DSO High-Tech Office Complex Solar Canopy",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.33 PM (1).jpeg",
+    oem: "JA Solar",
+    image: "/assets/Projects/dso-high-tech-office-complex-solar-canopy.jpeg",
     location: "Dubai Silicon Oasis (DSO), Dubai, UAE",
     client: "Silicon Oasis Authority / Etihad ESCO",
     capacity: "450 kWp Commercial Carport Solar Canopy",
@@ -333,8 +352,9 @@ const projects = [
   {
     id: 20,
     name: "Muhaisnah Commercial HVAC Retrofit",
-    category: "hvac",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.35 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/muhaisnah-commercial-hvac-retrofit.jpeg",
     location: "Muhaisnah 4, Dubai, UAE",
     client: "Al Futtaim Real Estate / Etihad ESCO",
     capacity: "1,200 TR Central Cooling & VRF Retrofit",
@@ -350,8 +370,9 @@ const projects = [
   {
     id: 21,
     name: "Jebel Ali Phase 2 Underground Water Grid",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.38 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "utility",
+    image: "/assets/Projects/jebel-ali-phase-2-underground-water-grid.jpeg",
     location: "Jafza North, Dubai, UAE",
     client: "DP World / Facilities Management",
     capacity: "1.8km High-Density Polyethylene (HDPE) Hydraulic Loop",
@@ -368,7 +389,8 @@ const projects = [
     id: 22,
     name: "Wattz Energy Residential Solar Cluster",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.39 PM.jpeg",
+    oem: "Trina",
+    image: "/assets/Projects/wattz-energy-residential-solar-cluster.jpeg",
     location: "Emirates Hills Sector E, Dubai, UAE",
     client: "Wattz Energy / Private Residential Clients",
     capacity: "185 kWp Distributed Luxury Villa Solar Grid",
@@ -385,7 +407,8 @@ const projects = [
     id: 23,
     name: "Mirdif Private Villa Architectural Solar PV",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.40 PM.jpeg",
+    oem: "Canadian Solar",
+    image: "/assets/Projects/mirdif-private-villa-architectural-solar-pv.jpeg",
     location: "Mirdif Hills, Dubai, UAE",
     client: "Private Client / Residential Development",
     capacity: "35 kWp Custom Roof-Integrated Solar Array",
@@ -401,8 +424,9 @@ const projects = [
   {
     id: 24,
     name: "Dubai Healthcare City HVAC Air Ducts",
-    category: "hvac",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.41 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/dubai-healthcare-city-hvac-air-ducts.jpeg",
     location: "Healthcare City Phase 1, Dubai, UAE",
     client: "Mediclinic Hospital Group",
     capacity: "Precision HEPA Filtration Air Ducts & AHU Integration",
@@ -418,8 +442,9 @@ const projects = [
   {
     id: 25,
     name: "Sobha Heartland Community Infrastructure",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.29 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/sobha-heartland-community-infrastructure.jpeg",
     location: "Sobha Hartland Phase 1, Dubai, UAE",
     client: "Sobha Group / Infrastructure Division",
     capacity: "Complete Subterranean Drainage & Storm Water Grid",
@@ -436,7 +461,8 @@ const projects = [
     id: 26,
     name: "DIP Warehouse Industrial Solar Upgrade",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.31 PM.jpeg",
+    oem: "Jinko",
+    image: "/assets/Projects/dip-warehouse-industrial-solar-upgrade.jpeg",
     location: "Dubai Investments Park (DIP) 2, Dubai, UAE",
     client: "Logistics Hub International",
     capacity: "540 kWp Rooftop Solar PV Installation",
@@ -452,8 +478,9 @@ const projects = [
   {
     id: 27,
     name: "Al Garhoud Utility Grid Earth Protection",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.33 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "government",
+    image: "/assets/Projects/al-garhoud-utility-grid-earth-protection.jpeg",
     location: "Al Garhoud, Dubai, UAE",
     client: "Municipal Utilities / Infrastructure Division",
     capacity: "132kV Substation Earth Grid Protection",
@@ -469,8 +496,9 @@ const projects = [
   {
     id: 28,
     name: "Dubai South District Cooling Loop Extension",
-    category: "hvac",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.34 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/dubai-south-district-cooling-loop-extension.jpeg",
     location: "Dubai South Logistics District, UAE",
     client: "Dubai South Development Consortium",
     capacity: "1.2km District Chilled Water Pipe Loop",
@@ -486,8 +514,9 @@ const projects = [
   {
     id: 29,
     name: "Sobha Villa Central MEP Integration",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.34 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/sobha-villa-central-mep-integration.jpeg",
     location: "Sobha Hartland Forest Villas, Dubai, UAE",
     client: "Sobha Group / Residential Division",
     capacity: "Full Villa MEP, Drainage & Electrical Feeds",
@@ -503,8 +532,9 @@ const projects = [
   {
     id: 30,
     name: "Garhoud Star Building Primary Feeder Switchgear",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.35 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/garhoud-star-building-primary-feeder-switchgear.jpeg",
     location: "Al Garhoud, Dubai, UAE",
     client: "Garhoud Star Building Management / Private Owner",
     capacity: "2,500A Main Low-Voltage (MLV) Switchgear Upgrade",
@@ -520,8 +550,9 @@ const projects = [
   {
     id: 31,
     name: "Muhaisnah Substation Transformer Support",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.36 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "utility",
+    image: "/assets/Projects/muhaisnah-substation-transformer-support.jpeg",
     location: "Muhaisnah 2, Dubai, UAE",
     client: "Etihad ESCO / Utility Services",
     capacity: "11kV Grid-Connected Substation Foundations & Cabling",
@@ -538,7 +569,8 @@ const projects = [
     id: 32,
     name: "Blue Deebaj FZCO Warehouse Structural Framing",
     category: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.37 PM.jpeg",
+    oem: "Trina",
+    image: "/assets/Projects/blue-deebaj-fzco-warehouse-structural-framing.jpeg",
     location: "Jafza South, Dubai, UAE",
     client: "Blue Deebaj FZCO",
     capacity: "Structural Solar Mounting Grid Reinforcement",
@@ -554,8 +586,9 @@ const projects = [
   {
     id: 33,
     name: "HSBC Jebel Ali Sub-metering Integration",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.20.38 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "industrial",
+    image: "/assets/Projects/hsbc-jebel-ali-sub-metering-integration.jpeg",
     location: "Jebel Ali Industrial Area, Dubai, UAE",
     client: "HSBC Middle East / Asset Management",
     capacity: "Commercial Smart Sub-metering & Panel Integration",
@@ -571,8 +604,9 @@ const projects = [
   {
     id: 34,
     name: "Jafza Gate 3 Substation Busbar Alignment",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.29.30 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "utility",
+    image: "/assets/Projects/jafza-gate-3-substation-busbar-alignment.jpeg",
     location: "Jafza North, Jebel Ali, Dubai, UAE",
     client: "DP World / Infrastructure Utility Services",
     capacity: "11kV Heavy Duty Copper Busbar Alignment & Torque",
@@ -588,8 +622,9 @@ const projects = [
   {
     id: 35,
     name: "DSO Substation Control Panels Array",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.29.30 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "utility",
+    image: "/assets/Projects/dso-substation-control-panels-array.jpeg",
     location: "Dubai Silicon Oasis, Dubai, UAE",
     client: "Silicon Oasis Authority / Electrical Utilities",
     capacity: "Substation Protection, Control & SCADA Panels",
@@ -605,8 +640,9 @@ const projects = [
   {
     id: 36,
     name: "Ruwais Infrastructure Underground Cabling Grid",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.29.31 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "industrial",
+    image: "/assets/Projects/ruwais-infrastructure-underground-cabling-grid.jpeg",
     location: "ADNOC Ruwais Industrial City, Abu Dhabi, UAE",
     client: "ADNOC / Infrastructure Division",
     capacity: "33kV Armoured Cabling Trenching & Laying",
@@ -622,8 +658,9 @@ const projects = [
   {
     id: 37,
     name: "DIP Substation Switchgear Commissioning",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.29.31 PM (1).jpeg",
+    category: "infrastructure",
+    subCategory: "utility",
+    image: "/assets/Projects/dip-substation-switchgear-commissioning.jpeg",
     location: "Dubai Investments Park, Dubai, UAE",
     client: "DIP Utilities Board / DEWA",
     capacity: "11kV Air-Insulated Switchgear (AIS) Commissioning",
@@ -639,8 +676,9 @@ const projects = [
   {
     id: 38,
     name: "Jebel Ali Substation Battery Room Chargers",
-    category: "substation",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.34.41 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "utility",
+    image: "/assets/Projects/jebel-ali-substation-battery-room-chargers.jpeg",
     location: "Jafza Gate 4 Utility Complex, Dubai, UAE",
     client: "DP World / Electrical Infrastructure",
     capacity: "110V DC Battery Charger & Battery Rack System",
@@ -656,8 +694,9 @@ const projects = [
   {
     id: 39,
     name: "Dubai Living Legends Luxury Villa MEP",
-    category: "mep",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.41.00 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "commercial",
+    image: "/assets/Projects/dubai-living-legends-luxury-villa-mep.jpeg",
     location: "Living Legends, Dubailand, Dubai, UAE",
     client: "Private Client / Luxury Residence",
     capacity: "Complete Custom Villa Electromechanical Systems",
@@ -673,8 +712,9 @@ const projects = [
   {
     id: 40,
     name: "Muhaisnah Commercial HVAC Air Handling Unit",
-    category: "hvac",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.57.35 PM.jpeg",
+    category: "infrastructure",
+    subCategory: "industrial",
+    image: "/assets/Projects/muhaisnah-commercial-hvac-air-handling-unit.jpeg",
     location: "Muhaisnah 4 Industrial Plaza, Dubai, UAE",
     client: "Al Futtaim Real Estate Development",
     capacity: "Double-Skin Clean Air Handling Unit (AHU) Installation",
@@ -686,41 +726,101 @@ const projects = [
       "Fabricated and linked premium thermal-insulated duct networks with flexible connector joints.",
       "Achieved certified low vibration and low noise levels complying with Dubai indoor acoustics guidelines."
     ]
+  },
+  {
+    id: 41,
+    name: "Ruwais Commercial Wind EPC Assessment",
+    category: "wind",
+    image: "/assets/Projects/wind-energy-service.png",
+    location: "Al Ruwais, Abu Dhabi, UAE",
+    client: "Abu Dhabi Future Energy Consortium",
+    capacity: "2.5 MW Wind Turbine Integration Study",
+    year: "2026",
+    status: "Completed & Under Review",
+    highlights: [
+      "Completed comprehensive micro-siting and wind speed profiling for coastal wind structures.",
+      "Engineered hybrid solar-wind grid-tie compatibility plans for commercial logistics zones.",
+      "Coordinated environmental impact assessments and aviation clearance approvals.",
+      "Delivered turnkey mechanical load and grounding system designs ready for procurement."
+    ]
+  },
+  {
+    id: 42,
+    name: "Fujairah Coastal Hybrid Wind & Solar Grid",
+    category: "wind",
+    image: "/assets/Projects/wind-energy-service.png",
+    location: "Coastal Highway, Fujairah, UAE",
+    client: "Federal Electricity & Water Authority (FEWA)",
+    capacity: "5.0 MW Hybrid Wind-Solar Power Grid",
+    year: "2025",
+    status: "Under Commissioning",
+    highlights: [
+      "Designed and integrated hybrid wind turbine arrays with secondary solar PV trackers.",
+      "Completed grid synchronization and high-voltage substation switchgear connections.",
+      "Optimized active pitch/yaw controls for high-turbulence coastal wind zones.",
+      "Establishes a critical clean energy model for FEWA's Eastern Grid initiative."
+    ]
   }
 ];
 
 const categories = [
   { id: "all", name: "All Projects" },
-  { id: "solar", name: "Solar EPC" },
-  { id: "mep", name: "MEP Works" },
-  { id: "hvac", name: "HVAC Engineering" },
-  { id: "substation", name: "Substations" }
+  { id: "solar", name: "Solar" },
+  { id: "wind", name: "Wind" },
+  { id: "infrastructure", name: "Infrastructure" }
 ];
+
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedSubCategory, setSelectedSubCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
-  // Filter projects
-  const filteredProjects = selectedCategory === "all"
-    ? projects
-    : projects.filter(p => p.category === selectedCategory);
+  // Filter projects based on category and sub-category
+  const filteredProjects = projects.filter((project) => {
+    // Primary Category Match
+    if (selectedCategory !== "all" && project.category !== selectedCategory) {
+      return false;
+    }
+    // Secondary Category Match
+    if (selectedSubCategory !== "all") {
+      if (selectedCategory === "solar" && project.oem !== selectedSubCategory) {
+        return false;
+      }
+      if (selectedCategory === "infrastructure" && project.subCategory !== selectedSubCategory) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  const handleCategoryChange = (catId: string) => {
+    setSelectedCategory(catId);
+    setSelectedSubCategory("all"); // Reset sub-category on primary change
+  };
 
   return (
-    <div className="bg-ras-charcoal text-white min-h-screen pt-28 pb-24 relative overflow-hidden">
-      {/* Dynamic Gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(197,168,128,0.05),transparent_60%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(30,59,50,0.08),transparent_60%)] pointer-events-none" />
+    <div className="bg-ras-light min-h-screen pb-24 relative overflow-hidden">
+      {/* ═══════════════════ HERO SECTION ═══════════════════ */}
+      <section className="relative min-h-[65vh] flex items-end overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/Projects/hsbc-jebel-ali-solar-pv-complex.jpeg"
+            alt="Ras Al Assad landmark infrastructure portfolio"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-white/45" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F0F1F3] via-[#F0F1F3]/60 to-transparent" />
+        </div>
 
-      <div className="wrapper max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* Page Hero */}
-        <div className="max-w-3xl mb-16">
-          <motion.span 
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pb-16 pt-40 w-full">
+          <motion.span
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-ras-gold text-xs font-bold uppercase tracking-[0.25em] mb-4 block"
+            className="text-xs font-bold uppercase tracking-[0.25em] text-ras-gold mb-4 block"
           >
             Milestones of UAE Engineering
           </motion.span>
@@ -728,36 +828,92 @@ export default function ProjectsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-6xl font-light tracking-tightest leading-tight mb-6"
+            className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-ras-charcoal leading-[1.1] mb-6"
           >
-            Landmark <span className="text-ras-gold">Infrastructure</span> Portfolio
+            Landmark{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-ras-gold via-ras-goldDark to-ras-gold">Infrastructure</span>{' '}Portfolio
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-ras-light/70 text-lg leading-relaxed font-normal"
+            className="text-base md:text-lg text-ras-grey max-w-2xl leading-relaxed"
           >
             From DEWA-synchronized industrial solar plants to complex central district cooling plants and high-voltage transmission substation supports, explore our record of absolute reliability across the GCC.
           </motion.p>
         </div>
+      </section>
+
+      <div className="wrapper max-w-7xl mx-auto px-6 relative z-10 pt-16">
 
         {/* Categories / Filter Bar */}
-        <div className="flex flex-wrap gap-3 mb-12 border-b border-white/10 pb-6">
+        <div className="flex flex-wrap gap-3 mb-6 border-b border-ras-grey/15 pb-6">
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => handleCategoryChange(cat.id)}
               className={`px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
                 selectedCategory === cat.id
                   ? "bg-ras-gold text-ras-charcoal shadow-lg hover:shadow-ras-gold/20 scale-102"
-                  : "bg-white/5 border border-white/15 text-white hover:bg-white/10 hover:border-white/30"
+                  : "bg-ras-charcoal/5 border border-ras-charcoal/15 text-ras-charcoal hover:bg-ras-charcoal/10 hover:border-ras-charcoal/30"
               }`}
             >
               {cat.name}
             </button>
           ))}
         </div>
+
+        {/* Secondary Sub-Category Filter Bar */}
+        <AnimatePresence mode="wait">
+          {selectedCategory === "solar" && (
+            <motion.div
+              key="solar-subnav"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-wrap gap-2 mb-12 p-2 bg-ras-charcoal/5 rounded-2xl border border-ras-charcoal/10"
+            >
+              {["all", "LONGi", "Jinko", "Trina", "Canadian Solar", "JA Solar"].map((oem) => (
+                <button
+                  key={oem}
+                  onClick={() => setSelectedSubCategory(oem)}
+                  className={`px-4 py-2 rounded-xl text-[11px] font-semibold tracking-wider uppercase transition-all duration-200 ${
+                    selectedSubCategory === oem
+                      ? "bg-white text-ras-charcoal shadow-sm"
+                      : "text-ras-charcoal/60 hover:text-ras-charcoal hover:bg-ras-charcoal/5"
+                  }`}
+                >
+                  {oem === "all" ? "All Brands" : oem}
+                </button>
+              ))}
+            </motion.div>
+          )}
+
+          {selectedCategory === "infrastructure" && (
+            <motion.div
+              key="infra-subnav"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-wrap gap-2 mb-12 p-2 bg-ras-charcoal/5 rounded-2xl border border-ras-charcoal/10"
+            >
+              {["all", "commercial", "industrial", "government", "utility"].map((sector) => (
+                <button
+                  key={sector}
+                  onClick={() => setSelectedSubCategory(sector)}
+                  className={`px-4 py-2 rounded-xl text-[11px] font-semibold tracking-wider uppercase transition-all duration-200 ${
+                    selectedSubCategory === sector
+                      ? "bg-white text-ras-charcoal shadow-sm"
+                      : "text-ras-charcoal/60 hover:text-ras-charcoal hover:bg-ras-charcoal/5"
+                  }`}
+                >
+                  {sector === "all" ? "All Sectors" : sector}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Projects Grid */}
         <motion.div 
@@ -774,7 +930,7 @@ export default function ProjectsPage() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => setSelectedProject(project)}
-                className="group relative rounded-[28px] overflow-hidden aspect-[0.8] w-full border border-white/5 bg-white/5 cursor-pointer hover:border-ras-gold/30 shadow-lg hover:shadow-2xl transition-all duration-500"
+                className="group relative rounded-[28px] overflow-hidden aspect-[0.8] w-full border border-ras-grey/10 bg-white cursor-pointer hover:border-ras-gold/30 shadow-lg hover:shadow-2xl transition-all duration-500"
               >
                 {/* Image Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-ras-charcoal via-ras-charcoal/30 to-transparent z-10 transition-opacity group-hover:opacity-95" />
@@ -796,9 +952,8 @@ export default function ProjectsPage() {
                   <div className="flex justify-between items-start">
                     <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/15">
                       {project.category === "solar" && <Sun className="w-5.5 h-5.5 text-ras-gold" />}
-                      {project.category === "mep" && <Cpu className="w-5.5 h-5.5 text-ras-gold" />}
-                      {project.category === "hvac" && <Wind className="w-5.5 h-5.5 text-ras-gold" />}
-                      {project.category === "substation" && <Zap className="w-5.5 h-5.5 text-ras-gold" />}
+                      {project.category === "wind" && <Wind className="w-5.5 h-5.5 text-ras-gold" />}
+                      {project.category === "infrastructure" && <Cpu className="w-5.5 h-5.5 text-ras-gold" />}
                     </div>
                     <span className="text-[9px] uppercase tracking-widest bg-ras-gold text-ras-charcoal px-2.5 py-1 rounded-full font-bold">
                       View Specifications

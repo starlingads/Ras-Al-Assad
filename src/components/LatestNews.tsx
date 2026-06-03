@@ -92,7 +92,7 @@ export default function LatestNews() {
             </p>
             <div className="pt-4">
               <Link
-                href="/en/contact"
+                href="/contact"
                 className="inline-flex items-center space-x-3 px-8 py-3.5 bg-ras-gold text-ras-charcoal font-semibold rounded-full hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 <span>Build with us</span>

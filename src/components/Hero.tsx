@@ -126,11 +126,11 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
   const img4DriftY = useTransform([img4y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 10 * (cap as number));
 
   const floatingImgs = [
-    { w: dimensions.imgWidths[0], ar: 0.854, driftX: img0DriftX, driftY: img0DriftY, opacity: img0o, src: "/assets/Ras Images/REMASTERED/SINGAPORE  PAVILION_x4.jpg",   alt: "Singapore Pavilion Solar Project",      zIdx: 30 },
-    { w: dimensions.imgWidths[1], ar: 0.987, driftX: img1DriftX, driftY: img1DriftY, opacity: img1o, src: "/assets/Ras Images/REMASTERED/SOBHA HEARTLAND.jpg",             alt: "Sobha Heartland MEP Engineering",       zIdx: 28 },
-    { w: dimensions.imgWidths[2], ar: 0.973, driftX: img2DriftX, driftY: img2DriftY, opacity: img2o, src: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x16.07.33 PM (1).jpg", alt: "Substation Installation", zIdx: 26 },
-    { w: dimensions.imgWidths[3], ar: 0.785, driftX: img3DriftX, driftY: img3DriftY, opacity: img3o, src: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.20.31 PM.jpg",      alt: "MEP Panel Commissioning",  zIdx: 24 },
-    { w: dimensions.imgWidths[4], ar: 0.856, driftX: img4DriftX, driftY: img4DriftY, opacity: img4o, src: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.57.35 PM.jpg",      alt: "Field Engineering Site",   zIdx: 22 },
+    { w: dimensions.imgWidths[0], ar: 0.854, driftX: img0DriftX, driftY: img0DriftY, opacity: img0o, src: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",   alt: "Singapore Pavilion Solar Project",      zIdx: 30 },
+    { w: dimensions.imgWidths[1], ar: 0.987, driftX: img1DriftX, driftY: img1DriftY, opacity: img1o, src: "/assets/Projects/SOBHA HEARTLAND.jpg",             alt: "Sobha Heartland MEP Engineering",       zIdx: 28 },
+    { w: dimensions.imgWidths[2], ar: 0.973, driftX: img2DriftX, driftY: img2DriftY, opacity: img2o, src: "/assets/Projects/al-garhoud-grid-substation-support.jpg", alt: "Substation Installation", zIdx: 26 },
+    { w: dimensions.imgWidths[3], ar: 0.785, driftX: img3DriftX, driftY: img3DriftY, opacity: img3o, src: "/assets/Projects/substation-engineering.jpg",      alt: "MEP Panel Commissioning",  zIdx: 24 },
+    { w: dimensions.imgWidths[4], ar: 0.856, driftX: img4DriftX, driftY: img4DriftY, opacity: img4o, src: "/assets/Projects/operations-maintenance.jpg",      alt: "Field Engineering Site",   zIdx: 22 },
   ];
 
   return (
@@ -188,7 +188,7 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
         >
           <motion.div style={{ scale: imgScale }} className="absolute inset-0">
             <Image
-              src="/assets/Ras Images/REMASTERED/SINGAPORE  PAVILION_x4.jpg"
+              src="/assets/Projects/SINGAPORE  PAVILION_x4.jpg"
               alt="Ras Al Assad Singapore Pavilion"
               fill
               priority
@@ -196,7 +196,7 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
               sizes="100vw"
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/65 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
         </motion.div>
       </motion.div>
 
@@ -225,25 +225,25 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
           </AnimatePresence>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extralight tracking-tightest leading-[1.1] mb-6 text-white max-w-4xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
+        <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extralight tracking-tightest leading-[1.1] mb-6 text-white max-w-4xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
           Ready to engineer <br />
           <span className="font-bold text-ras-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">your energy future</span>
         </h1>
 
-        <p className="text-base sm:text-lg text-white font-light max-w-2xl mb-10 leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">
+        <p className="text-base sm:text-lg text-white font-light max-w-2xl mb-10 leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
           Licensed EPC contractor specializing in solar PV and electromechanical solutions in the UAE.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 pointer-events-auto">
           <Link
-            href="/en/projects"
-            className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-white transition-all duration-300 w-full sm:w-auto text-center"
+            href="/projects"
+            className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-white transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
           >
             View Projects
           </Link>
           <Link
-            href="/en/contact"
-            className="px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white border border-white/25 text-sm font-semibold rounded-full hover:bg-white hover:text-ras-charcoal transition-all duration-300 w-full sm:w-auto text-center"
+            href="/contact"
+            className="px-8 py-3.5 bg-white/90 backdrop-blur-sm text-ras-charcoal border border-white/25 text-sm font-semibold rounded-full hover:bg-white hover:text-ras-charcoal transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
           >
             Start a Project
           </Link>

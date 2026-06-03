@@ -49,7 +49,7 @@ export default function ContactPage() {
             <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
               Global Headquarters
             </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-ras-charcoal leading-tight mb-4">
+            <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-ras-charcoal leading-tight mb-4">
               Connect With Our <span className="text-ras-gold">Engineers</span>
             </h1>
             <p className="text-sm md:text-base text-ras-grey leading-relaxed">
@@ -78,8 +78,8 @@ export default function ContactPage() {
                     <div>
                       <h4 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Corporate Address</h4>
                       <p className="text-sm text-ras-charcoal mt-1 leading-normal font-semibold">
-                        Office 305-306, Block B, Garhoud Star Building,<br />
-                        Al Garhoud, PO Box 84210,<br />
+                        Office #204, B Block, Saraya Avenue Building,<br />
+                        Al Garhoud, PO Box 241029,<br />
                         Dubai, United Arab Emirates
                       </p>
                     </div>
@@ -257,12 +257,12 @@ export default function ContactPage() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
                     >
-                      <option value="Solar EPC">Solar PV Integration (EPC)</option>
-                      <option value="Zero-CAPEX Solar Lease">Zero-CAPEX Solar Lease (PPA)</option>
-                      <option value="MEP Contracting">Electromechanical contracting (MEP)</option>
-                      <option value="HVAC Systems">Chilled Water / HVAC systems</option>
-                      <option value="Electrical Substation">Substations & Distribution</option>
-                      <option value="Operations & Maintenance (O&M)">O&M / Maintenance Contracts</option>
+                      <option value="Solar Energy">Solar Energy</option>
+                      <option value="Wind Energy">Wind Energy</option>
+                      <option value="Infrastructure">Infrastructure</option>
+                      <option value="EPC Services">EPC Services</option>
+                      <option value="Maintenance">Maintenance</option>
+                      <option value="Consultation">Consultation</option>
                     </select>
                   </div>
 

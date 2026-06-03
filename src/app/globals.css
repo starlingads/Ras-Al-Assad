@@ -2,8 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   FONT DECLARATIONS — Neue Haas Grotesk
+   Primary: Display (headings, hero, buttons)
+   Secondary: Text (body copy, paragraphs)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Neue Haas Grotesk Display ─── */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-45light-trial.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-55roman-trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-56italic-trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-65medium-trial.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-75bold-trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-76bolditalic-trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-95black-trial.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Neue Haas Grotesk Text ─── */
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-55roman-trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-56italic-trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-65medium-trial.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-75bold-trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-76bolditalic-trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
   --font-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Neue Haas Grotesk Display', var(--font-outfit);
+  --font-text: 'Neue Haas Grotesk Text', var(--font-outfit);
 }
 
 html {
@@ -12,7 +122,7 @@ html {
 }
 
 body {
-  font-family: var(--font-outfit);
+  font-family: var(--font-text);
   background-color: #FCFCFC;
   color: #121212;
   letter-spacing: -0.01em;
@@ -20,7 +130,10 @@ body {
   overflow-x: clip;
 }
 
-/* Glassmorphism Navigation */
+/* ═══════════════════════════════════════════════════════════════
+   GLASSMORPHISM NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+
 .navbar-glass {
   background: rgba(254, 254, 254, 0.7);
   backdrop-filter: blur(16px);
@@ -33,7 +146,10 @@ body {
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Mega-Menu Styling */
+/* ═══════════════════════════════════════════════════════════════
+   MEGA-MENU
+   ═══════════════════════════════════════════════════════════════ */
+
 .mega-menu-content {
   opacity: 0;
   visibility: hidden;
@@ -47,12 +163,18 @@ body {
   transform: translateY(0);
 }
 
-/* Swiper custom overrides */
+/* ═══════════════════════════════════════════════════════════════
+   SWIPER OVERRIDES
+   ═══════════════════════════════════════════════════════════════ */
+
 .swiper-slide {
   height: auto !important;
 }
 
-/* Map markers & paths */
+/* ═══════════════════════════════════════════════════════════════
+   MAP MARKERS
+   ═══════════════════════════════════════════════════════════════ */
+
 .map-marker {
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -62,7 +184,10 @@ body {
   z-index: 50;
 }
 
-/* Pre-footer shapes */
+/* ═══════════════════════════════════════════════════════════════
+   PRE-FOOTER SHAPE
+   ═══════════════════════════════════════════════════════════════ */
+
 .pre-footer-shape {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1312' height='1312' fill='none'%3E%3Cpath fill='%230F4338' fill-rule='evenodd' d='M548.571 676.861a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-41.715a2 2 0 0 1 2-2h544.571a2 2 0 0 1 2 2v41.715Zm763.429 0c0 1.104-.89 2-2 2H765.43a2 2 0 0 1-2-2v-41.715a2 2 0 0 1 2-2H1310c1.11 0 2 .896 2 2v41.715Zm-676.863-128.29a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h41.715a2 2 0 0 1 2 2v544.571a2 2 0 0 1-2 2h-41.715Zm.002 763.429c-1.104 0-2-.9-2-2V765.428a2 2 0 0 1 2-2h41.715a2 2 0 0 1 2 2L678.853 1310c0 1.1-.895 2-2 2h-41.714Z' clip-rule='evenodd'/%3E%3Cpath fill='%23FF5938' fill-rule='evenodd' d='M717.218 565.284a2 2 0 0 1 0-2.828l385.072-385.07a2.002 2.002 0 0 1 2.83 0l29.49 29.497c.78.781.78 2.047 0 2.828l-385.067 385.07a2 2 0 0 1-2.828 0l-29.497-29.497Z' clip-rule='evenodd'/%3E%3Cpath fill='%230F4338' fill-rule='evenodd' d='M177.386 1105.11a1.99 1.99 0 0 1 0-2.82l385.07-385.074a2 2 0 0 1 2.829 0l29.496 29.497a2 2 0 0 1 0 2.828l-385.07 385.069c-.781.78-2.047.78-2.828 0l-29.497-29.5Zm569.322-387.896a2 2 0 0 1 2.828 0l385.074 385.066c.78.79.78 2.05 0 2.83l-29.5 29.5c-.78.78-2.05.78-2.83 0L717.211 749.539a2 2 0 0 1 0-2.828l29.497-29.497ZM206.889 177.386a2 2 0 0 1 2.829 0l385.07 385.07a2 2 0 0 1 0 2.829l-29.497 29.496a2 2 0 0 1-2.828 0l-385.07-385.07a2 2 0 0 1 0-2.828l29.496-29.497Z' clip-rule='evenodd'/%3E%3C/svg%3E");
 }

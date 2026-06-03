@@ -28,7 +28,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-outfit)', 'sans-serif'],
+        sans: ["'Neue Haas Grotesk Text'", 'var(--font-outfit)', 'sans-serif'],
+        display: ["'Neue Haas Grotesk Display'", 'var(--font-outfit)', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.02em',

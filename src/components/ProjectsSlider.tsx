@@ -16,42 +16,42 @@ const projects = [
     name: "PNCA-SOBHA HARTLAND-2",
     scope: "Renewable Energy & Solar EPC",
     type: "solar",
-    image: "/assets/Ras Images/REMASTERED/SOBHA HEARTLAND.jpg",
+    image: "/assets/Projects/SOBHA HEARTLAND.jpg",
     location: "Sobha Heartland, Dubai"
   },
   {
     name: "Al HABTOOR Towers",
     scope: "Infrastructure MEP & HVAC Works",
     type: "mep",
-    image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.07.35 PM (1).jpg",
+    image: "/assets/Projects/adnoc-substation-infrastructure-projects.jpg",
     location: "Business Bay, Dubai"
   },
   {
     name: "HSBC Jebel Ali Complex",
     scope: "On-Grid Solar PV & Net Metering",
     type: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.33 PM.jpeg",
+    image: "/assets/Projects/hsbc-jebel-ali-solar-pv-complex.jpeg",
     location: "Jafza Gate 3, Dubai"
   },
   {
     name: "Singapore Pavilion EXPO 2020",
     scope: "Solar EPC & Electromechanical Works",
     type: "solar",
-    image: "/assets/Ras Images/REMASTERED/SINGAPORE  PAVILION_x4.jpg",
+    image: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",
     location: "Expo City, Dubai"
   },
   {
     name: "Dubai Government 5000 Villas",
     scope: "Residential PV & Community EPC",
     type: "solar",
-    image: "/assets/Ras Images/WhatsApp Image 2026-03-03 at 3.07.35 PM (1).jpeg",
+    image: "/assets/Projects/dubai-government-5000-villas-roof-solar.jpeg",
     location: "Mizhar & Muhaisnah, Dubai"
   },
   {
     name: "Al Garhoud Grid Substation",
     scope: "Electrical Substations & Infrastructure",
     type: "substation",
-    image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x16.07.33 PM (1).jpg",
+    image: "/assets/Projects/al-garhoud-grid-substation-support.jpg",
     location: "Al Garhoud, Dubai"
   }
 ];
@@ -150,7 +150,7 @@ export default function ProjectsSlider() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Link
-            href="/en/projects"
+            href="/projects"
             className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
           >
             <span>Explore all projects</span>

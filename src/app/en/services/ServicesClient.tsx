@@ -13,7 +13,8 @@ import {
   TrendingUp,
   FileCheck,
   Zap,
-  Activity
+  Activity,
+  Combine
 } from "lucide-react";
 
 export default function ServicesPage() {
@@ -45,7 +46,7 @@ export default function ServicesPage() {
         "Industrial structural load analysis & engineering seals",
         "Optimized rooftop, carport, and ground-mount configurations"
       ],
-      image: "/assets/Ras Images/REMASTERED/SINGAPORE  PAVILION_x4.jpg"
+      image: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg"
     },
     {
       id: "mep",
@@ -60,7 +61,7 @@ export default function ServicesPage() {
         "Fire-fighting systems & civil defense authority approvals",
         "Smart building automation (BMS) integration"
       ],
-      image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.07.35 PM (1).jpg"
+      image: "/assets/Projects/adnoc-substation-infrastructure-projects.jpg"
     },
     {
       id: "hvac",
@@ -75,7 +76,7 @@ export default function ServicesPage() {
         "Industrial ducting fabrication and acoustic isolation",
         "Indoor air quality (IAQ) HEPA filtration systems"
       ],
-      image: "/assets/Ras Images/REMASTERED/SOBHA HEARTLAND.jpg"
+      image: "/assets/Projects/SOBHA HEARTLAND.jpg"
     },
     {
       id: "substations",
@@ -90,7 +91,7 @@ export default function ServicesPage() {
         "Power factor correction (PFC) banks",
         "Underground cabling networks and earth-grid protection"
       ],
-      image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.20.31 PM.jpg"
+      image: "/assets/Projects/substation-engineering.jpg"
     },
     {
       id: "om",
@@ -105,49 +106,72 @@ export default function ServicesPage() {
         "Emergency MEP dispatching and immediate replacement",
         "Monthly efficiency reports and performance indexing"
       ],
-      image: "/assets/Ras Images/REMASTERED/WhatsApp Image 2026-03-03 at 3_x4.57.35 PM.jpg"
+      image: "/assets/Projects/operations-maintenance.jpg"
+    },
+    {
+      id: "wind-energy",
+      icon: Combine,
+      title: "Wind Energy Solutions",
+      subtitle: "Renewable Wind Power & Hybrid Energy Systems",
+      tagline: "Next-generation renewable infrastructure",
+      description: "As the GCC accelerates its diversification beyond solar, Ras Al Assad is expanding into wind energy engineering. Our electromechanical expertise positions us to deliver turbine engineering, hybrid solar-wind systems, and grid-connected wind infrastructure — powering the region's transition to a diversified renewable energy future.",
+      highlights: [
+        "Wind Energy Systems & Turbine Engineering",
+        "Renewable Energy Infrastructure",
+        "Hybrid Energy Solutions (Solar + Wind)",
+        "Future Energy Integration & Grid Connection"
+      ],
+      image: "/assets/Projects/wind-energy-service.png"
     }
   ];
 
   return (
-    <div className="bg-ras-light min-h-screen pt-28 pb-20">
-      {/* Services Hero */}
-      <section className="relative px-6 lg:px-8 py-20 bg-gradient-to-b from-ras-sand/50 to-transparent overflow-hidden border-b border-ras-grey/10">
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="solar-grid-services" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#solar-grid-services)" />
-          </svg>
+    <div className="bg-ras-light min-h-screen">
+      {/* ═══════════════════ HERO SECTION ═══════════════════ */}
+      <section className="relative min-h-[65vh] flex items-end overflow-hidden">
+        {/* Full-width background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/Projects/SOBHA HEARTLAND.jpg"
+            alt="Ras Al Assad solar PV and electromechanical services"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Light overlay for readability */}
+          <div className="absolute inset-0 bg-white/45" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F0F1F3] via-[#F0F1F3]/60 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 text-center max-w-3xl mx-auto">
-          <motion.span 
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pb-16 pt-40 w-full">
+          <motion.span
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block"
+            className="text-xs font-bold uppercase tracking-[0.25em] text-ras-gold mb-4 block"
           >
-            Engineering Portfolio
+            What We Do
           </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, y: 15 }}
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-extrabold tracking-tight text-ras-charcoal leading-tight mb-6"
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-ras-charcoal leading-[1.1] mb-6"
           >
-            Core Technical Systems
+            Our{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-ras-gold via-ras-goldDark to-ras-gold">
+              Services
+            </span>
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-base md:text-lg text-ras-grey leading-relaxed"
+            transition={{ duration: 0.9, delay: 0.25 }}
+            className="text-base md:text-lg text-ras-grey max-w-2xl leading-relaxed"
           >
-            We combine high-end solar technology with foundational electromechanical engineering to deliver energy-efficient, robust structures compliant with Dubai's highest regulatory standards.
+            Comprehensive electromechanical engineering and renewable energy solutions — from solar EPC and HVAC systems to substations and wind energy infrastructure.
           </motion.p>
         </div>
       </section>
@@ -204,7 +228,7 @@ export default function ServicesPage() {
                     <span className="text-xs font-bold uppercase tracking-widest text-ras-gold block">
                       {service.tagline}
                     </span>
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-ras-charcoal tracking-tight">
+                    <h2 className="font-display text-2xl md:text-3xl font-extrabold text-ras-charcoal tracking-tight">
                       {service.title}
                     </h2>
                     <h4 className="text-sm font-semibold text-ras-grey uppercase tracking-wide">
@@ -227,7 +251,7 @@ export default function ServicesPage() {
 
                     <div className="pt-6">
                       <Link
-                        href="/en/contact"
+                        href="/contact"
                         className="inline-flex items-center text-sm font-bold text-ras-gold hover:text-ras-charcoal transition-colors group"
                       >
                         Request engineering audit
@@ -259,7 +283,7 @@ export default function ServicesPage() {
           <span className="text-xs font-bold uppercase tracking-widest text-ras-gold block">
             Zero-CAPEX Solar Leases
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Go Solar with Zero Capital Investment
           </h2>
           <p className="text-base md:text-lg text-ras-light/75 max-w-3xl mx-auto leading-relaxed">
@@ -286,7 +310,7 @@ export default function ServicesPage() {
 
           <div className="pt-6">
             <Link
-              href="/en/solar-calculator"
+              href="/solar-calculator"
               className="px-8 py-4 bg-ras-gold text-ras-charcoal text-sm font-bold rounded-full hover:bg-white hover:text-ras-charcoal transition-all duration-300 inline-block shadow-lg"
             >
               Calculate Solar Payback
