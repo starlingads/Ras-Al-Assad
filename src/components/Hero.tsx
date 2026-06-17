@@ -135,8 +135,11 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
 
   return (
     <div
-      className="sticky top-0 h-screen w-full overflow-hidden"
-      style={{ background: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(197,168,128,0.10), #F7F4EF 70%)" }}
+      className="sticky top-0 w-full overflow-hidden"
+      style={{
+        height: windowSize.height,
+        background: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(197,168,128,0.10), #F7F4EF 70%)",
+      }}
     >
       {/* ── Cluster wrapper shifts up to reveal corporate text ── */}
       <motion.div
