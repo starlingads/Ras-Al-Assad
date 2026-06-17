@@ -21,7 +21,7 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="bg-ras-light min-h-screen pb-20">
+    <div className="bg-ras-light min-h-screen pb-20 pt-[76px] lg:pt-[80px]">
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
         {/* Full-width background image */}

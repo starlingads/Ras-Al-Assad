@@ -86,7 +86,7 @@ export default function AppreciationClient() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   return (
-    <div className="bg-ras-light min-h-screen pb-0">
+    <div className="bg-ras-light min-h-screen pb-0 pt-[76px] lg:pt-[80px]">
       {/* ───────────────────── 1. HERO ───────────────────── */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
         {/* Full-width background image */}

@@ -126,7 +126,7 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="bg-ras-light min-h-screen">
+    <div className="bg-ras-light min-h-screen pt-[76px] lg:pt-[80px]">
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
         {/* Full-width background image */}

@@ -800,7 +800,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="bg-ras-light min-h-screen pb-24 relative overflow-hidden">
+    <div className="bg-ras-light min-h-screen pb-24 pt-[76px] lg:pt-[80px] relative overflow-hidden">
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0 bg-black">

@@ -64,7 +64,7 @@ const cardVariants = {
 
 export default function TeamPage() {
   return (
-    <div className="bg-ras-light min-h-screen pb-24 overflow-hidden relative">
+    <div className="bg-ras-light min-h-screen pb-24 pt-[76px] lg:pt-[80px] overflow-hidden relative">
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0 bg-black">

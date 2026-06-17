@@ -47,14 +47,7 @@ export default function Navbar() {
   };
 
   // Pages that feature transparent headers initially (hero extends behind navbar)
-  const isTransparentHeaderPage =
-    normalizedPath === "/" ||
-    normalizedPath.includes("/about") ||
-    normalizedPath.includes("/services") ||
-    normalizedPath.includes("/projects") ||
-    normalizedPath.includes("/sustainability") ||
-    normalizedPath.includes("/appreciation") ||
-    normalizedPath.includes("/team");
+  const isTransparentHeaderPage = normalizedPath === "/";
 
   const hasHeaderBg = scrolled || !isTransparentHeaderPage;
   const isTextWhite = !hasHeaderBg;
