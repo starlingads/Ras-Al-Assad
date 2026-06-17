@@ -67,7 +67,7 @@ export default function TeamPage() {
     <div className="bg-ras-light min-h-screen pb-24 overflow-hidden relative">
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-[#0F2747]">
+        <div className="absolute inset-0 z-0 bg-black">
           <Image
             src="/assets/Projects/SINGAPORE  PAVILION_x4.jpg"
             alt="Ras Al Assad leadership and technical team"
@@ -75,9 +75,8 @@ export default function TeamPage() {
             className="object-cover opacity-60"
             priority
           />
-          {/* Dark premium overlay */}
-          <div className="absolute inset-0 bg-[#0F2747]/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2747] via-[#0F2747]/45 to-transparent" />
+          {/* Premium Black Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/65 to-black/55" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pb-16 pt-40 w-full">

@@ -75,17 +75,24 @@ export default function Navbar() {
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.style.height = '100vh';
     } else {
       document.body.style.overflow = '';
+      document.body.style.height = '';
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    };
   }, [mobileMenuOpen]);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          hasHeaderBg
+        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
+          mobileMenuOpen
+            ? "bg-transparent py-6"
+            : hasHeaderBg
             ? "navbar-glass shadow-md py-4 border-b border-ras-sand/30"
             : "bg-transparent py-6"
         }`}
@@ -192,7 +199,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[55] bg-ras-sand pt-28 px-8 flex flex-col justify-between pb-12 overflow-y-auto"
+            className="fixed top-0 left-0 w-full h-[100dvh] z-50 bg-ras-sand pt-28 px-8 flex flex-col justify-between pb-12 overflow-y-auto overscroll-contain"
           >
             <div className="flex flex-col space-y-6">
               {navLinks.map((link) => (

@@ -86,7 +86,7 @@ export default function SustainabilityClient() {
       {/* ═══════════════════ SECTION 1 — HERO ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
         {/* Full-width background image */}
-        <div className="absolute inset-0 z-0 bg-[#0F2747]">
+        <div className="absolute inset-0 z-0 bg-black">
           <Image
             src="/assets/Projects/dubai-government-5000-villas-roof-solar.jpeg"
             alt="Sustainable solar energy infrastructure by Ras Al Assad"
@@ -94,9 +94,8 @@ export default function SustainabilityClient() {
             className="object-cover opacity-60"
             priority
           />
-          {/* Dark premium overlay */}
-          <div className="absolute inset-0 bg-[#0F2747]/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2747] via-[#0F2747]/45 to-transparent" />
+          {/* Premium Black Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/65 to-black/55" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pb-16 pt-40 w-full">
