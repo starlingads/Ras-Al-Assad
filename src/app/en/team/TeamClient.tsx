@@ -67,16 +67,17 @@ export default function TeamPage() {
     <div className="bg-ras-light min-h-screen pb-24 overflow-hidden relative">
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[65vh] flex items-end overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 bg-[#0F2747]">
           <Image
             src="/assets/Projects/SINGAPORE  PAVILION_x4.jpg"
             alt="Ras Al Assad leadership and technical team"
             fill
-            className="object-cover"
+            className="object-cover opacity-60"
             priority
           />
-          <div className="absolute inset-0 bg-white/45" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#F0F1F3] via-[#F0F1F3]/60 to-transparent" />
+          {/* Dark premium overlay */}
+          <div className="absolute inset-0 bg-[#0F2747]/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2747] via-[#0F2747]/45 to-transparent" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 pb-16 pt-40 w-full">
@@ -84,7 +85,7 @@ export default function TeamPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold uppercase tracking-[0.25em] text-ras-gold mb-4 block"
+            className="text-xs font-bold uppercase tracking-[0.25em] text-[#AB8857] mb-4 block"
           >
             Engineering Performance. Delivering Reliability.
           </motion.span>
@@ -93,10 +94,10 @@ export default function TeamPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-ras-charcoal leading-[1.1] mb-6"
+            className="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6"
           >
             Our{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-ras-gold via-ras-goldDark to-ras-gold">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#AB8857] via-[#D4B282] to-[#AB8857]">
               Leadership
             </span>{' '}
             &amp; Technical Team
@@ -106,7 +107,7 @@ export default function TeamPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-base md:text-lg text-ras-grey max-w-2xl leading-relaxed"
+            className="text-base md:text-lg text-white/85 max-w-2xl leading-relaxed"
           >
             MEP infrastructure and renewable energy require absolute precision. Our leadership and engineering specialists bring together over a decade of UAE grid-compliant delivery.
           </motion.p>

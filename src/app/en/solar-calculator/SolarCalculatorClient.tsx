@@ -82,6 +82,53 @@ export default function SolarCalculatorPage() {
     setSubmitted(true);
   };
 
+  // Lock background scroll when modal is open
+  useEffect(() => {
+    if (showContactModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showContactModal]);
+
+  // Block ESC key from closing modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && showContactModal) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => window.removeEventListener("keydown", handleKeyDown, true);
+  }, [showContactModal]);
+
+  const handleLeadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Prefill sidebar form with captured lead data
+    setFormData(prev => ({
+      ...prev,
+      name: contactModalData.name,
+      email: contactModalData.email,
+      phone: contactModalData.phone
+    }));
+
+    // Future integration hook: log data
+    console.log("Lead captured for database/email sync:", {
+      name: contactModalData.name,
+      email: contactModalData.email,
+      phone: contactModalData.phone,
+      bill: bill
+    });
+
+    // Close modal
+    setShowContactModal(false);
+  };
+
   return (
     <div className="bg-ras-light min-h-screen pt-28 pb-20">
       <section className="relative px-6 lg:px-8 py-16 bg-gradient-to-b from-ras-sand/50 to-transparent overflow-hidden">
@@ -363,29 +410,17 @@ export default function SolarCalculatorPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white rounded-2xl shadow-2xl border border-ras-sand max-w-md w-full p-8 relative"
           >
-            {/* Close button */}
-            <button
-              onClick={() => setShowContactModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-ras-sand/60 hover:bg-ras-sand flex items-center justify-center transition-colors"
-              aria-label="Close modal"
-            >
-              <X className="h-4 w-4 text-ras-charcoal" />
-            </button>
-
             <div className="text-center mb-6">
               <h2 className="font-display text-xl font-extrabold text-ras-charcoal mb-2">
                 Get Your Detailed Estimate
               </h2>
               <p className="text-sm text-ras-grey leading-relaxed">
-                Please sign in or submit your contact details before receiving a detailed estimate.
+                Please provide your details to receive an estimated solar solution tailored to your energy consumption.
               </p>
             </div>
 
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setShowContactModal(false);
-              }}
+              onSubmit={handleLeadSubmit}
               className="space-y-4"
             >
               <div className="space-y-1.5">
@@ -439,6 +474,10 @@ export default function SolarCalculatorPage() {
               >
                 Submit & View Estimate
               </button>
+              
+              <p className="text-[10px] text-ras-grey/75 text-center leading-relaxed mt-4 pt-2 border-t border-ras-sand/40">
+                Your information will be used solely to provide an indicative solar assessment. Final recommendations and pricing may vary based on site conditions and project requirements.
+              </p>
             </form>
           </motion.div>
         </div>
