@@ -234,7 +234,7 @@ export default function InteractiveMap() {
                 initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                transition={{ duration: 0.25, cubicBezier: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.25 }}
                 className="absolute bottom-6 left-6 right-6 sm:right-auto sm:w-80 bg-ras-charcoal text-white p-5 rounded-2xl shadow-2xl border border-white/10 z-30 flex items-start space-x-3.5 backdrop-blur-md"
               >
                 <div className={`p-2.5 rounded-xl border border-white/10 ${

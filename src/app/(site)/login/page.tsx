@@ -1,6 +1,6 @@
 "use client";
 
-import LoginClient from "@/app/en/login/LoginClient";
+import LoginClient from "../en/login/LoginClient";
 
 export default function LoginPage() {
   return <LoginClient />;

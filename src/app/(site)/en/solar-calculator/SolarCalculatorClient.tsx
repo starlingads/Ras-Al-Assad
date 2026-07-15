@@ -148,7 +148,7 @@ export default function SolarCalculatorPage() {
               Solar Return & Savings <span className="text-ras-gold">Estimator</span>
             </h1>
             <p className="text-sm md:text-base text-ras-grey leading-relaxed">
-              Estimate your commercial property's solar PV potential in Dubai. Adjust your average monthly electricity bill below and view immediate, high-fidelity financial projections.
+              Estimate your commercial property&apos;s solar PV potential in Dubai. Adjust your average monthly electricity bill below and view immediate, high-fidelity financial projections.
             </p>
           </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import AppreciationClient from "@/app/en/appreciation/AppreciationClient";
+import AppreciationClient from "../en/appreciation/AppreciationClient";
 
 export default function AppreciationPage() {
   return <AppreciationClient />;

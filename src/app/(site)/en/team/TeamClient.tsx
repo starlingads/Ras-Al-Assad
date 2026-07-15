@@ -57,7 +57,9 @@ const cardVariants = {
     y: 0,
     transition: {
       duration: 0.8,
-      ease: [0.16, 1, 0.3, 1]
+      // `as const` keeps this a 4-tuple; without it TypeScript widens it to
+      // number[], which no longer satisfies framer-motion's BezierDefinition.
+      ease: [0.16, 1, 0.3, 1] as const
     }
   }
 };
@@ -128,7 +130,7 @@ export default function TeamPage() {
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
             <Star className="h-8 w-8 text-ras-gold fill-ras-gold mx-auto" />
             <blockquote className="text-xl md:text-2xl font-light leading-relaxed italic text-ras-charcoal/85">
-              "At Ras Al Assad, our mission is not simply to build, but to engineer performance that lasts. We believe that clean energy and robust mechanical infrastructure are the foundations of Dubai's future. Our team executes every solar panel array, every electrical substation, and every district cooling line with strict safety compliance, technical transparency, and a commitment to long-term value."
+              &quot;At Ras Al Assad, our mission is not simply to build, but to engineer performance that lasts. We believe that clean energy and robust mechanical infrastructure are the foundations of Dubai&apos;s future. Our team executes every solar panel array, every electrical substation, and every district cooling line with strict safety compliance, technical transparency, and a commitment to long-term value.&quot;
             </blockquote>
             <div className="pt-2">
               <p className="text-lg font-bold text-ras-gold leading-none">Mr. Navas Komu</p>

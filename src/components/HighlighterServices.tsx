@@ -113,7 +113,7 @@ export default function HighlighterServices() {
               initial={{ opacity: 0, scale: 1.02 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.55, cubicBezier: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.55 }}
               className="absolute inset-0 w-full h-full"
             >
               <Image
