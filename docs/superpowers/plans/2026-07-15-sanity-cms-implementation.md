@@ -761,11 +761,27 @@ Order (risk-ascending): Team → Appreciation → Contact → About → Sustaina
 - [x] `next/image` optimization re-enabled with the `cdn.sanity.io` remote pattern; `unoptimized: true` and the unsplash/virya hotlink patterns removed
 - [ ] Retire the now-unused `/public/assets` images (fonts stay) — deferred; harmless but ~13 MB of dead weight in the repo
 
-### Phase 5 — Preview, polish & handover (1 day)
-- [ ] Presentation tool + draft mode route + document→URL resolver (click-to-edit preview)
-- [ ] Studio UX pass: descriptions read like sentences, empty states, icon picker visual input
-- [ ] Invite client as Editor; 60-min training + one-page illustrated cheat-sheet ("add a project", "swap a photo", "reorder services", "edit phone number")
-- [ ] `sanity:deploy-schema` verification + `/code-review` on the full diff
+### Phase 5 — Preview, polish & handover (1 day) — **PARTIALLY COMPLETE**
+- [x] CORS origin added for `https://ras-al-assad.vercel.app` (`npx sanity cors add … --credentials`); `http://localhost:3000` already existed
+- [x] QA pass against the production build (see below)
+- [ ] **Presentation tool** + draft-mode route + document→URL resolver (click-to-edit preview). Needs `SANITY_API_READ_TOKEN` (Viewer) — a human step; the token must not be committed
+- [ ] Invite client as Editor; 60-min training + one-page illustrated cheat-sheet
+- [ ] Icon picker visual input (currently a plain dropdown of the curated list)
+
+### QA results (production build, served locally, diffed against the live site)
+
+| Check | Result |
+|---|---|
+| typecheck / lint / build | 0 errors · 0 errors · 14/14 routes |
+| Content vs live baseline | **9/9 pages match.** `/` and `/projects` score *higher* — they now render server-side what production only renders client-side |
+| Homepage sections | 17/17 present |
+| Images | 43/43 from `cdn.sanity.io`, 0 broken, 0 legacy `/assets/Projects` refs |
+| Project filtering | All 42 → Solar 18 → LONGi 2 → Jinko 3 → Wind 2 → Infrastructure 22 → Government 3 → back to 42 ✓ |
+| Solar calculator | Every figure matches the CMS assumptions (195 kWp · 702,000 AED · 6.1 yr · 234 t · 390 panels · 2,304,000 / 20 yr); lead gate honours `leadGateEnabled` |
+| Mobile (375×812) | No horizontal overflow; burger + drawer work; services dropdown auto-populates from the CMS; body scroll locks/restores |
+| Console | 0 errors |
+| SEO | JSON-LD LocalBusiness with real phone; sitemap 9 URLs; `/en/*` → 308 → canonical |
+| `/studio` | 200, `noindex`, zero site-chrome leakage |
 
 **Total estimate: ~8–10 working days** (v2 additions: +½–1 day across Phases 1–3). Suggested checkpoint deploys after Phases 2, 3, and 5.
 
