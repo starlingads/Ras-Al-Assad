@@ -3,7 +3,7 @@ import type { PortableTextBlock } from "next-sanity";
 
 import SustainabilityClient, {
   type SustainabilityPageData,
-} from "../en/sustainability/SustainabilityClient";
+} from "./SustainabilityClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { SUSTAINABILITY_PAGE_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";

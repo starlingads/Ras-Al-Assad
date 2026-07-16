@@ -537,7 +537,150 @@ async function main() {
     seo: { _type: "seo" },
   });
 
-  console.log("\nSingletons seeded (homePage intentionally deferred to its wiring step).");
+  // ── Homepage ──────────────────────────────────────────────────────────
+  // Copy lifted verbatim from the previously hardcoded components.
+  const featuredProjectRefs = await client.fetch(
+    `*[_type == "project" && featured == true] | order(orderRank)[0..5]{
+      _id, "slug": slug.current
+    }`,
+  );
+  const bySlug = Object.fromEntries(featuredProjectRefs.map((p) => [p.slug, p._id]));
+  const pin = (slug, x, y) =>
+    bySlug[slug] ? withKey({ _type: "mapPin", project: ref(bySlug[slug]), x, y }) : null;
+
+  await upsertSingleton("homePage", {
+    rotatingWords: ["Solar EPC", "MEP Works", "HVAC Engineering", "Substations", "O&M Services"],
+    rotatingSuffix: "Specialist",
+    headlineLine1: "Ready to engineer",
+    headlineLine2: "your energy future",
+    subheadline:
+      "Licensed EPC contractor specializing in solar PV and electromechanical solutions in the UAE.",
+    scrollHint: "Explore Solutions",
+    primaryCta: customCta("View Projects", "/projects"),
+    secondaryCta: customCta("Start a Project", "/contact"),
+    heroMedia: {
+      mediaType: "floating",
+      mainImage: await figureFor(
+        "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",
+        "Ras Al Assad Singapore Pavilion",
+      ),
+      floatingImages: [
+        withKey(await figureFor("/assets/Projects/SINGAPORE  PAVILION_x4.jpg", "Singapore Pavilion Solar Project")),
+        withKey(await figureFor("/assets/Projects/SOBHA HEARTLAND.jpg", "Sobha Heartland MEP Engineering")),
+        withKey(await figureFor("/assets/Projects/al-garhoud-grid-substation-support.jpg", "Substation Installation")),
+        withKey(await figureFor("/assets/Projects/substation-engineering.jpg", "MEP Panel Commissioning")),
+        withKey(await figureFor("/assets/Projects/operations-maintenance.jpg", "Field Engineering Site")),
+      ],
+    },
+    showExpertise: true,
+    showClientLogos: true,
+    showStats: true,
+    showMap: true,
+    showOffers: true,
+    showFeaturedProjects: true,
+    showSustainability: true,
+    showPartner: true,
+    showInstitutions: true,
+    introChip: "Who We Are",
+    introHeading: "Building",
+    introHeadingAccent: "infrastructure that performs",
+    introText:
+      "Ras Al Assad Electromechanical Works LLC is a UAE-based renewable and electromechanical infrastructure specialist with over a decade of experience in engineering, procurement, and construction. We support developers, industries, and institutions with technically sound, compliant, and performance-driven solutions across renewable energy and electrical infrastructure.",
+    expertiseChip: "Specialized Expertise",
+    expertiseHeading: "Core capabilities",
+    expertiseCta: customCta("Explore all services", "/services"),
+    logosMode: "all",
+    logosHeading: "Our Clients",
+    statsChip: "End-To-End Delivery",
+    statsHeading: "Building Infrastructure",
+    statsHeadingBold: "That Performs",
+    statsText:
+      "We provide end-to-end EPC solutions across renewable energy and electromechanical infrastructure, from engineering design to commissioning and long-term operational support.",
+    credentials: [
+      withKey({ _type: "stat", icon: "Calendar", value: "13+ Years", label: "Engineering Experience", description: "A proven legacy of high-performance project execution since 2013." }),
+      withKey({ _type: "stat", icon: "Award", value: "Certified", label: "Solar PV Consultant", description: "Officially registered and authorized by DEWA and local grid authorities." }),
+      withKey({ _type: "stat", icon: "Shield", value: "ISO Certified", label: "Operations & Management", description: "Strict compliance with international quality and safety benchmarks." }),
+      withKey({ _type: "stat", icon: "Trophy", value: "Integrated", label: "EPC Capability", description: "Comprehensive in-house design, procurement, and execution teams." }),
+    ],
+    statsQuote: {
+      text: "At Ras Al Assad, we believe building high-performance energy infrastructure is not just a technical process but a long-term commitment. Our certified credentials and systematic EPC pipeline ensure maximum reliability for the UAE skyline.",
+      author: "ENG. NAVAS KOMU — Managing Director, RAAEW",
+    },
+    pipelineHeading: "Integrated EPC Pipeline",
+    pipelineSteps: [
+      withKey({ _type: "pipelineStep", title: "Engineering Design", description: "Detailed PV layout mapping, electrical single line diagrams (SLD), and structural load assessments compliant with UAE grid standards." }),
+      withKey({ _type: "pipelineStep", title: "Procurement & Technical Coordination", description: "Strategic sourcing of Tier-1 PV components, transformers, switchgears, and regulatory-approved electromechanical apparatus." }),
+      withKey({ _type: "pipelineStep", title: "Construction & Installation", description: "Field civil works, panel installation, electrical wiring, HVAC ducting, and piping systems executed by certified builders." }),
+      withKey({ _type: "pipelineStep", title: "Testing & Commissioning", description: "Pre-commissioning insulation sweeps, hot-spot thermal scanning, grid integration safety checks, and authority approvals." }),
+      withKey({ _type: "pipelineStep", title: "After-Sales & Operational Support", description: "Preventative AMC support, 24/7 remote generation tracking, structural testing, and immediate breakdown dispatch." }),
+    ],
+    mapChip: "UAE Footprint",
+    mapHeading: "UAE",
+    mapHeadingBottom: "footprint",
+    mapSubheading:
+      "Actively constructing clean energy and high-fidelity electromechanical systems across Dubai, Abu Dhabi, Sharjah, and the Northern Emirates.",
+    mapCta: customCta("Discover all our projects", "/projects"),
+    // Pins reuse the six projects the old map hardcoded, matched by slug.
+    pins: [
+      pin("pnca-sobha-hartland-2-solar-pv", 73, 36),
+      pin("singapore-pavilion-expo-2020-dubai", 70, 41),
+      pin("adnoc-substation-and-infrastructure-projects", 26, 67),
+      pin("hsbc-jebel-ali-solar-pv-complex", 74, 33),
+      pin("al-garhoud-grid-substation-support", 76, 30),
+    ].filter(Boolean),
+    offersChip: "Tailored to Your Operations",
+    offersHeading: "B2B Engineering Value Propositions",
+    // The Unsplash hotlinks the old component used are replaced with owned
+    // project photography (plan §9.4).
+    offers: [
+      withKey({ _type: "offer", title: "Zero-Capital Solar Lease", description: "Switch to clean solar power with zero upfront CAPEX. We finance, construct, and operate roof or carport solar PV installations with immediate utility billing discounts.", image: await figureFor("/assets/Projects/dubai-government-5000-villas-roof-solar.jpeg", "Zero-capital solar lease installation") }),
+      withKey({ _type: "offer", title: "DEWA Net Metering Integration", description: "Seamless grid-tie engineering. Surplus clean energy generated by your facility is exported back to the DEWA grid, building net-energy billing credits in real-time.", image: await figureFor("/assets/Projects/hsbc-jebel-ali-solar-pv-complex.jpeg", "DEWA net metering integration") }),
+      withKey({ _type: "offer", title: "High-Precision MEP Execution", description: "Integrated electromechanical and plumbing systems designed for luxury residential estates, high-rise office towers, and high-load industrial hubs.", image: await figureFor("/assets/Projects/SOBHA HEARTLAND.jpg", "High-precision MEP execution") }),
+      withKey({ _type: "offer", title: "Etihad ESCO Compliance", description: "Safeguard regulatory compliance under Dubai's building rules. We provide comprehensive energy performance auditing and carbon offset calculations.", image: await figureFor("/assets/Projects/chalhoub-group-head-office-solar-mep.jpeg", "Etihad ESCO compliance auditing") }),
+      withKey({ _type: "offer", title: "24/7 Preventative AMC Support", description: "Protect the lifetime value of your engineering assets. High-fidelity thermal drone auditing, inverter diagnostics, and quick-dispatch MEP emergency teams.", image: await figureFor("/assets/Projects/operations-maintenance.jpg", "24/7 preventative AMC support") }),
+    ],
+    featuredProjectsChip: "Discover Our Projects",
+    featuredProjectsHeading: "Our Projects",
+    featuredProjectsCta: customCta("Explore all projects", "/projects"),
+    sustainabilityChip: "Sustainability",
+    sustainabilityHeading: "Powering a",
+    sustainabilityHeadingAccent: "Sustainable",
+    sustainabilityHeadingEnd: "Future",
+    sustainabilityText:
+      "Our commitment to clean energy and environmental stewardship drives every project we deliver across the UAE and beyond.",
+    sustainabilityFeatures: [
+      withKey({ _type: "sustainabilityFeature", icon: "Sun", title: "Renewable Energy", description: "Solar PV systems designed and installed to maximize clean energy generation for commercial and residential sectors." }),
+      withKey({ _type: "sustainabilityFeature", icon: "Wind", title: "Wind Energy", description: "Wind turbine integration and hybrid energy solutions for coastal and industrial zones across the UAE." }),
+      withKey({ _type: "sustainabilityFeature", icon: "Zap", title: "Future Energy Technologies", description: "Green hydrogen readiness, battery storage systems, and next-generation grid integration solutions." }),
+      withKey({ _type: "sustainabilityFeature", icon: "Leaf", title: "Environmental Responsibility", description: "Commitment to reducing carbon emissions and supporting the UAE Energy Strategy 2050 clean energy targets." }),
+    ],
+    sustainabilityCta: customCta("Learn More About Sustainability", "/sustainability"),
+    partner: ids.anert ? ref(ids.anert) : undefined,
+    partnerHeading: "ANERT Partnership",
+    partnerText:
+      "Ras Al Assad is a recognized partner of the Agency for New and Renewable Energy Research and Technology (ANERT), reinforcing our commitment to advancing renewable energy technologies and sustainable development across the region.",
+    institutionsChip: "Trusted Excellence",
+    institutionsHeading: "Trusted by leading institutions",
+    institutionsHeadingBold: "across the UAE",
+    sloganBanner: {
+      chip: "Proven Capability",
+      line1: "ENGINEERING EXCELLENCE.",
+      line2: "PROVEN CAPABILITY.",
+      text: "Partner with an integrated electromechanical and renewable EPC contractor built on certified standards, technical precision, and disciplined execution.",
+      cta: customCta("Build with us", "/contact"),
+    },
+    missionBlock: {
+      label: "Our Mission Statement",
+      quote:
+        "WE DESIGN, BUILD, AND MAINTAIN HIGH-PERFORMANCE ENERGY AND INFRASTRUCTURE SYSTEMS WITH PRECISION, SAFETY, AND ACCOUNTABILITY. THROUGH STRONG ENGINEERING EXPERTISE, REGULATORY COMPLIANCE, AND DISCIPLINED EXECUTION, WE DELIVER INTEGRATED EPC AND RENEWABLE SOLUTIONS THAT CREATE LASTING VALUE FOR OUR CLIENTS AND COMMUNITIES.",
+      taglineStart: "Engineering Performance.",
+      taglineBold: "Delivering Reliability.",
+      subline: "RENEWABLE & ELECTROMECHANICAL INFRASTRUCTURE PARTNER",
+    },
+    seo: { _type: "seo" },
+  });
+
+  console.log("\nAll singletons seeded.");
 }
 
 main().catch((err) => {

@@ -1,4 +1,4 @@
-import { HomeIcon } from "@sanity/icons";
+import { HomeIcon } from "@sanity/icons/Home";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 /**
@@ -213,6 +213,27 @@ export const homePage = defineType({
       group: "sections",
     }),
     defineField({
+      name: "expertiseChip",
+      type: "string",
+      title: "Expertise — small label",
+      group: "sections",
+      description: "e.g. “Specialized Expertise”",
+    }),
+    defineField({
+      name: "expertiseHeading",
+      type: "string",
+      title: "Expertise — heading",
+      group: "sections",
+      description: "e.g. “Core capabilities”",
+    }),
+    defineField({
+      name: "expertiseCta",
+      type: "cta",
+      title: "Expertise — link",
+      group: "sections",
+      description: "The small link beside the heading, e.g. “Explore all services”.",
+    }),
+    defineField({
       name: "expertiseOverride",
       type: "array",
       title: "Expertise cards — manual override",
@@ -243,10 +264,24 @@ export const homePage = defineType({
       group: "sections",
     }),
     defineField({
+      name: "featuredProjectsChip",
+      type: "string",
+      title: "Featured projects — small label",
+      group: "sections",
+      description: "e.g. “Discover Our Projects”",
+    }),
+    defineField({
       name: "featuredProjectsHeading",
       type: "string",
       title: "Featured projects — heading",
       group: "sections",
+    }),
+    defineField({
+      name: "featuredProjectsCta",
+      type: "cta",
+      title: "Featured projects — link",
+      group: "sections",
+      description: "The small link beside the heading, e.g. “Explore all projects”.",
     }),
     defineField({
       name: "featuredProjectsOverride",
@@ -327,12 +362,51 @@ export const homePage = defineType({
 
     // ── Stats & Process ─────────────────────────────────────────────────
     defineField({
+      name: "statsChip",
+      type: "string",
+      title: "Section — small label",
+      group: "stats",
+      description: "e.g. “End-To-End Delivery”",
+    }),
+    defineField({
+      name: "statsHeading",
+      type: "string",
+      title: "Section — heading (light part)",
+      group: "stats",
+      description: "e.g. “Building Infrastructure”",
+    }),
+    defineField({
+      name: "statsHeadingBold",
+      type: "string",
+      title: "Section — heading (bold part)",
+      group: "stats",
+      description: "e.g. “That Performs”",
+    }),
+    defineField({
+      name: "statsText",
+      type: "text",
+      rows: 3,
+      title: "Section — paragraph",
+      group: "stats",
+    }),
+    defineField({
       name: "credentials",
       type: "array",
-      title: "Credential statistics",
+      title: "Credential cards",
       group: "stats",
       of: [defineArrayMember({ type: "stat" })],
       validation: (r) => r.max(4).error("The design fits up to 4 statistics"),
+    }),
+    defineField({
+      name: "statsQuote",
+      type: "object",
+      title: "Closing quote",
+      group: "stats",
+      description: "The quote under the pipeline. Quote marks are added automatically.",
+      fields: [
+        defineField({ name: "text", type: "text", rows: 4, title: "Quote" }),
+        defineField({ name: "author", type: "string", title: "Attribution", description: "e.g. “ENG. NAVAS KOMU — Managing Director, RAAEW”" }),
+      ],
     }),
     defineField({
       name: "pipelineHeading",
@@ -365,16 +439,37 @@ export const homePage = defineType({
 
     // ── Map ─────────────────────────────────────────────────────────────
     defineField({
+      name: "mapChip",
+      type: "string",
+      title: "Map — small label",
+      group: "map",
+      description: "e.g. “UAE Footprint”",
+    }),
+    defineField({
       name: "mapHeading",
       type: "string",
-      title: "Map — heading",
+      title: "Map — heading (first line)",
       group: "map",
+      description: "e.g. “UAE”",
+    }),
+    defineField({
+      name: "mapHeadingBottom",
+      type: "string",
+      title: "Map — heading (second line, grey)",
+      group: "map",
+      description: "e.g. “footprint”",
     }),
     defineField({
       name: "mapSubheading",
       type: "text",
       rows: 2,
       title: "Map — supporting line",
+      group: "map",
+    }),
+    defineField({
+      name: "mapCta",
+      type: "cta",
+      title: "Map — button",
       group: "map",
     }),
     defineField({
@@ -417,6 +512,13 @@ export const homePage = defineType({
     }),
 
     // ── Offers ──────────────────────────────────────────────────────────
+    defineField({
+      name: "offersChip",
+      type: "string",
+      title: "Offers — small label",
+      group: "offers",
+      description: "e.g. “Tailored to Your Operations”",
+    }),
     defineField({
       name: "offersHeading",
       type: "string",

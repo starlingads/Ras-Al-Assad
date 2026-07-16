@@ -1,20 +1,20 @@
-import {
-  CaseIcon,
-  CogIcon,
-  EnvelopeIcon,
-  FilterIcon,
-  HomeIcon,
-  ImagesIcon,
-  LeaveIcon,
-  LinkIcon,
-  ProjectsIcon,
-  SparklesIcon,
-  StarFilledIcon,
-  StarIcon,
-  TagIcon,
-  UsersIcon,
-  WrenchIcon,
-} from "@sanity/icons";
+// @sanity/icons v5 removed the root-entry exports; each icon ships as its
+// own subpath (the root now only exports the generic <Icon> component).
+import { CaseIcon } from "@sanity/icons/Case";
+import { CogIcon } from "@sanity/icons/Cog";
+import { EnvelopeIcon } from "@sanity/icons/Envelope";
+import { FilterIcon } from "@sanity/icons/Filter";
+import { HomeIcon } from "@sanity/icons/Home";
+import { ImagesIcon } from "@sanity/icons/Images";
+import { LeaveIcon } from "@sanity/icons/Leave";
+import { LinkIcon } from "@sanity/icons/Link";
+import { ProjectsIcon } from "@sanity/icons/Projects";
+import { SparklesIcon } from "@sanity/icons/Sparkles";
+import { StarFilledIcon } from "@sanity/icons/StarFilled";
+import { StarIcon } from "@sanity/icons/Star";
+import { TagIcon } from "@sanity/icons/Tag";
+import { UsersIcon } from "@sanity/icons/Users";
+import { WrenchIcon } from "@sanity/icons/Wrench";
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import type { ComponentType } from "react";
 import type { StructureBuilder, StructureResolver } from "sanity/structure";

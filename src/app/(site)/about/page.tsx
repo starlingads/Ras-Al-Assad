@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { PortableTextBlock } from "next-sanity";
 
-import AboutClient, { type AboutPageData } from "../en/about/AboutClient";
+import AboutClient, { type AboutPageData } from "./AboutClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ABOUT_PAGE_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";

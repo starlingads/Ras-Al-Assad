@@ -1,4 +1,4 @@
-import { LeaveIcon } from "@sanity/icons";
+import { LeaveIcon } from "@sanity/icons/Leave";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 /** The Sustainability page — one tab per section. */

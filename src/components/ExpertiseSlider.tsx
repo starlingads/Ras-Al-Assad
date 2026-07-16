@@ -4,45 +4,33 @@ import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { register } from "swiper/element/bundle";
-import { ArrowRight, Sun, Cpu, Wind, Zap, ShieldCheck, Clipboard } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { LucideIcon } from "@/components/LucideIcon";
 
 if (typeof window !== "undefined") {
   register(); // Register Swiper custom elements
 }
 
-const cards = [
-  {
-    title: "Renewable Energy & Solar EPC",
-    image: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",
-    icon: <Sun className="w-6 h-6 text-ras-gold" />,
-    desc: "Design, engineering, installation, and commissioning of on-grid, off-grid, and hybrid solar systems for commercial, industrial, and utility-scale applications.",
-    href: "/services#solar-epc"
-  },
-  {
-    title: "Electrical Infrastructure",
-    image: "/assets/Projects/al-garhoud-grid-substation-support.jpg",
-    icon: <Zap className="w-6 h-6 text-ras-gold" />,
-    desc: "HV, MV, and LV systems, generators, transformers, cable laying, and integrated power distribution solutions executed in compliance with UAE regulatory standards.",
-    href: "/services#substations"
-  },
-  {
-    title: "Electromechanical Works",
-    image: "/assets/Projects/SOBHA HEARTLAND.jpg",
-    icon: <Cpu className="w-6 h-6 text-ras-gold" />,
-    desc: "Installation and integration of complex electromechanical systems delivered with technical precision and disciplined project management.",
-    href: "/services#mep"
-  },
-  {
-    title: "AMC & Technical Consultancy",
-    image: "/assets/Projects/operations-maintenance.jpg",
-    icon: <Clipboard className="w-6 h-6 text-ras-gold" />,
-    desc: "Preventive maintenance, breakdown services, engineering consultancy, and compliance assessments ensuring long-term operational reliability.",
-    href: "/services#om"
-  }
-];
+/**
+ * Cards come from Homepage → Expertise: the ⭐ featured services in drag
+ * order, or the manual override list when the client fills one in.
+ */
+export type ExpertiseSliderProps = {
+  chip?: string | null;
+  heading?: string | null;
+  cta: { label: string; href: string } | null;
+  cards: {
+    title: string;
+    description?: string | null;
+    icon?: string | null;
+    imageUrl?: string | null;
+    imageAlt?: string | null;
+    href: string;
+  }[];
+};
 
-export default function ExpertiseSlider() {
+export default function ExpertiseSlider({ chip, heading, cta, cards }: ExpertiseSliderProps) {
   const swiperRef = useRef<any>(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -122,27 +110,29 @@ export default function ExpertiseSlider() {
           className="max-w-2xl"
         >
           <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">
-            Specialized Expertise
+            {chip}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-ras-charcoal tracking-tightest leading-tight">
-            Core capabilities
+            {heading}
           </h2>
         </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <Link
-            href="/services"
-            className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
+
+        {cta && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span>Explore all services</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </motion.div>
+            <Link
+              href={cta.href}
+              className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
+            >
+              <span>{cta.label}</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+        )}
       </div>
 
       {/* Custom Swiper Component */}
@@ -160,13 +150,15 @@ export default function ExpertiseSlider() {
                   {/* Image Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-ras-charcoal/90 via-ras-charcoal/40 to-transparent z-10" />
                   <div className="absolute inset-0 overflow-hidden">
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    {card.imageUrl && (
+                      <Image
+                        src={card.imageUrl}
+                        alt={card.imageAlt || card.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
                   </div>
 
                   {/* Card Content */}
@@ -174,7 +166,7 @@ export default function ExpertiseSlider() {
                     {/* Top Bar with Icon */}
                     <div className="flex justify-between items-start">
                       <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
-                        {card.icon}
+                        <LucideIcon name={card.icon} className="w-6 h-6 text-ras-gold" />
                       </div>
                       <span className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <ArrowRight className="h-5 w-5 text-white" />
@@ -187,7 +179,7 @@ export default function ExpertiseSlider() {
                         {card.title}
                       </h3>
                       <p className="text-sm text-white/80 line-clamp-4 leading-relaxed tracking-normal font-normal opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-4 transition-all duration-500">
-                        {card.desc}
+                        {card.description}
                       </p>
                     </div>
                   </div>

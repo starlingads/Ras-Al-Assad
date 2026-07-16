@@ -15,6 +15,16 @@ const outfit = Outfit({
   display: "swap",
 });
 
+/**
+ * Regenerate every page in this group at most once a minute.
+ *
+ * Without this the pages are prerendered once at build time, so anything the
+ * client publishes in the Studio would not reach the live site until the next
+ * deploy. With it, a publish shows up within a minute and no webhook or
+ * redeploy is needed. Applies to every route nested under (site).
+ */
+export const revalidate = 60;
+
 /** One fetch for everything the shell needs (Navbar, Footer, metadata). */
 async function getLayoutData() {
   const { data } = await sanityFetch({ query: LAYOUT_QUERY });

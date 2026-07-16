@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import TeamClient, { type TeamPageData } from "../en/team/TeamClient";
+import TeamClient, { type TeamPageData } from "./TeamClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { TEAM_PAGE_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";

@@ -1,4 +1,4 @@
-import { StarFilledIcon } from "@sanity/icons";
+import { StarFilledIcon } from "@sanity/icons/StarFilled";
 import { defineField, defineType } from "sanity";
 
 /**

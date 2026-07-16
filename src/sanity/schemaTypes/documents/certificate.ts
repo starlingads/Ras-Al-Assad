@@ -1,5 +1,5 @@
 import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
-import { StarFilledIcon } from "@sanity/icons";
+import { StarFilledIcon } from "@sanity/icons/StarFilled";
 import { defineField, defineType } from "sanity";
 
 /**

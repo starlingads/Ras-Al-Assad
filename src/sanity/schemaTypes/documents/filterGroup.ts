@@ -1,5 +1,5 @@
 import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
-import { FilterIcon } from "@sanity/icons";
+import { FilterIcon } from "@sanity/icons/Filter";
 import { defineField, defineType } from "sanity";
 
 /**

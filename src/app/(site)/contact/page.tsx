@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import ContactClient, { type ContactPageData } from "../en/contact/ContactClient";
+import ContactClient, { type ContactPageData } from "./ContactClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { CONTACT_PAGE_QUERY } from "@/sanity/lib/queries";
 import { pageMetadata } from "@/sanity/lib/seo";

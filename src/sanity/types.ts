@@ -522,6 +522,9 @@ export type HomePage = {
   introHeading?: string;
   introHeadingAccent?: string;
   introText?: string;
+  expertiseChip?: string;
+  expertiseHeading?: string;
+  expertiseCta?: Cta;
   expertiseOverride?: Array<
     {
       _key: string;
@@ -529,7 +532,9 @@ export type HomePage = {
   >;
   logosMode?: "all" | "featured";
   logosHeading?: string;
+  featuredProjectsChip?: string;
   featuredProjectsHeading?: string;
+  featuredProjectsCta?: Cta;
   featuredProjectsOverride?: Array<
     {
       _key: string;
@@ -538,12 +543,36 @@ export type HomePage = {
   partner?: PartnerReference;
   partnerHeading?: string;
   partnerText?: string;
+  institutionsChip?: string;
   institutionsHeading?: string;
+  institutionsHeadingBold?: string;
+  sloganBanner?: {
+    chip?: string;
+    line1?: string;
+    line2?: string;
+    text?: string;
+    cta?: Cta;
+  };
+  missionBlock?: {
+    label?: string;
+    quote?: string;
+    taglineStart?: string;
+    taglineBold?: string;
+    subline?: string;
+  };
+  statsChip?: string;
+  statsHeading?: string;
+  statsHeadingBold?: string;
+  statsText?: string;
   credentials?: Array<
     {
       _key: string;
     } & Stat
   >;
+  statsQuote?: {
+    text?: string;
+    author?: string;
+  };
   pipelineHeading?: string;
   pipelineSteps?: Array<{
     title?: string;
@@ -551,8 +580,11 @@ export type HomePage = {
     _type: "pipelineStep";
     _key: string;
   }>;
+  mapChip?: string;
   mapHeading?: string;
+  mapHeadingBottom?: string;
   mapSubheading?: string;
+  mapCta?: Cta;
   pins?: Array<{
     project?: ProjectReference;
     x?: number;
@@ -560,6 +592,7 @@ export type HomePage = {
     _type: "mapPin";
     _key: string;
   }>;
+  offersChip?: string;
   offersHeading?: string;
   offers?: Array<{
     title?: string;
@@ -568,7 +601,10 @@ export type HomePage = {
     _type: "offer";
     _key: string;
   }>;
+  sustainabilityChip?: string;
   sustainabilityHeading?: string;
+  sustainabilityHeadingAccent?: string;
+  sustainabilityHeadingEnd?: string;
   sustainabilityText?: string;
   sustainabilityFeatures?: Array<{
     icon?: IconPicker;
@@ -1547,7 +1583,7 @@ export type LAYOUT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: {  "page": *[_type == "homePage"][0]{    rotatingWords,    rotatingSuffix,    headlineLine1,    headlineLine2,    subheadline,    scrollHint,    primaryCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    secondaryCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    heroMedia{      mediaType,      mainImage {  image{asset, hotspot, crop},  alt,  caption},      floatingImages[] {  image{asset, hotspot, crop},  alt,  caption},      backgroundImage {  image{asset, hotspot, crop},  alt,  caption},      "backgroundVideoUrl": backgroundVideo.asset->url    },    showExpertise, showClientLogos, showStats, showMap, showOffers,    showFeaturedProjects, showSustainability, showPartner, showInstitutions,    introChip, introHeading, introHeadingAccent, introText,    "expertise": select(      count(expertiseOverride) > 0 => expertiseOverride[]->{        title, "slug": slug.current, icon, summary, heroImage {  image{asset, hotspot, crop},  alt,  caption}      },      *[_type == "service" && visible == true && featured == true] | order(orderRank) {        title, "slug": slug.current, icon, summary, heroImage {  image{asset, hotspot, crop},  alt,  caption}      }    ),    logosMode,    logosHeading,    credentials[] {  prefix, value, suffix, label, description, icon},    pipelineHeading,    pipelineSteps[]{title, description},    mapHeading,    mapSubheading,    pins[]{x, y, project->{name, location, capacity, "categorySlug": category->slug.current}},    offersHeading,    offers[]{title, description, image {  image{asset, hotspot, crop},  alt,  caption}},    featuredProjectsHeading,    "featuredProjects": select(      count(featuredProjectsOverride) > 0 => featuredProjectsOverride[]-> {  name,  "slug": slug.current,  summary,  thumbnail {  image{asset, hotspot, crop},  alt,  caption},  coverImage {  image{asset, hotspot, crop},  alt,  caption},  location,  clientName,  capacity,  statusLabel,  "year": string::split(coalesce(completionDate, ""), "-")[0],  "categorySlug": category->slug.current,  "categoryTitle": category->title},      *[_type == "project" && featured == true && hidden != true] | order(orderRank) {  name,  "slug": slug.current,  summary,  thumbnail {  image{asset, hotspot, crop},  alt,  caption},  coverImage {  image{asset, hotspot, crop},  alt,  caption},  location,  clientName,  capacity,  statusLabel,  "year": string::split(coalesce(completionDate, ""), "-")[0],  "categorySlug": category->slug.current,  "categoryTitle": category->title}    ),    sustainabilityHeading,    sustainabilityText,    sustainabilityFeatures[]{icon, title, description},    sustainabilityCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    partner->{name, role, description, logo {  image{asset, hotspot, crop},  alt,  caption}},    partnerHeading,    partnerText,    institutionsHeading,    seo {  title,  description,  ogImage{asset},  keywords,  canonicalUrl,  noIndex}  },  "clientLogos": *[_type == "clientLogo" && visible == true] | order(orderRank) {    name, logo{asset}, website, featured  },  "institutions": *[_type == "partner" && type == "authority"] | order(orderRank) {    name, role, description, logo {  image{asset, hotspot, crop},  alt,  caption}  }}
+// Query: {  "page": *[_type == "homePage"][0]{    rotatingWords,    rotatingSuffix,    headlineLine1,    headlineLine2,    subheadline,    scrollHint,    primaryCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    secondaryCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    heroMedia{      mediaType,      mainImage {  image{asset, hotspot, crop},  alt,  caption},      floatingImages[] {  image{asset, hotspot, crop},  alt,  caption},      backgroundImage {  image{asset, hotspot, crop},  alt,  caption},      "backgroundVideoUrl": backgroundVideo.asset->url    },    showExpertise, showClientLogos, showStats, showMap, showOffers,    showFeaturedProjects, showSustainability, showPartner, showInstitutions,    introChip, introHeading, introHeadingAccent, introText,    expertiseChip,    expertiseHeading,    expertiseCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    "expertise": select(      count(expertiseOverride) > 0 => expertiseOverride[]->{        title, "slug": slug.current, icon, summary, heroImage {  image{asset, hotspot, crop},  alt,  caption}      },      *[_type == "service" && visible == true && featured == true] | order(orderRank) {        title, "slug": slug.current, icon, summary, heroImage {  image{asset, hotspot, crop},  alt,  caption}      }    ),    logosMode,    logosHeading,    statsChip,    statsHeading,    statsHeadingBold,    statsText,    credentials[] {  prefix, value, suffix, label, description, icon},    statsQuote{text, author},    pipelineHeading,    pipelineSteps[]{title, description},    mapChip,    mapHeading,    mapHeadingBottom,    mapSubheading,    mapCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    pins[]{      x,      y,      project->{        name,        location,        capacity,        "categorySlug": category->slug.current,        "categoryTitle": category->title,        "categoryIcon": category->icon      }    },    offersChip,    offersHeading,    offers[]{title, description, image {  image{asset, hotspot, crop},  alt,  caption}},    featuredProjectsChip,    featuredProjectsHeading,    featuredProjectsCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    "featuredProjects": select(      count(featuredProjectsOverride) > 0 => featuredProjectsOverride[]-> {  name,  "slug": slug.current,  summary,  thumbnail {  image{asset, hotspot, crop},  alt,  caption},  coverImage {  image{asset, hotspot, crop},  alt,  caption},  location,  clientName,  capacity,  statusLabel,  "year": string::split(coalesce(completionDate, ""), "-")[0],  "categorySlug": category->slug.current,  "categoryTitle": category->title,  "categoryIcon": category->icon},      *[_type == "project" && featured == true && hidden != true] | order(orderRank) {  name,  "slug": slug.current,  summary,  thumbnail {  image{asset, hotspot, crop},  alt,  caption},  coverImage {  image{asset, hotspot, crop},  alt,  caption},  location,  clientName,  capacity,  statusLabel,  "year": string::split(coalesce(completionDate, ""), "-")[0],  "categorySlug": category->slug.current,  "categoryTitle": category->title,  "categoryIcon": category->icon}    ),    sustainabilityChip,    sustainabilityHeading,    sustainabilityHeadingAccent,    sustainabilityHeadingEnd,    sustainabilityText,    sustainabilityFeatures[]{icon, title, description},    sustainabilityCta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}},    partner->{name, role, description, logo {  image{asset, hotspot, crop},  alt,  caption}},    partnerHeading,    partnerText,    institutionsChip,    institutionsHeading,    institutionsHeadingBold,    sloganBanner{chip, line1, line2, text, cta {  mode,  label,  link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}},  savedButton->{label, link {  linkType,  page,  anchor,  url,  email,  phone,  service->{title, "slug": slug.current},  project->{name, "slug": slug.current}}}}},    missionBlock{label, quote, taglineStart, taglineBold, subline},    seo {  title,  description,  ogImage{asset},  keywords,  canonicalUrl,  noIndex}  },  "clientLogos": *[_type == "clientLogo" && visible == true] | order(orderRank) {    name, logo{asset}, website, featured  },  "institutions": *[_type == "partner" && type == "authority"] | order(orderRank) {    name, role, description, logo {  image{asset, hotspot, crop},  alt,  caption}  }}
 export type HOME_PAGE_QUERY_RESULT = {
   page: {
     rotatingWords: Array<string> | null;
@@ -1746,6 +1782,81 @@ export type HOME_PAGE_QUERY_RESULT = {
     introHeading: string | null;
     introHeadingAccent: string | null;
     introText: string | null;
+    expertiseChip: string | null;
+    expertiseHeading: string | null;
+    expertiseCta: {
+      mode: "custom" | "saved" | null;
+      label: string | null;
+      link: {
+        linkType:
+          | "email"
+          | "external"
+          | "page"
+          | "phone"
+          | "project"
+          | "service"
+          | null;
+        page:
+          | "/"
+          | "/about"
+          | "/appreciation"
+          | "/contact"
+          | "/projects"
+          | "/services"
+          | "/solar-calculator"
+          | "/sustainability"
+          | "/team"
+          | null;
+        anchor: string | null;
+        url: string | null;
+        email: string | null;
+        phone: string | null;
+        service: {
+          title: string | null;
+          slug: string | null;
+        } | null;
+        project: {
+          name: string | null;
+          slug: string | null;
+        } | null;
+      } | null;
+      savedButton: {
+        label: string | null;
+        link: {
+          linkType:
+            | "email"
+            | "external"
+            | "page"
+            | "phone"
+            | "project"
+            | "service"
+            | null;
+          page:
+            | "/"
+            | "/about"
+            | "/appreciation"
+            | "/contact"
+            | "/projects"
+            | "/services"
+            | "/solar-calculator"
+            | "/sustainability"
+            | "/team"
+            | null;
+          anchor: string | null;
+          url: string | null;
+          email: string | null;
+          phone: string | null;
+          service: {
+            title: string | null;
+            slug: string | null;
+          } | null;
+          project: {
+            name: string | null;
+            slug: string | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
     expertise: Array<{
       title: string | null;
       slug: string | null;
@@ -1763,6 +1874,10 @@ export type HOME_PAGE_QUERY_RESULT = {
     }> | null;
     logosMode: "all" | "featured" | null;
     logosHeading: string | null;
+    statsChip: string | null;
+    statsHeading: string | null;
+    statsHeadingBold: string | null;
+    statsText: string | null;
     credentials: Array<{
       prefix: string | null;
       value: string | null;
@@ -1771,13 +1886,92 @@ export type HOME_PAGE_QUERY_RESULT = {
       description: string | null;
       icon: IconPicker | null;
     }> | null;
+    statsQuote: {
+      text: string | null;
+      author: string | null;
+    } | null;
     pipelineHeading: string | null;
     pipelineSteps: Array<{
       title: string | null;
       description: string | null;
     }> | null;
+    mapChip: string | null;
     mapHeading: string | null;
+    mapHeadingBottom: string | null;
     mapSubheading: string | null;
+    mapCta: {
+      mode: "custom" | "saved" | null;
+      label: string | null;
+      link: {
+        linkType:
+          | "email"
+          | "external"
+          | "page"
+          | "phone"
+          | "project"
+          | "service"
+          | null;
+        page:
+          | "/"
+          | "/about"
+          | "/appreciation"
+          | "/contact"
+          | "/projects"
+          | "/services"
+          | "/solar-calculator"
+          | "/sustainability"
+          | "/team"
+          | null;
+        anchor: string | null;
+        url: string | null;
+        email: string | null;
+        phone: string | null;
+        service: {
+          title: string | null;
+          slug: string | null;
+        } | null;
+        project: {
+          name: string | null;
+          slug: string | null;
+        } | null;
+      } | null;
+      savedButton: {
+        label: string | null;
+        link: {
+          linkType:
+            | "email"
+            | "external"
+            | "page"
+            | "phone"
+            | "project"
+            | "service"
+            | null;
+          page:
+            | "/"
+            | "/about"
+            | "/appreciation"
+            | "/contact"
+            | "/projects"
+            | "/services"
+            | "/solar-calculator"
+            | "/sustainability"
+            | "/team"
+            | null;
+          anchor: string | null;
+          url: string | null;
+          email: string | null;
+          phone: string | null;
+          service: {
+            title: string | null;
+            slug: string | null;
+          } | null;
+          project: {
+            name: string | null;
+            slug: string | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
     pins: Array<{
       x: number | null;
       y: number | null;
@@ -1786,8 +1980,11 @@ export type HOME_PAGE_QUERY_RESULT = {
         location: string | null;
         capacity: string | null;
         categorySlug: string | null;
+        categoryTitle: string | null;
+        categoryIcon: IconPicker | null;
       } | null;
     }> | null;
+    offersChip: string | null;
     offersHeading: string | null;
     offers: Array<{
       title: string | null;
@@ -1802,7 +1999,81 @@ export type HOME_PAGE_QUERY_RESULT = {
         caption: string | null;
       } | null;
     }> | null;
+    featuredProjectsChip: string | null;
     featuredProjectsHeading: string | null;
+    featuredProjectsCta: {
+      mode: "custom" | "saved" | null;
+      label: string | null;
+      link: {
+        linkType:
+          | "email"
+          | "external"
+          | "page"
+          | "phone"
+          | "project"
+          | "service"
+          | null;
+        page:
+          | "/"
+          | "/about"
+          | "/appreciation"
+          | "/contact"
+          | "/projects"
+          | "/services"
+          | "/solar-calculator"
+          | "/sustainability"
+          | "/team"
+          | null;
+        anchor: string | null;
+        url: string | null;
+        email: string | null;
+        phone: string | null;
+        service: {
+          title: string | null;
+          slug: string | null;
+        } | null;
+        project: {
+          name: string | null;
+          slug: string | null;
+        } | null;
+      } | null;
+      savedButton: {
+        label: string | null;
+        link: {
+          linkType:
+            | "email"
+            | "external"
+            | "page"
+            | "phone"
+            | "project"
+            | "service"
+            | null;
+          page:
+            | "/"
+            | "/about"
+            | "/appreciation"
+            | "/contact"
+            | "/projects"
+            | "/services"
+            | "/solar-calculator"
+            | "/sustainability"
+            | "/team"
+            | null;
+          anchor: string | null;
+          url: string | null;
+          email: string | null;
+          phone: string | null;
+          service: {
+            title: string | null;
+            slug: string | null;
+          } | null;
+          project: {
+            name: string | null;
+            slug: string | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
     featuredProjects: Array<{
       name: string | null;
       slug: string | null;
@@ -1832,8 +2103,12 @@ export type HOME_PAGE_QUERY_RESULT = {
       year: string | null;
       categorySlug: string | null;
       categoryTitle: string | null;
+      categoryIcon: IconPicker | null;
     }> | null;
+    sustainabilityChip: string | null;
     sustainabilityHeading: string | null;
+    sustainabilityHeadingAccent: string | null;
+    sustainabilityHeadingEnd: string | null;
     sustainabilityText: string | null;
     sustainabilityFeatures: Array<{
       icon: IconPicker | null;
@@ -1929,7 +2204,95 @@ export type HOME_PAGE_QUERY_RESULT = {
     } | null;
     partnerHeading: string | null;
     partnerText: string | null;
+    institutionsChip: string | null;
     institutionsHeading: string | null;
+    institutionsHeadingBold: string | null;
+    sloganBanner: {
+      chip: string | null;
+      line1: string | null;
+      line2: string | null;
+      text: string | null;
+      cta: {
+        mode: "custom" | "saved" | null;
+        label: string | null;
+        link: {
+          linkType:
+            | "email"
+            | "external"
+            | "page"
+            | "phone"
+            | "project"
+            | "service"
+            | null;
+          page:
+            | "/"
+            | "/about"
+            | "/appreciation"
+            | "/contact"
+            | "/projects"
+            | "/services"
+            | "/solar-calculator"
+            | "/sustainability"
+            | "/team"
+            | null;
+          anchor: string | null;
+          url: string | null;
+          email: string | null;
+          phone: string | null;
+          service: {
+            title: string | null;
+            slug: string | null;
+          } | null;
+          project: {
+            name: string | null;
+            slug: string | null;
+          } | null;
+        } | null;
+        savedButton: {
+          label: string | null;
+          link: {
+            linkType:
+              | "email"
+              | "external"
+              | "page"
+              | "phone"
+              | "project"
+              | "service"
+              | null;
+            page:
+              | "/"
+              | "/about"
+              | "/appreciation"
+              | "/contact"
+              | "/projects"
+              | "/services"
+              | "/solar-calculator"
+              | "/sustainability"
+              | "/team"
+              | null;
+            anchor: string | null;
+            url: string | null;
+            email: string | null;
+            phone: string | null;
+            service: {
+              title: string | null;
+              slug: string | null;
+            } | null;
+            project: {
+              name: string | null;
+              slug: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+    missionBlock: {
+      label: string | null;
+      quote: string | null;
+      taglineStart: string | null;
+      taglineBold: string | null;
+      subline: string | null;
+    } | null;
     seo: {
       title: string | null;
       description: string | null;
@@ -3627,12 +3990,48 @@ export type SITEMAP_QUERY_RESULT = {
   siteUrl: string | null;
 };
 
+// Source: src/sanity/lib/queries.ts
+// Variable: ORGANIZATION_QUERY
+// Query: *[_type == "siteSettings"][0]{  siteName,  siteUrl,  logo{asset},  defaultSeo{description},  address,  phones[]{label, number},  emails[]{label, email},  officeHours[]{days, hours},  socialLinks[]{url}}
+export type ORGANIZATION_QUERY_RESULT = {
+  siteName: string | null;
+  siteUrl: string | null;
+  logo: {
+    asset: SanityImageAssetReference | null;
+  } | null;
+  defaultSeo: {
+    description: string | null;
+  } | null;
+  address: {
+    line1?: string;
+    line2?: string;
+    poBox?: string;
+    city?: string;
+    mapsUrl?: string;
+  } | null;
+  phones: Array<{
+    label: string | null;
+    number: string | null;
+  }> | null;
+  emails: Array<{
+    label: string | null;
+    email: string | null;
+  }> | null;
+  officeHours: Array<{
+    days: string | null;
+    hours: string | null;
+  }> | null;
+  socialLinks: Array<{
+    url: string | null;
+  }> | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '{\n  "settings": *[_type == "siteSettings"][0]{\n    siteName,\n    logo{asset},\n    footerLogo{asset},\n    favicon{asset},\n    defaultHeroOverlay,\n    mainMenu[] {\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  enabled,\n  dropdown\n},\n    headerCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    footerBanner{chip, heading, headingAccent, headingEnd, cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}},\n    footerDescription,\n    capabilityHeading,\n    companyMenu[] {\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  enabled,\n  dropdown\n},\n    showAccreditations,\n    copyrightText,\n    footerTagline,\n    address,\n    phones[]{label, number},\n    emails[]{label, email},\n    officeHours[]{days, hours},\n    socialLinks[]{platform, url},\n    siteUrl,\n    titleTemplate,\n    defaultSeo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n},\n    ga4Id, gtmId, metaPixelId\n  },\n  "services": *[_type == "service" && visible == true] | order(orderRank) {\n    title, "slug": slug.current, icon\n  },\n  "accreditations": *[_type == "accreditation"] | order(orderRank) {\n    name, shortLabel, description, icon, licenseNumber\n  }\n}': LAYOUT_QUERY_RESULT;
-    '{\n  "page": *[_type == "homePage"][0]{\n    rotatingWords,\n    rotatingSuffix,\n    headlineLine1,\n    headlineLine2,\n    subheadline,\n    scrollHint,\n    primaryCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    secondaryCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    heroMedia{\n      mediaType,\n      mainImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n      floatingImages[] {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n      backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n      "backgroundVideoUrl": backgroundVideo.asset->url\n    },\n    showExpertise, showClientLogos, showStats, showMap, showOffers,\n    showFeaturedProjects, showSustainability, showPartner, showInstitutions,\n    introChip, introHeading, introHeadingAccent, introText,\n    "expertise": select(\n      count(expertiseOverride) > 0 => expertiseOverride[]->{\n        title, "slug": slug.current, icon, summary, heroImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}\n      },\n      *[_type == "service" && visible == true && featured == true] | order(orderRank) {\n        title, "slug": slug.current, icon, summary, heroImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}\n      }\n    ),\n    logosMode,\n    logosHeading,\n    credentials[] {\n  prefix, value, suffix, label, description, icon\n},\n    pipelineHeading,\n    pipelineSteps[]{title, description},\n    mapHeading,\n    mapSubheading,\n    pins[]{x, y, project->{name, location, capacity, "categorySlug": category->slug.current}},\n    offersHeading,\n    offers[]{title, description, image {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}},\n    featuredProjectsHeading,\n    "featuredProjects": select(\n      count(featuredProjectsOverride) > 0 => featuredProjectsOverride[]-> {\n  name,\n  "slug": slug.current,\n  summary,\n  thumbnail {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  coverImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  location,\n  clientName,\n  capacity,\n  statusLabel,\n  "year": string::split(coalesce(completionDate, ""), "-")[0],\n  "categorySlug": category->slug.current,\n  "categoryTitle": category->title\n},\n      *[_type == "project" && featured == true && hidden != true] | order(orderRank) {\n  name,\n  "slug": slug.current,\n  summary,\n  thumbnail {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  coverImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  location,\n  clientName,\n  capacity,\n  statusLabel,\n  "year": string::split(coalesce(completionDate, ""), "-")[0],\n  "categorySlug": category->slug.current,\n  "categoryTitle": category->title\n}\n    ),\n    sustainabilityHeading,\n    sustainabilityText,\n    sustainabilityFeatures[]{icon, title, description},\n    sustainabilityCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    partner->{name, role, description, logo {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}},\n    partnerHeading,\n    partnerText,\n    institutionsHeading,\n    seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n  },\n  "clientLogos": *[_type == "clientLogo" && visible == true] | order(orderRank) {\n    name, logo{asset}, website, featured\n  },\n  "institutions": *[_type == "partner" && type == "authority"] | order(orderRank) {\n    name, role, description, logo {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}\n  }\n}': HOME_PAGE_QUERY_RESULT;
+    '{\n  "page": *[_type == "homePage"][0]{\n    rotatingWords,\n    rotatingSuffix,\n    headlineLine1,\n    headlineLine2,\n    subheadline,\n    scrollHint,\n    primaryCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    secondaryCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    heroMedia{\n      mediaType,\n      mainImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n      floatingImages[] {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n      backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n      "backgroundVideoUrl": backgroundVideo.asset->url\n    },\n    showExpertise, showClientLogos, showStats, showMap, showOffers,\n    showFeaturedProjects, showSustainability, showPartner, showInstitutions,\n    introChip, introHeading, introHeadingAccent, introText,\n    expertiseChip,\n    expertiseHeading,\n    expertiseCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    "expertise": select(\n      count(expertiseOverride) > 0 => expertiseOverride[]->{\n        title, "slug": slug.current, icon, summary, heroImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}\n      },\n      *[_type == "service" && visible == true && featured == true] | order(orderRank) {\n        title, "slug": slug.current, icon, summary, heroImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}\n      }\n    ),\n    logosMode,\n    logosHeading,\n    statsChip,\n    statsHeading,\n    statsHeadingBold,\n    statsText,\n    credentials[] {\n  prefix, value, suffix, label, description, icon\n},\n    statsQuote{text, author},\n    pipelineHeading,\n    pipelineSteps[]{title, description},\n    mapChip,\n    mapHeading,\n    mapHeadingBottom,\n    mapSubheading,\n    mapCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    pins[]{\n      x,\n      y,\n      project->{\n        name,\n        location,\n        capacity,\n        "categorySlug": category->slug.current,\n        "categoryTitle": category->title,\n        "categoryIcon": category->icon\n      }\n    },\n    offersChip,\n    offersHeading,\n    offers[]{title, description, image {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}},\n    featuredProjectsChip,\n    featuredProjectsHeading,\n    featuredProjectsCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    "featuredProjects": select(\n      count(featuredProjectsOverride) > 0 => featuredProjectsOverride[]-> {\n  name,\n  "slug": slug.current,\n  summary,\n  thumbnail {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  coverImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  location,\n  clientName,\n  capacity,\n  statusLabel,\n  "year": string::split(coalesce(completionDate, ""), "-")[0],\n  "categorySlug": category->slug.current,\n  "categoryTitle": category->title,\n  "categoryIcon": category->icon\n},\n      *[_type == "project" && featured == true && hidden != true] | order(orderRank) {\n  name,\n  "slug": slug.current,\n  summary,\n  thumbnail {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  coverImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  location,\n  clientName,\n  capacity,\n  statusLabel,\n  "year": string::split(coalesce(completionDate, ""), "-")[0],\n  "categorySlug": category->slug.current,\n  "categoryTitle": category->title,\n  "categoryIcon": category->icon\n}\n    ),\n    sustainabilityChip,\n    sustainabilityHeading,\n    sustainabilityHeadingAccent,\n    sustainabilityHeadingEnd,\n    sustainabilityText,\n    sustainabilityFeatures[]{icon, title, description},\n    sustainabilityCta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n},\n    partner->{name, role, description, logo {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}},\n    partnerHeading,\n    partnerText,\n    institutionsChip,\n    institutionsHeading,\n    institutionsHeadingBold,\n    sloganBanner{chip, line1, line2, text, cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}},\n    missionBlock{label, quote, taglineStart, taglineBold, subline},\n    seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n  },\n  "clientLogos": *[_type == "clientLogo" && visible == true] | order(orderRank) {\n    name, logo{asset}, website, featured\n  },\n  "institutions": *[_type == "partner" && type == "authority"] | order(orderRank) {\n    name, role, description, logo {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}\n  }\n}': HOME_PAGE_QUERY_RESULT;
     '*[_type == "aboutPage"][0]{\n  hero {\n  chip,\n  title,\n  titleAccent,\n  titleEnd,\n  subtitle,\n  backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  overlay,\n  cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n},\n  missionVisionSection{chip, heading},\n  mission,\n  vision,\n  storyChip,\n  storyHeading,\n  storyBody,\n  storyBadges[]{icon, title, description},\n  principlesChip,\n  principlesHeading,\n  principles[]{icon, title, description},\n  partnerChip,\n  partnerHeading,\n  partnerText,\n  partner->{name, logo {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n}},\n  accreditationStrip[]{title, subtitle},\n  seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n}': ABOUT_PAGE_QUERY_RESULT;
     '{\n  "page": *[_type == "servicesPage"][0]{\n    hero {\n  chip,\n  title,\n  titleAccent,\n  titleEnd,\n  subtitle,\n  backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  overlay,\n  cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n},\n    zeroCapital{\n      chip,\n      heading,\n      text,\n      benefits[]{icon, title, description},\n      cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n    },\n    seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n  },\n  "services": *[_type == "service" && visible == true] | order(orderRank) {\n    title,\n    "slug": slug.current,\n    icon,\n    subtitle,\n    tagline,\n    summary,\n    description,\n    highlights,\n    heroImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n    gallery[] {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n    cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n  }\n}': SERVICES_PAGE_QUERY_RESULT;
     '{\n  "page": *[_type == "projectsPage"][0]{\n    hero {\n  chip,\n  title,\n  titleAccent,\n  titleEnd,\n  subtitle,\n  backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  overlay,\n  cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n},\n    emptyStateText,\n    seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n  },\n  "projects": *[_type == "project" && hidden != true] | order(orderRank) {\n    name,\n    "slug": slug.current,\n    summary,\n    thumbnail {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n    coverImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n    gallery[] {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n    highlights,\n    location,\n    clientName,\n    capacity,\n    statusLabel,\n    "year": string::split(coalesce(completionDate, ""), "-")[0],\n    "categorySlug": category->slug.current,\n    "categoryTitle": category->title,\n    "filterSlugs": filters[]->slug.current,\n    featured\n  },\n  "categories": *[_type == "category"] | order(orderRank) {\n    title, "slug": slug.current, icon\n  },\n  "filterGroups": *[_type == "filterGroup"] | order(orderRank) {\n    title,\n    "slug": slug.current,\n    allLabel,\n    "appliesTo": appliesTo[]->slug.current,\n    "filters": *[_type == "projectFilter" && group._ref == ^._id] | order(orderRank) {\n      title, "slug": slug.current\n    }\n  }\n}': PROJECTS_PAGE_QUERY_RESULT;
@@ -3642,5 +4041,6 @@ declare module "@sanity/client" {
     '{\n  "page": *[_type == "contactPage"][0]{\n    hero {\n  chip,\n  title,\n  titleAccent,\n  titleEnd,\n  subtitle,\n  backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  overlay,\n  cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n},\n    departments[]{name, email, phone, note},\n    legalLines,\n    formHeading,\n    formServiceOptions,\n    formSuccessHeading,\n    formSuccessText,\n    formSuccessNote,\n    mapEmbed{embedUrl, lat, lng},\n    seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n  },\n  "settings": *[_type == "siteSettings"][0]{\n    address,\n    phones[]{label, number},\n    emails[]{label, email},\n    officeHours[]{days, hours}\n  },\n  "accreditations": *[_type == "accreditation"] | order(orderRank) {\n    name, shortLabel, licenseNumber\n  }\n}': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "solarCalculatorPage"][0]{\n  hero {\n  chip,\n  title,\n  titleAccent,\n  titleEnd,\n  subtitle,\n  backgroundImage {\n  image{asset, hotspot, crop},\n  alt,\n  caption\n},\n  overlay,\n  cta {\n  mode,\n  label,\n  link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n},\n  savedButton->{label, link {\n  linkType,\n  page,\n  anchor,\n  url,\n  email,\n  phone,\n  service->{title, "slug": slug.current},\n  project->{name, "slug": slug.current}\n}}\n}\n},\n  assumptions,\n  leadGateEnabled,\n  disclaimer,\n  seo {\n  title,\n  description,\n  ogImage{asset},\n  keywords,\n  canonicalUrl,\n  noIndex\n}\n}': SOLAR_CALCULATOR_PAGE_QUERY_RESULT;
     '{\n  "pages": *[_type in ["homePage","aboutPage","servicesPage","projectsPage","sustainabilityPage","appreciationPage","teamPage","contactPage","solarCalculatorPage"] && seo.noIndex != true]{\n    _type, _updatedAt\n  },\n  "siteUrl": *[_type == "siteSettings"][0].siteUrl\n}': SITEMAP_QUERY_RESULT;
+    '*[_type == "siteSettings"][0]{\n  siteName,\n  siteUrl,\n  logo{asset},\n  defaultSeo{description},\n  address,\n  phones[]{label, number},\n  emails[]{label, email},\n  officeHours[]{days, hours},\n  socialLinks[]{url}\n}': ORGANIZATION_QUERY_RESULT;
   }
 }

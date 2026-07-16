@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import AppreciationClient, {
   type AppreciationPageData,
-} from "../en/appreciation/AppreciationClient";
+} from "./AppreciationClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { APPRECIATION_PAGE_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";

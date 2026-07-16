@@ -113,7 +113,8 @@ const PROJECT_CARD = /* groq */ `{
   statusLabel,
   "year": string::split(coalesce(completionDate, ""), "-")[0],
   "categorySlug": category->slug.current,
-  "categoryTitle": category->title
+  "categoryTitle": category->title,
+  "categoryIcon": category->icon
 }`;
 
 export const HOME_PAGE_QUERY = defineQuery(`{
@@ -136,6 +137,9 @@ export const HOME_PAGE_QUERY = defineQuery(`{
     showExpertise, showClientLogos, showStats, showMap, showOffers,
     showFeaturedProjects, showSustainability, showPartner, showInstitutions,
     introChip, introHeading, introHeadingAccent, introText,
+    expertiseChip,
+    expertiseHeading,
+    expertiseCta ${CTA},
     "expertise": select(
       count(expertiseOverride) > 0 => expertiseOverride[]->{
         title, "slug": slug.current, icon, summary, heroImage ${FIGURE}
@@ -146,15 +150,37 @@ export const HOME_PAGE_QUERY = defineQuery(`{
     ),
     logosMode,
     logosHeading,
+    statsChip,
+    statsHeading,
+    statsHeadingBold,
+    statsText,
     credentials[] ${STAT},
+    statsQuote{text, author},
     pipelineHeading,
     pipelineSteps[]{title, description},
+    mapChip,
     mapHeading,
+    mapHeadingBottom,
     mapSubheading,
-    pins[]{x, y, project->{name, location, capacity, "categorySlug": category->slug.current}},
+    mapCta ${CTA},
+    pins[]{
+      x,
+      y,
+      project->{
+        name,
+        location,
+        capacity,
+        "categorySlug": category->slug.current,
+        "categoryTitle": category->title,
+        "categoryIcon": category->icon
+      }
+    },
+    offersChip,
     offersHeading,
     offers[]{title, description, image ${FIGURE}},
+    featuredProjectsChip,
     featuredProjectsHeading,
+    featuredProjectsCta ${CTA},
     "featuredProjects": select(
       count(featuredProjectsOverride) > 0 => featuredProjectsOverride[]-> ${PROJECT_CARD},
       *[_type == "project" && featured == true && hidden != true] | order(orderRank) ${PROJECT_CARD}
@@ -359,4 +385,17 @@ export const SITEMAP_QUERY = defineQuery(`{
     _type, _updatedAt
   },
   "siteUrl": *[_type == "siteSettings"][0].siteUrl
+}`);
+
+/** Organization / LocalBusiness JSON-LD source (homepage). */
+export const ORGANIZATION_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
+  siteName,
+  siteUrl,
+  logo{asset},
+  defaultSeo{description},
+  address,
+  phones[]{label, number},
+  emails[]{label, email},
+  officeHours[]{days, hours},
+  socialLinks[]{url}
 }`);

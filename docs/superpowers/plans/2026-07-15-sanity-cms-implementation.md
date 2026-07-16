@@ -731,29 +731,35 @@ Working software at the end of every phase; site remains deployable throughout (
 - [x] Verify: typecheck ✓, lint ✓ (0 errors), build ✓ (21/21 routes), SSR output diffed against live production ✓ (13/13 identical), `/studio` isolation ✓
 - [ ] **HUMAN STEP:** create the Sanity project under the StarlingAds account (`npx sanity login && npx sanity init --project-name "Ras Al Assad" --dataset production`), then set `NEXT_PUBLIC_SANITY_PROJECT_ID` in `.env.local` **and on Vercel**. Requires interactive OAuth. Until then `/studio` cannot boot against a real project.
 
-### Phase 1 — Schema foundation (1–1.5 days)
-- [ ] Shared objects: `seo`, `figure`, `link`, `cta` (saved/custom modes), `pageHero`, `navItem`, `stat`, `iconPicker` (with unit-testable link-resolver util + tests)
-- [ ] Taxonomies: `category`, `filterGroup`, `projectFilter`
-- [ ] Collections: `project`, `service`, `teamMember`, `certificate`, `accreditation`, `partner`, `clientLogo`, `ctaButton` (previews, badges, validations per §12.1)
-- [ ] Singletons: all 10, with field groups
-- [ ] Structure: full desk tree per Part 5, singleton guards, media plugin, branding
-- [ ] `npm run typegen` green; schema review against this doc
+### Phase 1 — Schema foundation (1–1.5 days) — **COMPLETE**
+- [x] Shared objects: `seo`, `figure`, `link`, `cta` (saved/custom modes), `pageHero`, `navItem`, `stat`, `iconPicker`
+- [x] Taxonomies: `category`, `filterGroup`, `projectFilter`
+- [x] Collections: `project`, `service`, `teamMember`, `certificate`, `accreditation`, `partner`, `clientLogo`, `ctaButton` (previews, badges, validations per §12.1)
+- [x] Singletons: all 10, with field groups
+- [x] Structure: full desk tree per Part 5, singleton guards, media plugin, colorInput, Vision admin-gated
+- [x] `npm run typegen` green — 12 queries + 54 schema types
 
-### Phase 2 — Seed content (1 day)
-- [ ] Extract hardcoded data → `seed-data.ts` (typed)
-- [ ] Asset upload script (auto-tags media by source folder per §6.8) + document seed script (idempotent, incl. media tags + the 4 seeded `ctaButton`s) — run against `production`
-- [ ] Manual QA in Studio: counts, thumbnails, references, orderings; fix data-quality items from §1.2.6
+> **`@sanity/icons` v5 gotcha (cost a build):** v5 **removed every named icon from the root entry** — they are now per-icon subpaths (`import {StarIcon} from '@sanity/icons/Star'`). The root only exports `{Icon, icons}`. The old names still exist in `index.d.ts` typed as `never` with a deprecation note, so **`tsc` passes and the build then fails** with "Export X doesn't exist in target module". Always import icons from their subpath.
 
-### Phase 3 — Frontend integration, page by page (3–4 days)
+### Phase 2 — Seed content (1 day) — **COMPLETE**
+- [x] `scripts/seed/extract.mjs` lifts every hardcoded array out of the components (balanced-bracket slice + VM eval) → `.extracted.json`
+- [x] `scripts/seed/collections.mjs` — assets uploaded (cached + auto-tagged by source folder per §6.8) and all collections created. **Verified counts: 42 projects · 6 services · 3 categories · 2 filter groups · 9 filters · 4 team · 3 certificates · 5 accreditations · 7 partners · 23 client logos · 4 buttons · 0 broken references.**
+- [x] `scripts/seed/singletons.mjs` — all 10 page singletons incl. the homepage's 10 sections
+- Run with `npx sanity exec scripts/seed/<script>.mjs --with-user-token` (uses the CLI login; no token files, nothing committed)
+
+### Phase 3 — Frontend integration, page by page (3–4 days) — **COMPLETE**
 Order (risk-ascending): Team → Appreciation → Contact → About → Sustainability → Services (+ nav dropdown) → Site Settings into `layout/Navbar/Footer` → Homepage (10 sections) → **Projects** (filter refactor) → Solar Calculator
-- [ ] Per page: `defineQuery` → server `page.tsx` with `sanityFetch` + `generateMetadata` → props into existing client component → visual diff vs production → commit
-- [ ] Delete dead hardcoded arrays as each page lands
+- [x] Per page: `defineQuery` → server `page.tsx` with `sanityFetch` + `generateMetadata` → props into the existing client component (markup + animations untouched)
+- [x] Every hardcoded array deleted — no business content remains in the components
+- [x] Projects filtering rebuilt data-driven: filter rows render from Filter Groups (`appliesTo` decides which category tab shows each row); the hardcoded brand/sector arrays are gone
+- [x] Solar calculator assumptions (tariff, yield, cost/kWp, savings rate, CO₂, panel size) read from the CMS with the old constants as fallbacks
 
-### Phase 4 — SEO & platform hardening (1 day)
-- [ ] `sitemap.ts`, `robots.ts`, JSON-LD (Organization/LocalBusiness), canonical logic
-- [ ] `redirects()`: `/en/:path*` → `/:path*` (301)
-- [ ] `next/image` re-enabled with `cdn.sanity.io` remote pattern; remove `unoptimized: true`; Lighthouse pass
-- [ ] Retire `/public/assets` images superseded by CDN (keep fonts)
+### Phase 4 — SEO & platform hardening (1 day) — **COMPLETE**
+- [x] `app/sitemap.ts` (GROQ over page singletons, respects "Hide from search engines", `_updatedAt` → lastmod), `app/robots.ts` (disallows `/studio` + `/login`, points at the sitemap), `OrganizationJsonLd` (Organization + LocalBusiness built from Site Settings → Contact Details, incl. parsed opening hours)
+- [x] Per-page `generateMetadata` merging item SEO → site defaults, `stega: false`, self-referencing canonicals
+- [x] `redirects()`: `/en` → `/` and `/en/:path*` → `/:path*` (301). **The `(site)/en` route tree is deleted** — a matching route would have shadowed the redirect.
+- [x] `next/image` optimization re-enabled with the `cdn.sanity.io` remote pattern; `unoptimized: true` and the unsplash/virya hotlink patterns removed
+- [ ] Retire the now-unused `/public/assets` images (fonts stay) — deferred; harmless but ~13 MB of dead weight in the repo
 
 ### Phase 5 — Preview, polish & handover (1 day)
 - [ ] Presentation tool + draft mode route + document→URL resolver (click-to-edit preview)

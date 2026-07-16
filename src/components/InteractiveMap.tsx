@@ -3,34 +3,56 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Sun, Cpu, Wind, Zap } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { LucideIcon } from "@/components/LucideIcon";
 
-type Project = {
+/**
+ * Pins come from Homepage → Map: each pin is a project reference plus its
+ * x/y position on the UAE artwork. Filter chips are derived from the
+ * categories of the pinned projects, so adding a category needs no code.
+ */
+type Pin = {
   name: string;
-  type: "solar" | "mep" | "hvac" | "substation";
-  location: string;
-  capacity: string;
+  categorySlug?: string | null;
+  categoryTitle?: string | null;
+  categoryIcon?: string | null;
+  location?: string | null;
+  capacity?: string | null;
   x: string; // Left percentage
   y: string; // Top percentage
 };
 
-const projects: Project[] = [
-  { name: "Sobha Hartland Residential Solar", type: "solar", location: "Sobha Hartland, Dubai", capacity: "2.4 MWp", x: "73%", y: "36%" },
-  { name: "Expo 2020 Singapore Pavilion", type: "mep", location: "Dubai South", capacity: "Turnkey MEP", x: "70%", y: "41%" },
-  { name: "ADNOC Operations Complex", type: "solar", location: "Ruwais, Abu Dhabi", capacity: "8.5 MWp", x: "26%", y: "67%" },
-  { name: "HSBC Headquarters Tower", type: "hvac", location: "Downtown Dubai", capacity: "850 TR Cooling", x: "74%", y: "33%" },
-  { name: "Al Garhoud Grid Substation", type: "substation", location: "Garhoud, Dubai", capacity: "33/11 kV", x: "76%", y: "30%" },
-  { name: "Sharjah Sustainable City Solar", type: "solar", location: "Sharjah", capacity: "4.2 MWp", x: "78%", y: "25%" },
-];
+export type InteractiveMapProps = {
+  chip?: string | null;
+  headingTop?: string | null;
+  headingBottom?: string | null;
+  text?: string | null;
+  cta: { label: string; href: string } | null;
+  pins: Pin[];
+};
 
-export default function InteractiveMap() {
-  const [filter, setFilter] = useState<"all" | "solar" | "mep" | "hvac" | "substation">("all");
-  const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
+export default function InteractiveMap({
+  chip,
+  headingTop,
+  headingBottom,
+  text,
+  cta,
+  pins,
+}: InteractiveMapProps) {
+  const [filter, setFilter] = useState<string>("all");
+  const [hoveredProject, setHoveredProject] = useState<Pin | null>(null);
   const [hoveredEmirate, setHoveredEmirate] = useState<string | null>(null);
 
-  const filteredProjects = filter === "all" 
-    ? projects 
-    : projects.filter(p => p.type === filter);
+  // Distinct categories among the pinned projects, in pin order.
+  const pinCategories = pins.reduce<{ slug: string; title: string }[]>((acc, pin) => {
+    if (pin.categorySlug && !acc.some((c) => c.slug === pin.categorySlug)) {
+      acc.push({ slug: pin.categorySlug, title: pin.categoryTitle ?? pin.categorySlug });
+    }
+    return acc;
+  }, []);
+
+  const filteredProjects =
+    filter === "all" ? pins : pins.filter((p) => p.categorySlug === filter);
 
   const getEmirateName = (id: string) => {
     switch (id) {
@@ -45,17 +67,17 @@ export default function InteractiveMap() {
     }
   };
 
+  /**
+   * Which emirates glow for the current filter. Presentation detail: the
+   * artwork has no per-pin emirate data, so the wide view (and the solar
+   * portfolio, which spans the country) lights the three main emirates,
+   * while narrower filters focus on Dubai.
+   */
   const isPathActive = (id: string) => {
-    if (filter === "all") {
+    if (filter === "all" || filter === "solar") {
       return id === "abu-dhabi" || id === "dubai" || id === "sharjah";
     }
-    if (filter === "solar") {
-      return id === "abu-dhabi" || id === "dubai" || id === "sharjah";
-    }
-    if (filter === "mep" || filter === "hvac" || filter === "substation") {
-      return id === "dubai";
-    }
-    return false;
+    return id === "dubai";
   };
 
   const getPathClasses = (id: string) => {
@@ -90,26 +112,28 @@ export default function InteractiveMap() {
           <div className="lg:col-span-5 flex flex-col space-y-6 sm:space-y-8">
             <div className="space-y-3">
               <span className="text-ras-gold text-xs font-bold uppercase tracking-widest block">
-                UAE Footprint
+                {chip}
               </span>
               <h2 className="text-5xl sm:text-6xl lg:text-7xl font-extralight text-ras-charcoal tracking-tightest leading-none flex flex-col">
-                <span>UAE</span>
-                <span className="text-ras-grey/40 font-light">footprint</span>
+                <span>{headingTop}</span>
+                <span className="text-ras-grey/40 font-light">{headingBottom}</span>
               </h2>
             </div>
-            
+
             <p className="text-ras-grey text-sm sm:text-base font-light leading-relaxed max-w-md">
-              Actively constructing clean energy and high-fidelity electromechanical systems across Dubai, Abu Dhabi, Sharjah, and the Northern Emirates.
+              {text}
             </p>
-            
-            <div>
-              <Link
-                href="/projects"
-                className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-ras-charcoal text-xs font-bold uppercase tracking-wider rounded-full hover:bg-ras-charcoal hover:text-white shadow-sm border border-ras-grey/10 transition-all duration-300"
-              >
-                Discover all our projects
-              </Link>
-            </div>
+
+            {cta && (
+              <div>
+                <Link
+                  href={cta.href}
+                  className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-ras-charcoal text-xs font-bold uppercase tracking-wider rounded-full hover:bg-ras-charcoal hover:text-white shadow-sm border border-ras-grey/10 transition-all duration-300"
+                >
+                  {cta.label}
+                </Link>
+              </div>
+            )}
           </div>
           
           {/* Right Column: Map and Filter Selector */}
@@ -212,13 +236,11 @@ export default function InteractiveMap() {
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 300, delay: idx * 0.05 }}
                   className={`w-6 h-6 rounded-full flex items-center justify-center cursor-pointer shadow-lg transform transition-transform hover:scale-125 border border-white ${
-                    proj.type === "solar"
+                    proj.categorySlug === "solar"
                       ? "bg-ras-gold"
-                      : proj.type === "mep"
-                      ? "bg-[#0f4338]"
-                      : proj.type === "hvac"
+                      : proj.categorySlug === "wind"
                       ? "bg-sky-700"
-                      : "bg-[#7c2d12]"
+                      : "bg-[#0f4338]"
                   }`}
                 >
                   <MapPin className="h-3.5 w-3.5 text-white" />
@@ -238,18 +260,17 @@ export default function InteractiveMap() {
                 className="absolute bottom-6 left-6 right-6 sm:right-auto sm:w-80 bg-ras-charcoal text-white p-5 rounded-2xl shadow-2xl border border-white/10 z-30 flex items-start space-x-3.5 backdrop-blur-md"
               >
                 <div className={`p-2.5 rounded-xl border border-white/10 ${
-                  hoveredProject.type === "solar"
+                  hoveredProject.categorySlug === "solar"
                     ? "bg-ras-gold/20"
-                    : hoveredProject.type === "mep"
-                    ? "bg-[#0f4338]/20"
-                    : hoveredProject.type === "hvac"
+                    : hoveredProject.categorySlug === "wind"
                     ? "bg-sky-700/20"
-                    : "bg-[#7c2d12]/20"
+                    : "bg-[#0f4338]/20"
                 }`}>
-                  {hoveredProject.type === "solar" && <Sun className="h-5 w-5 text-ras-gold" />}
-                  {hoveredProject.type === "mep" && <Cpu className="h-5 w-5 text-ras-gold" />}
-                  {hoveredProject.type === "hvac" && <Wind className="h-5 w-5 text-sky-400" />}
-                  {hoveredProject.type === "substation" && <Zap className="h-5 w-5 text-[#f97316]" />}
+                  <LucideIcon
+                    name={hoveredProject.categoryIcon}
+                    fallback="Cpu"
+                    className={`h-5 w-5 ${hoveredProject.categorySlug === "wind" ? "text-sky-400" : "text-ras-gold"}`}
+                  />
                 </div>
 
                 <div className="flex-grow space-y-1">
@@ -271,35 +292,30 @@ export default function InteractiveMap() {
           </AnimatePresence>
         </div>
 
-        {/* Filter Selector Pills (Directly under the map) */}
-        <div className="flex flex-wrap justify-center gap-3 mt-8 relative z-20 w-full">
-          {(["all", "solar", "mep", "hvac", "substation"] as const).map((type) => (
-            <button
-              key={type}
-              onClick={() => setFilter(type)}
-              className={`px-5 py-2.5 rounded-full text-[10px] font-bold tracking-wider uppercase transition-all duration-300 border flex items-center space-x-2.5 ${
-                filter === type
-                  ? "bg-ras-charcoal text-white border-transparent shadow-md scale-105"
-                  : "bg-white text-ras-charcoal border-ras-grey/15 hover:border-ras-grey/40 shadow-sm"
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full ${
-                type === "all" ? "bg-ras-grey" :
-                type === "solar" ? "bg-ras-gold" :
-                type === "mep" ? "bg-[#0f4338]" :
-                type === "hvac" ? "bg-sky-500" :
-                "bg-amber-500"
-              }`} />
-              <span>
-                {type === "all" ? "All Sectors" :
-                 type === "solar" ? "Solar EPC" :
-                 type === "mep" ? "MEP Works" :
-                 type === "hvac" ? "HVAC" :
-                 "Substations"}
-              </span>
-            </button>
-          ))}
-        </div>
+        {/* Filter Selector Pills — derived from the pinned projects' categories */}
+        {pinCategories.length > 1 && (
+          <div className="flex flex-wrap justify-center gap-3 mt-8 relative z-20 w-full">
+            {[{ slug: "all", title: "All Sectors" }, ...pinCategories].map((cat) => (
+              <button
+                key={cat.slug}
+                onClick={() => setFilter(cat.slug)}
+                className={`px-5 py-2.5 rounded-full text-[10px] font-bold tracking-wider uppercase transition-all duration-300 border flex items-center space-x-2.5 ${
+                  filter === cat.slug
+                    ? "bg-ras-charcoal text-white border-transparent shadow-md scale-105"
+                    : "bg-white text-ras-charcoal border-ras-grey/15 hover:border-ras-grey/40 shadow-sm"
+                }`}
+              >
+                <span className={`w-2 h-2 rounded-full ${
+                  cat.slug === "all" ? "bg-ras-grey" :
+                  cat.slug === "solar" ? "bg-ras-gold" :
+                  cat.slug === "wind" ? "bg-sky-500" :
+                  "bg-[#0f4338]"
+                }`} />
+                <span>{cat.title}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
         </div>
       </div>

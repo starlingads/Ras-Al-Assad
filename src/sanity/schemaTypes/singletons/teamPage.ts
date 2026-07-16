@@ -1,4 +1,4 @@
-import { UsersIcon } from "@sanity/icons";
+import { UsersIcon } from "@sanity/icons/Users";
 import { defineField, defineType } from "sanity";
 
 /** The Team page intro. Members come from the Team Members collection. */

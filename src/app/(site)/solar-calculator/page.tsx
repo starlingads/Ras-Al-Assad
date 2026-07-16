@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import SolarCalculatorClient, {
   type SolarCalculatorData,
-} from "../en/solar-calculator/SolarCalculatorClient";
+} from "./SolarCalculatorClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { SOLAR_CALCULATOR_PAGE_QUERY } from "@/sanity/lib/queries";
 import { pageMetadata } from "@/sanity/lib/seo";

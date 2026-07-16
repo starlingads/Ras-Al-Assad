@@ -13,13 +13,26 @@ import {
 } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 
-const rotatingWords = [
-  { text: "Solar EPC" },
-  { text: "MEP Works" },
-  { text: "HVAC Engineering" },
-  { text: "Substations" },
-  { text: "O&M Services" },
-];
+/** All copy and imagery come from Homepage → Hero. */
+export type HeroImage = { url: string; alt: string };
+
+export type HeroProps = {
+  rotatingWords: string[];
+  rotatingSuffix?: string | null;
+  headlineLine1?: string | null;
+  headlineLine2?: string | null;
+  subheadline?: string | null;
+  scrollHint?: string | null;
+  primaryCta: { label: string; href: string } | null;
+  secondaryCta: { label: string; href: string } | null;
+  mainImage: HeroImage | null;
+  /** The design needs exactly 5; the schema validates that. */
+  floatingImages: HeroImage[];
+  introChip?: string | null;
+  introHeading?: string | null;
+  introHeadingAccent?: string | null;
+  introText?: string | null;
+};
 
 interface Dimensions {
   cardWidth: number;
@@ -29,14 +42,33 @@ interface Dimensions {
   offsets: { x: number; y: number }[];
 }
 
-interface HeroAnimationProps {
+interface HeroAnimationProps extends HeroProps {
   scrollYProgress: MotionValue<number>;
   windowSize: { width: number; height: number };
   dimensions: Dimensions;
   wordIndex: number;
 }
 
-function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: HeroAnimationProps) {
+function HeroAnimation({
+  scrollYProgress,
+  windowSize,
+  dimensions,
+  wordIndex,
+  rotatingWords,
+  rotatingSuffix,
+  headlineLine1,
+  headlineLine2,
+  subheadline,
+  scrollHint,
+  primaryCta,
+  secondaryCta,
+  mainImage,
+  floatingImages,
+  introChip,
+  introHeading,
+  introHeadingAccent,
+  introText,
+}: HeroAnimationProps) {
   // Text fades out as user starts scrolling
   const textOpacity = useTransform(scrollYProgress, [0.10, 0.25], [1, 0]);
   const textY = useTransform(scrollYProgress, [0.10, 0.25], [0, -60]);
@@ -125,13 +157,14 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
   const img4DriftX = useTransform([img4x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 10 * (cap as number));
   const img4DriftY = useTransform([img4y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 10 * (cap as number));
 
+  // Aspect ratios and z-order are design constants; the photos come from the CMS.
   const floatingImgs = [
-    { w: dimensions.imgWidths[0], ar: 0.854, driftX: img0DriftX, driftY: img0DriftY, opacity: img0o, src: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",   alt: "Singapore Pavilion Solar Project",      zIdx: 30 },
-    { w: dimensions.imgWidths[1], ar: 0.987, driftX: img1DriftX, driftY: img1DriftY, opacity: img1o, src: "/assets/Projects/SOBHA HEARTLAND.jpg",             alt: "Sobha Heartland MEP Engineering",       zIdx: 28 },
-    { w: dimensions.imgWidths[2], ar: 0.973, driftX: img2DriftX, driftY: img2DriftY, opacity: img2o, src: "/assets/Projects/al-garhoud-grid-substation-support.jpg", alt: "Substation Installation", zIdx: 26 },
-    { w: dimensions.imgWidths[3], ar: 0.785, driftX: img3DriftX, driftY: img3DriftY, opacity: img3o, src: "/assets/Projects/substation-engineering.jpg",      alt: "MEP Panel Commissioning",  zIdx: 24 },
-    { w: dimensions.imgWidths[4], ar: 0.856, driftX: img4DriftX, driftY: img4DriftY, opacity: img4o, src: "/assets/Projects/operations-maintenance.jpg",      alt: "Field Engineering Site",   zIdx: 22 },
-  ];
+    { w: dimensions.imgWidths[0], ar: 0.854, driftX: img0DriftX, driftY: img0DriftY, opacity: img0o, zIdx: 30 },
+    { w: dimensions.imgWidths[1], ar: 0.987, driftX: img1DriftX, driftY: img1DriftY, opacity: img1o, zIdx: 28 },
+    { w: dimensions.imgWidths[2], ar: 0.973, driftX: img2DriftX, driftY: img2DriftY, opacity: img2o, zIdx: 26 },
+    { w: dimensions.imgWidths[3], ar: 0.785, driftX: img3DriftX, driftY: img3DriftY, opacity: img3o, zIdx: 24 },
+    { w: dimensions.imgWidths[4], ar: 0.856, driftX: img4DriftX, driftY: img4DriftY, opacity: img4o, zIdx: 22 },
+  ].map((slot, i) => ({ ...slot, photo: floatingImages[i] }));
 
   return (
     <div
@@ -165,13 +198,15 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
               willChange: "transform, opacity",
             }}
           >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              sizes="(max-width: 768px) 180px, 250px"
-              className="object-cover"
-            />
+            {img.photo && (
+              <Image
+                src={img.photo.url}
+                alt={img.photo.alt}
+                fill
+                sizes="(max-width: 768px) 180px, 250px"
+                className="object-cover"
+              />
+            )}
           </motion.div>
         ))}
 
@@ -190,14 +225,16 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
           }}
         >
           <motion.div style={{ scale: imgScale }} className="absolute inset-0">
-            <Image
-              src="/assets/Projects/SINGAPORE  PAVILION_x4.jpg"
-              alt="Ras Al Assad Singapore Pavilion"
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
+            {mainImage && (
+              <Image
+                src={mainImage.url}
+                alt={mainImage.alt}
+                fill
+                priority
+                className="object-cover"
+                sizes="100vw"
+              />
+            )}
           </motion.div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
         </motion.div>
@@ -212,7 +249,7 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
         <div className="h-8 mb-6 flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.span
-              key={rotatingWords[wordIndex].text}
+              key={rotatingWords[wordIndex]}
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -10, opacity: 0 }}
@@ -223,33 +260,37 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
                 <span className="absolute w-2.5 h-2.5 rounded-full bg-ras-gold/30 animate-ping" />
                 <span className="relative w-1.5 h-1.5 rounded-full bg-ras-gold" />
               </span>
-              <span>{rotatingWords[wordIndex].text} Specialist</span>
+              <span>{[rotatingWords[wordIndex], rotatingSuffix].filter(Boolean).join(" ")}</span>
             </motion.span>
           </AnimatePresence>
         </div>
 
         <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extralight tracking-tightest leading-[1.1] mb-6 text-white max-w-4xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
-          Ready to engineer <br />
-          <span className="font-bold text-ras-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">your energy future</span>
+          {headlineLine1} <br />
+          <span className="font-bold text-ras-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">{headlineLine2}</span>
         </h1>
 
         <p className="text-base sm:text-lg text-white font-light max-w-2xl mb-10 leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
-          Licensed EPC contractor specializing in solar PV and electromechanical solutions in the UAE.
+          {subheadline}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 pointer-events-auto">
-          <Link
-            href="/projects"
-            className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-white transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
-          >
-            View Projects
-          </Link>
-          <Link
-            href="/contact"
-            className="px-8 py-3.5 bg-white/90 backdrop-blur-sm text-ras-charcoal border border-white/25 text-sm font-semibold rounded-full hover:bg-white hover:text-ras-charcoal transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
-          >
-            Start a Project
-          </Link>
+          {primaryCta && (
+            <Link
+              href={primaryCta.href}
+              className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-white transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
+            >
+              {primaryCta.label}
+            </Link>
+          )}
+          {secondaryCta && (
+            <Link
+              href={secondaryCta.href}
+              className="px-8 py-3.5 bg-white/90 backdrop-blur-sm text-ras-charcoal border border-white/25 text-sm font-semibold rounded-full hover:bg-white hover:text-ras-charcoal transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
+            >
+              {secondaryCta.label}
+            </Link>
+          )}
         </div>
 
         <motion.div
@@ -258,7 +299,7 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
           className="flex flex-col items-center cursor-pointer pointer-events-auto"
           onClick={() => window.scrollTo({ top: window.innerHeight * 1.5, behavior: "smooth" })}
         >
-          <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-white/60 mb-2">Explore Solutions</span>
+          <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-white/60 mb-2">{scrollHint}</span>
           <div className="p-2.5 bg-white/10 border border-white/20 rounded-full">
             <ArrowDown className="h-4 w-4 text-ras-gold" />
           </div>
@@ -270,19 +311,20 @@ function HeroAnimation({ scrollYProgress, windowSize, dimensions, wordIndex }: H
         style={{ opacity: corporateOpacity, y: corporateY, zIndex: 50 }}
         className="absolute bottom-10 sm:bottom-14 left-0 right-0 mx-auto max-w-4xl px-8 text-center flex flex-col items-center pointer-events-auto select-none"
       >
-        <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">Who We Are</span>
+        <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">{introChip}</span>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight mb-5 leading-tight text-ras-charcoal">
-          Building <span className="font-bold text-ras-goldDark">infrastructure that performs</span>
+          {introHeading} <span className="font-bold text-ras-goldDark">{introHeadingAccent}</span>
         </h2>
         <p className="text-xs sm:text-sm md:text-base font-light max-w-3xl leading-relaxed text-ras-charcoal/75">
-          Ras Al Assad Electromechanical Works LLC is a UAE-based renewable and electromechanical infrastructure specialist with over a decade of experience in engineering, procurement, and construction. We support developers, industries, and institutions with technically sound, compliant, and performance-driven solutions across renewable energy and electrical infrastructure.
+          {introText}
         </p>
       </motion.div>
     </div>
   );
 }
 
-export default function Hero() {
+export default function Hero(props: HeroProps) {
+  const { rotatingWords } = props;
   const [wordIndex, setWordIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -357,21 +399,23 @@ export default function Hero() {
   });
 
   useEffect(() => {
+    if (rotatingWords.length === 0) return;
     const timer = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % rotatingWords.length);
     }, 2800);
     return () => clearInterval(timer);
-  }, []);
+  }, [rotatingWords.length]);
 
   return (
     <section ref={containerRef} className="relative h-[280vh] bg-ras-sand">
       {isMounted && (
         <HeroAnimation
           key={`hero-${windowSize.width < 640 ? "sm" : windowSize.width < 1024 ? "md" : "lg"}`}
+          {...props}
           scrollYProgress={scrollYProgress}
           windowSize={windowSize}
           dimensions={dimensions}
-          wordIndex={wordIndex}
+          wordIndex={Math.min(wordIndex, Math.max(rotatingWords.length - 1, 0))}
         />
       )}
     </section>

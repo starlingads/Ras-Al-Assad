@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import ProjectsClient, { type ProjectsPageData } from "../en/projects/ProjectsClient";
+import ProjectsClient, { type ProjectsPageData } from "./ProjectsClient";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECTS_PAGE_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";

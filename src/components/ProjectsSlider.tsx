@@ -4,59 +4,34 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { register } from "swiper/element/bundle";
-import { ArrowRight, Wind, Sun, Cpu, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { LucideIcon } from "@/components/LucideIcon";
 
 if (typeof window !== "undefined") {
   register();
 }
 
-const projects = [
-  {
-    name: "PNCA-SOBHA HARTLAND-2",
-    scope: "Renewable Energy & Solar EPC",
-    type: "solar",
-    image: "/assets/Projects/SOBHA HEARTLAND.jpg",
-    location: "Sobha Heartland, Dubai"
-  },
-  {
-    name: "Al HABTOOR Towers",
-    scope: "Infrastructure MEP & HVAC Works",
-    type: "mep",
-    image: "/assets/Projects/adnoc-substation-infrastructure-projects.jpg",
-    location: "Business Bay, Dubai"
-  },
-  {
-    name: "HSBC Jebel Ali Complex",
-    scope: "On-Grid Solar PV & Net Metering",
-    type: "solar",
-    image: "/assets/Projects/hsbc-jebel-ali-solar-pv-complex.jpeg",
-    location: "Jafza Gate 3, Dubai"
-  },
-  {
-    name: "Singapore Pavilion EXPO 2020",
-    scope: "Solar EPC & Electromechanical Works",
-    type: "solar",
-    image: "/assets/Projects/SINGAPORE  PAVILION_x4.jpg",
-    location: "Expo City, Dubai"
-  },
-  {
-    name: "Dubai Government 5000 Villas",
-    scope: "Residential PV & Community EPC",
-    type: "solar",
-    image: "/assets/Projects/dubai-government-5000-villas-roof-solar.jpeg",
-    location: "Mizhar & Muhaisnah, Dubai"
-  },
-  {
-    name: "Al Garhoud Grid Substation",
-    scope: "Electrical Substations & Infrastructure",
-    type: "substation",
-    image: "/assets/Projects/al-garhoud-grid-substation-support.jpg",
-    location: "Al Garhoud, Dubai"
-  }
-];
+/**
+ * Cards come from Homepage → Featured projects: ⭐ featured projects in
+ * drag order, or the manual override list when the client fills one in.
+ */
+export type ProjectsSliderProps = {
+  chip?: string | null;
+  heading?: string | null;
+  cta: { label: string; href: string } | null;
+  projects: {
+    name: string;
+    scope?: string | null;
+    location?: string | null;
+    imageUrl?: string | null;
+    imageAlt?: string | null;
+    categoryTitle?: string | null;
+    categoryIcon?: string | null;
+  }[];
+};
 
-export default function ProjectsSlider() {
+export default function ProjectsSlider({ chip, heading, cta, projects }: ProjectsSliderProps) {
   const swiperRef = useRef<any>(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -136,27 +111,29 @@ export default function ProjectsSlider() {
           className="max-w-2xl"
         >
           <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">
-            Discover Our Projects
+            {chip}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-ras-charcoal tracking-tightest leading-tight">
-            Our Projects
+            {heading}
           </h2>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <Link
-            href="/projects"
-            className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
+        {cta && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span>Explore all projects</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </motion.div>
+            <Link
+              href={cta.href}
+              className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
+            >
+              <span>{cta.label}</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+        )}
       </div>
 
       {/* Projects Swiper Wrapper */}
@@ -174,47 +151,33 @@ export default function ProjectsSlider() {
                   
                   {/* Background Image Zoom Wrapper */}
                   <div className="absolute inset-0 overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    {project.imageUrl && (
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.imageAlt || project.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-ras-charcoal/90 via-ras-charcoal/30 to-transparent z-10" />
                   </div>
 
                   {/* Badges and Interactive Details */}
                   <div className="absolute inset-0 z-20 p-6 flex flex-col justify-between text-white">
-                    
-                    {/* Top Badge Row */}
+
+                    {/* Top Badge Row — category name + icon */}
                     <div className="flex justify-between items-center">
-                      <div className="px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex items-center space-x-2 text-xs font-semibold tracking-wide">
-                        {project.type === "solar" && (
-                          <>
-                            <Sun className="h-3.5 w-3.5 text-ras-gold animate-spin-slow" />
-                            <span className="uppercase">Solar</span>
-                          </>
-                        )}
-                        {project.type === "mep" && (
-                          <>
-                            <Cpu className="h-3.5 w-3.5 text-ras-gold" />
-                            <span className="uppercase">MEP Works</span>
-                          </>
-                        )}
-                        {project.type === "hvac" && (
-                          <>
-                            <Wind className="h-3.5 w-3.5 text-ras-gold" />
-                            <span className="uppercase">HVAC</span>
-                          </>
-                        )}
-                        {project.type === "substation" && (
-                          <>
-                            <Zap className="h-3.5 w-3.5 text-ras-gold" />
-                            <span className="uppercase">Substation</span>
-                          </>
-                        )}
-                      </div>
+                      {project.categoryTitle && (
+                        <div className="px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex items-center space-x-2 text-xs font-semibold tracking-wide">
+                          <LucideIcon
+                            name={project.categoryIcon}
+                            fallback="Cpu"
+                            className={`h-3.5 w-3.5 text-ras-gold ${project.categoryIcon === "Sun" ? "animate-spin-slow" : ""}`}
+                          />
+                          <span className="uppercase">{project.categoryTitle}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Bottom Text Panel */}
