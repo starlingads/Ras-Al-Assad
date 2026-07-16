@@ -1,3 +1,2 @@
-"use client";
-import SustainabilityClient from "./SustainabilityClient";
-export default SustainabilityClient;
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default, generateMetadata } from "../../sustainability/page";

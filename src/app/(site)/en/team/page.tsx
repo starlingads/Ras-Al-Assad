@@ -1,5 +1,2 @@
-"use client";
-
-import TeamPage from "./TeamClient";
-
-export default TeamPage;
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default, generateMetadata } from "../../team/page";

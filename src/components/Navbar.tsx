@@ -6,29 +6,25 @@ import Image from "next/image";
 import { ChevronDown, Menu, X, ArrowUpRight, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
-  { name: "About Us", href: "/about" },
-  {
-    name: "Services",
-    href: "/services",
-    dropdown: [
-      { name: "Solar PV EPC", href: "/services#solar-epc" },
-      { name: "Electromechanical Works (MEP)", href: "/services#mep" },
-      { name: "HVAC Engineering", href: "/services#hvac" },
-      { name: "Substations & Infrastructure", href: "/services#substations" },
-      { name: "Operations & Maintenance (O&M)", href: "/services#om" },
-      { name: "Wind Energy Solutions", href: "/services#wind-energy" },
-    ]
-  },
-  { name: "Projects", href: "/projects" },
-  { name: "Sustainability", href: "/sustainability" },
-  { name: "Appreciation", href: "/appreciation" },
-  { name: "Our Team", href: "/team" },
-  { name: "Solar Calculator", href: "/solar-calculator" },
-  { name: "Contact", href: "/contact" },
-];
+/**
+ * View-model props, supplied by the (site) layout from Site Settings.
+ * The layout resolves CMS link objects to plain hrefs so this component
+ * stays purely presentational.
+ */
+export type NavbarMenuItem = {
+  label: string;
+  href: string;
+  dropdown?: { label: string; href: string }[];
+};
 
-export default function Navbar() {
+export type NavbarProps = {
+  logoSrc: string;
+  logoAlt: string;
+  menu: NavbarMenuItem[];
+  cta: { label: string; href: string } | null;
+};
+
+export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -95,8 +91,8 @@ export default function Navbar() {
           <Link href="/" className="relative z-50 flex items-center">
             <div className="relative w-44 h-11 md:w-48 md:h-12 overflow-hidden hover:scale-105 transition-all duration-300 flex items-center justify-center">
               <Image
-                src="/assets/Logos/RAS-Logo-Main.png"
-                alt="Ras Al Assad L.L.C"
+                src={logoSrc}
+                alt={logoAlt}
                 fill
                 className="object-contain"
                 priority
@@ -106,11 +102,11 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <nav className="hidden lg:flex items-center space-x-7">
-            {navLinks.map((link) => (
+            {menu.map((link) => (
               <div
-                key={link.name}
+                key={link.label}
                 className="relative group py-2"
-                onMouseEnter={() => link.dropdown && setActiveDropdown(link.name)}
+                onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <Link
@@ -118,7 +114,7 @@ export default function Navbar() {
                   className="flex items-center text-sm font-medium transition-colors hover:text-ras-gold tracking-tight relative pb-1"
                   style={{ color: isLinkActive(link.href) ? '#C5A880' : (isTextWhite ? '#FCFCFC' : '#121212') }}
                 >
-                  {link.name}
+                  {link.label}
                   {link.dropdown && (
                     <ChevronDown className="ml-1 h-4 w-4 transition-transform group-hover:rotate-180" />
                   )}
@@ -133,16 +129,16 @@ export default function Navbar() {
                 )}
 
                 {/* Mega Dropdown */}
-                {link.dropdown && activeDropdown === link.name && (
+                {link.dropdown && activeDropdown === link.label && (
                   <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 rounded-xl bg-ras-sand border border-white/40 shadow-2xl p-3 flex flex-col space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-b-ras-sand"></div>
                     {link.dropdown.map((subItem) => (
                       <Link
-                        key={subItem.name}
+                        key={subItem.label}
                         href={subItem.href}
                         className="px-4 py-2.5 rounded-lg text-sm text-ras-charcoal hover:bg-white/50 hover:text-ras-gold transition-all flex items-center justify-between group/item"
                       >
-                        {subItem.name}
+                        {subItem.label}
                         <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                       </Link>
                     ))}
@@ -152,7 +148,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Action Buttons — Solar Inquiry + Login */}
+          {/* Action Buttons — CMS CTA + Login */}
           <div className="hidden lg:flex items-center space-x-4">
             <Link
               href="/login"
@@ -165,12 +161,14 @@ export default function Navbar() {
               <User className="h-4 w-4" />
               Login
             </Link>
-            <Link
-              href="/contact"
-              className="px-5 py-2.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-ras-charcoal hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
-            >
-              Solar Inquiry
-            </Link>
+            {cta && (
+              <Link
+                href={cta.href}
+                className="px-5 py-2.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-ras-charcoal hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                {cta.label}
+              </Link>
+            )}
           </div>
 
           {/* Mobile Burger Trigger */}
@@ -195,22 +193,22 @@ export default function Navbar() {
             className="fixed top-0 left-0 w-full h-[100dvh] z-50 bg-ras-sand pt-28 px-8 flex flex-col justify-between pb-12 overflow-y-auto overscroll-contain"
           >
             <div className="flex flex-col space-y-6">
-              {navLinks.map((link) => (
-                <div key={link.name} className="flex flex-col">
+              {menu.map((link) => (
+                <div key={link.label} className="flex flex-col">
                   {link.dropdown ? (
                     <>
                       <span className="text-xs font-bold uppercase tracking-wider text-ras-grey mb-2">
-                        {link.name}
+                        {link.label}
                       </span>
                       <div className="flex flex-col pl-4 space-y-3">
                         {link.dropdown.map((subItem) => (
                           <Link
-                            key={subItem.name}
+                            key={subItem.label}
                             href={subItem.href}
                             onClick={() => setMobileMenuOpen(false)}
                             className="text-lg font-medium text-ras-charcoal hover:text-ras-gold transition-colors"
                           >
-                            {subItem.name}
+                            {subItem.label}
                           </Link>
                         ))}
                       </div>
@@ -221,7 +219,7 @@ export default function Navbar() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="text-2xl font-semibold text-ras-charcoal hover:text-ras-gold transition-colors"
                     >
-                      {link.name}
+                      {link.label}
                     </Link>
                   )}
                 </div>
@@ -237,13 +235,15 @@ export default function Navbar() {
                 <User className="h-4 w-4" />
                 Login
               </Link>
-              <Link
-                href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-4 bg-ras-gold text-ras-charcoal text-center font-bold rounded-full shadow-lg"
-              >
-                Solar Inquiry
-              </Link>
+              {cta && (
+                <Link
+                  href={cta.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-4 bg-ras-gold text-ras-charcoal text-center font-bold rounded-full shadow-lg"
+                >
+                  {cta.label}
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
@@ -251,4 +251,3 @@ export default function Navbar() {
     </>
   );
 }
-

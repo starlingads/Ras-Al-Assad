@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "typegen": "sanity schema extract --path=schema.json && sanity typegen generate"
   },
   "dependencies": {
     "@sanity/color-input": "^6.0.14",
+    "@sanity/icons": "^5.1.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/orderable-document-list": "^2.0.12",
     "@sanity/vision": "^6.5.0",

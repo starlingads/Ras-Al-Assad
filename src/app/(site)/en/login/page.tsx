@@ -1,5 +1,2 @@
-import LoginClient from './LoginClient';
-
-export default function LoginPage() {
-  return <LoginClient />;
-}
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default } from "../../login/page";

@@ -27,6 +27,10 @@ tsconfig.tsbuildinfo
 .sanity/
 schema.json
 
+# Seed-script working files (derived / machine-local)
+scripts/seed/.extracted.json
+scripts/seed/.asset-cache.json
+
 # ─── Debug & logs ────────────────────────────────────────────────────────
 npm-debug.log*
 yarn-debug.log*

@@ -1,7 +1,2 @@
-"use client";
-
-import AppreciationClient from "./AppreciationClient";
-
-export default function AppreciationPage() {
-  return <AppreciationClient />;
-}
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default, generateMetadata } from "../../appreciation/page";

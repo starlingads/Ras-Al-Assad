@@ -1,5 +1,2 @@
-"use client";
-
-import AboutPage from "./AboutClient";
-
-export default AboutPage;
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default, generateMetadata } from "../../about/page";

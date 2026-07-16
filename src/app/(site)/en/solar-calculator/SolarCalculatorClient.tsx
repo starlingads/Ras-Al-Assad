@@ -15,9 +15,35 @@ import {
   AlertTriangle,
   X
 } from "lucide-react";
-import Link from "next/link";
+/**
+ * View-model props, mapped from SOLAR_CALCULATOR_PAGE_QUERY by the server
+ * page. The assumption numbers are client-editable in the Studio — changing
+ * them changes every estimate this calculator produces.
+ */
+export type SolarCalculatorData = {
+  hero: {
+    chip?: string | null;
+    title?: string | null;
+    titleAccent?: string | null;
+    titleEnd?: string | null;
+    subtitle?: string | null;
+  };
+  assumptions: {
+    tariffAedPerKwh: number;
+    selfConsumptionFactor: number;
+    yieldKwhPerKwpYear: number;
+    costAedPerKwp: number;
+    savingsRate: number;
+    savingsHorizonYears: number;
+    co2TonnesPerKwp: number;
+    kwpPerPanel: number;
+  };
+  leadGateEnabled: boolean;
+  disclaimer?: string | null;
+};
 
-export default function SolarCalculatorPage() {
+export default function SolarCalculatorPage({ data }: { data: SolarCalculatorData }) {
+  const { hero, assumptions, leadGateEnabled, disclaimer } = data;
   const [bill, setBill] = useState<number>(12000);
   const [systemSize, setSystemSize] = useState<number>(0);
   const [capitalCost, setCapitalCost] = useState<number>(0);
@@ -27,7 +53,7 @@ export default function SolarCalculatorPage() {
   const [co2, setCo2] = useState<number>(0);
 
   // Contact modal state
-  const [showContactModal, setShowContactModal] = useState(true);
+  const [showContactModal, setShowContactModal] = useState(leadGateEnabled);
   const [contactModalData, setContactModalData] = useState({
     name: "",
     email: "",
@@ -45,24 +71,33 @@ export default function SolarCalculatorPage() {
   });
 
   useEffect(() => {
-    // Dubai solar calculation metrics
-    // Rule of thumb: A monthly bill of X AED in Dubai implies approximately Y kWh consumption
-    // Tariff is around 0.38 AED/kWh for commercial/industrial.
-    // Standard system size in kWp needed to offset 80% of consumption:
-    const size = Math.round((bill / 0.38) * 12 * 0.85 / 1650); // 1650 kWh/kWp annual yield in Dubai
-    
-    // Average capital expenditure cost (approx. 3,500 - 4,000 AED per kWp installed for scale)
-    const cost = size * 3600;
+    // Dubai solar calculation metrics — every factor is client-editable in
+    // the Studio (Solar Calculator → Calculation Numbers).
+    const {
+      tariffAedPerKwh,
+      selfConsumptionFactor,
+      yieldKwhPerKwpYear,
+      costAedPerKwp,
+      savingsRate,
+      savingsHorizonYears,
+      co2TonnesPerKwp,
+    } = assumptions;
 
-    // Annual savings (80% bill reduction)
-    const annualSavings = Math.round(bill * 12 * 0.80);
-    const savings20 = annualSavings * 20;
+    // System size in kWp needed to offset the usable share of consumption.
+    const size = Math.round((bill / tariffAedPerKwh) * 12 * selfConsumptionFactor / yieldKwhPerKwpYear);
+
+    // Average capital expenditure for an installation at this scale.
+    const cost = size * costAedPerKwp;
+
+    // Annual savings as the configured share of the bill.
+    const annualSavings = Math.round(bill * 12 * savingsRate);
+    const savings20 = annualSavings * savingsHorizonYears;
 
     // Return on investment payback period
     const paybackPeriod = Number((cost / annualSavings).toFixed(1));
 
-    // CO2 reduction (1.2 Tons per kWp per year in the Gulf grid mix)
-    const co2Reduction = Math.round(size * 1.2);
+    // CO₂ reduction per installed kWp per year in the Gulf grid mix.
+    const co2Reduction = Math.round(size * co2TonnesPerKwp);
 
     setSystemSize(size);
     setCapitalCost(cost);
@@ -70,7 +105,7 @@ export default function SolarCalculatorPage() {
     setSavings20Years(savings20);
     setPayback(paybackPeriod > 0 ? paybackPeriod : 0);
     setCo2(co2Reduction);
-  }, [bill]);
+  }, [bill, assumptions]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -142,13 +177,15 @@ export default function SolarCalculatorPage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
-              Interactive Feasibility Tool
+              {hero.chip}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-ras-charcoal leading-tight mb-4">
-              Solar Return & Savings <span className="text-ras-gold">Estimator</span>
+              {hero.title}
+              {hero.titleAccent && <span className="text-ras-gold">{hero.titleAccent}</span>}
+              {hero.titleEnd}
             </h1>
             <p className="text-sm md:text-base text-ras-grey leading-relaxed">
-              Estimate your commercial property&apos;s solar PV potential in Dubai. Adjust your average monthly electricity bill below and view immediate, high-fidelity financial projections.
+              {hero.subtitle}
             </p>
           </div>
 
@@ -289,7 +326,7 @@ export default function SolarCalculatorPage() {
                     {systemSize} <span className="text-lg font-bold">kWp</span>
                   </p>
                 </div>
-                <p className="text-xs text-ras-grey mt-4 leading-normal">Approx. {Math.round(systemSize / 0.5)} high-performance solar PV modules required.</p>
+                <p className="text-xs text-ras-grey mt-4 leading-normal">Approx. {Math.round(systemSize / assumptions.kwpPerPanel)} high-performance solar PV modules required.</p>
               </div>
 
               {/* Capex Card */}
@@ -391,14 +428,16 @@ export default function SolarCalculatorPage() {
           </div>
 
           {/* Disclaimer Alert Box */}
-          <div className="mt-12 max-w-4xl mx-auto">
-            <div className="p-4 rounded-xl border border-amber-300 bg-amber-50 flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
-              <p className="text-sm text-amber-800 leading-relaxed">
-                All calculations are indicative and based on average assumptions. Final pricing, savings, and system sizing may vary depending on site conditions, equipment selection, and project requirements.
-              </p>
+          {disclaimer && (
+            <div className="mt-12 max-w-4xl mx-auto">
+              <div className="p-4 rounded-xl border border-amber-300 bg-amber-50 flex items-start gap-3">
+                <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-amber-800 leading-relaxed">
+                  {disclaimer}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

@@ -6,14 +6,15 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 
-// 23 client logos: Asset 3.png through Asset 25.png
-const clientLogos = Array.from({ length: 23 }, (_, i) => ({
-  id: i + 3,
-  src: `/assets/Trusted Clients/Asset ${i + 3}.png`,
-  alt: `Trusted Client ${i + 3}`,
-}));
+/** Logos come from the client-managed Client Logos collection. */
+export type ClientLogosProps = {
+  heading?: string | null;
+  logos: { src: string; alt: string }[];
+};
 
-export default function ClientLogos() {
+export default function ClientLogos({ heading, logos }: ClientLogosProps) {
+  if (logos.length === 0) return null;
+
   return (
     <section className="py-20 bg-white relative overflow-hidden">
       {/* Section Header */}
@@ -26,7 +27,7 @@ export default function ClientLogos() {
           className="text-center mb-14"
         >
           <span className="text-ras-gold text-xs font-bold uppercase tracking-[0.25em] mb-3 block">
-            Our Clients
+            {heading || "Our Clients"}
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-semibold text-ras-charcoal tracking-tight">
             Trusted <span className="text-ras-gold">By</span>
@@ -62,8 +63,8 @@ export default function ClientLogos() {
           }}
           className="client-logos-swiper"
         >
-          {clientLogos.map((logo) => (
-            <SwiperSlide key={logo.id}>
+          {logos.map((logo, idx) => (
+            <SwiperSlide key={idx}>
               <div className="flex items-center justify-center h-20 px-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
                 <div className="relative w-full h-full">
                   <Image

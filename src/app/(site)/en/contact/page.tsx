@@ -1,5 +1,2 @@
-"use client";
-
-import ContactPage from "./ContactClient";
-
-export default ContactPage;
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default, generateMetadata } from "../../contact/page";

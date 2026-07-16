@@ -1,5 +1,2 @@
-"use client";
-
-import ServicesPage from "./ServicesClient";
-
-export default ServicesPage;
+// Duplicate /en route — Phase 4 replaces this tree with 301 redirects.
+export { default, generateMetadata } from "../../services/page";
