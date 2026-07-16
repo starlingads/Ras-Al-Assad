@@ -3,7 +3,7 @@ import { Outfit } from "next/font/google";
 import "../globals.css";
 import Navbar, { type NavbarMenuItem } from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { sanityFetch } from "@/sanity/lib/live";
 import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { resolveCta, resolveLink } from "@/lib/links";
@@ -36,12 +36,23 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = settings?.defaultSeo;
   const title =
     seo?.title ?? "Ras Al Assad Electromechanical Works L.L.C";
+  // Site-wide defaults from Site Settings → SEO Defaults. Pages inherit
+  // anything they do not set themselves (see pageMetadata).
   return {
     ...(settings?.siteUrl ? { metadataBase: new URL(settings.siteUrl) } : {}),
     title: settings?.titleTemplate
       ? { default: title, template: settings.titleTemplate }
       : title,
-    description: seo?.description ?? undefined,
+    ...(seo?.description ? { description: seo.description } : {}),
+    openGraph: {
+      type: "website",
+      siteName: settings?.siteName ?? undefined,
+      title,
+      ...(seo?.description ? { description: seo.description } : {}),
+      ...(seo?.ogImage?.asset
+        ? { images: [{ url: urlFor(seo.ogImage).width(1200).height(630).fit("crop").url(), width: 1200, height: 630 }] }
+        : {}),
+    },
     icons: settings?.favicon?.asset
       ? { icon: urlFor(settings.favicon).width(128).url() }
       : undefined,
@@ -128,7 +139,6 @@ export default async function RootLayout({
           companyName={settings?.siteName ?? "Ras Al Assad Electromechanical Works L.L.C"}
           tagline={settings?.footerTagline}
         />
-        <SanityLive />
       </body>
     </html>
   );

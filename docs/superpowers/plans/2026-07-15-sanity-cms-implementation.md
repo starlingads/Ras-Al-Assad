@@ -658,6 +658,10 @@ Studio invite via Sanity project members (StarlingAds org). Verify seat allowanc
 ## Part 7 — SEO Architecture
 
 - **Every routed surface gets the `seo` object** (9 page singletons + service + project). Global fallbacks in `siteSettings.seoDefaults` (title template, default description, default OG image, `siteUrl`).
+
+  > **Two Next.js metadata-merge traps, both found by probing the rendered HTML rather than trusting the code:**
+  > 1. **A key present with an `undefined` value still overrides the parent.** `description: seo?.description ?? undefined` blanked the site-wide description on *every* page (all 9 shipped with an empty `<meta name="description">`). Fix: spread the key in conditionally so it can be inherited.
+  > 2. **A child's `openGraph` replaces the parent's wholesale** — it is not deep-merged. Setting `openGraph` unconditionally silently dropped `og:site_name`, `og:type` and would have dropped the client's default share image the moment they set one. `og:description` only appeared to work because Next derives it from the resolved top-level description. Fix: pages emit `openGraph` only when they have OG-specific content of their own.
 - **`generateMetadata` per route** (server components) merging: item SEO → page SEO → site defaults. All metadata fetches use `stega: false` (stega chars in `<title>` would corrupt SERPs).
 - **`app/sitemap.ts`**: GROQ over pages + visible services + non-hidden projects (`seo.noIndex != true`), with `_updatedAt` for `lastmod`. **`app/robots.ts`**: allow all, disallow `/studio`, `/api`, point to sitemap.
 - **JSON-LD** (improvement): `Organization` + `LocalBusiness` (from Site Settings contact object — address/phones/hours already structured for it) on the homepage; `Service` schema on service detail pages; `BreadcrumbList` on future project pages.
@@ -678,7 +682,11 @@ AFTER   /about/page.tsx (server):
           return <AboutClient data={data} settings={…} />
 ```
 
-- **Data layer:** `src/sanity/lib/live.ts` uses `defineLive` from `next-sanity` → `sanityFetch` (typed, cached, tag-revalidated) + `<SanityLive />` in root layout; published-content updates propagate without manual webhooks, drafts render in Presentation preview.
+- **Data layer:** `src/sanity/lib/live.ts` exports a thin, typed `sanityFetch` over `client.fetch` with `next: {revalidate: 60}`.
+
+  > **Why not `defineLive`, despite the plan originally specifying it.** `defineLive`'s `sanityFetch` hardcodes `next: {revalidate: false}` and depends on `<SanityLive />` calling `revalidateTag()` **from a browser** to ever free the Data Cache. With nobody viewing the site, a publish never reaches new visitors. This was not theoretical — it was caught by probing it: after publishing a change, the served page still showed the old value two minutes later, because the route's `revalidate = 60` re-rendered the page from a permanently cached fetch. For a non-technical client, "I published and the site didn't change" is the worst possible failure. A plain time-revalidated fetch is deterministic: no webhook, no open tab, no token, content at most 60s stale. Verified by `scripts/seed/qa-publish-to-site.mjs`.
+  >
+  > The trade-off accepted: no instant live-refresh while watching. If click-to-edit Presentation is added later, it can use `defineLive` *scoped to the draft-mode path only*, leaving the public path on this deterministic fetch.
 - **Queries:** one `defineQuery` per page in `src/sanity/lib/queries.ts`; fragments for `figure` (`asset, hotspot, crop, alt, caption`), `seo`, `cta/link` resolution; projections only (no `*[...]{...}` star-dumps).
 - **TypeGen:** `npx sanity schema extract && npx sanity typegen generate` wired as `npm run typegen` (predev/prebuild hook) — components consume generated types; the `data` props are never hand-typed.
 - **Layout data** (`Navbar`, `Footer`): fetched once in `layout.tsx` (settings + visible services for the dropdown) and passed down.
@@ -782,6 +790,20 @@ Order (risk-ascending): Team → Appreciation → Contact → About → Sustaina
 | Console | 0 errors |
 | SEO | JSON-LD LocalBusiness with real phone; sitemap 9 URLs; `/en/*` → 308 → canonical |
 | `/studio` | 200, `noindex`, zero site-chrome leakage |
+
+### Pre-deploy verification round (2026-07-16)
+
+Re-verified against the real `prqp92tt` project on a production build. **Three bugs found and fixed — all three would have shipped:**
+
+| # | Bug | How it surfaced | Fix |
+|---|---|---|---|
+| 1 | **A publish never reached the site.** `defineLive`'s `sanityFetch` caches with `revalidate: false`; only `<SanityLive/>` in an open browser frees it. Route-level `revalidate = 60` re-rendered from the frozen cache. | `qa-publish-to-site.mjs`: published a heading, site still showed the old value 2 min later | Replaced with a typed `client.fetch` + `next:{revalidate:60}`. Re-test: **"SITE UPDATED after ~54s without a redeploy"** ✓ |
+| 2 | **Every page shipped an empty meta description** | grepped the rendered `<head>`, not the code | `description: x ?? undefined` overrides the parent; spread the key conditionally so it inherits |
+| 3 | **`og:site_name`/`og:type` dropped; a future default share image would be too** | same | Pages emit `openGraph` only when they have OG content of their own |
+
+Editorial pipeline (`qa-crud.mjs`, run against the live dataset and fully reverted — 42 projects, zero residue): **16/16 pass** — create · edit · image upload · draft/publish round-trip · delete · cleanup. Includes two client-safety proofs: **drafts are invisible under the published perspective**, and **reference protection blocks deleting an in-use image**.
+
+All 21 document types present and populated. No broken internal links (10/10 targets).
 
 **Total estimate: ~8–10 working days** (v2 additions: +½–1 day across Phases 1–3). Suggested checkpoint deploys after Phases 2, 3, and 5.
 

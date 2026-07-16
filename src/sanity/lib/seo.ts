@@ -27,24 +27,37 @@ export function pageMetadata(
   const title = seo?.title || fallbackTitle;
   return {
     title,
-    description: seo?.description ?? undefined,
-    keywords: seo?.keywords ?? undefined,
+    // Only emit these when the page actually sets them. Next.js merges
+    // metadata per segment, and a key present with an `undefined` value still
+    // overrides the parent — which would blank out the site-wide description
+    // from Site Settings → SEO Defaults. Omitting the key lets it inherit.
+    ...(seo?.description ? { description: seo.description } : {}),
+    ...(seo?.keywords?.length ? { keywords: seo.keywords } : {}),
     alternates: { canonical: seo?.canonicalUrl || path },
     ...(seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
-    openGraph: {
-      title,
-      ...(seo?.description ? { description: seo.description } : {}),
-      ...(seo?.ogImage?.asset
-        ? {
-            images: [
-              {
-                url: urlFor(seo.ogImage as never).width(1200).height(630).fit("crop").url(),
-                width: 1200,
-                height: 630,
-              },
-            ],
-          }
-        : {}),
-    },
+    // Only emit `openGraph` when this page has OG-specific content of its own.
+    // A child's openGraph *replaces* the parent's wholesale — setting it
+    // unconditionally would silently drop the site-wide og:site_name, og:type
+    // and default share image from Site Settings. When omitted, Next fills
+    // og:title/og:description from the resolved title/description anyway.
+    ...(seo?.description || seo?.ogImage?.asset
+      ? {
+          openGraph: {
+            title,
+            ...(seo.description ? { description: seo.description } : {}),
+            ...(seo.ogImage?.asset
+              ? {
+                  images: [
+                    {
+                      url: urlFor(seo.ogImage as never).width(1200).height(630).fit("crop").url(),
+                      width: 1200,
+                      height: 630,
+                    },
+                  ],
+                }
+              : {}),
+          },
+        }
+      : {}),
   };
 }
