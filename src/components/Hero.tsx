@@ -6,6 +6,7 @@ import {
   motion,
   useScroll,
   useTransform,
+  useMotionValueEvent,
   AnimatePresence,
   MotionValue,
   useMotionValue,
@@ -69,9 +70,41 @@ function HeroAnimation({
   introHeadingAccent,
   introText,
 }: HeroAnimationProps) {
-  // Text fades out as user starts scrolling
-  const textOpacity = useTransform(scrollYProgress, [0.10, 0.25], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0.10, 0.25], [0, -60]);
+  // ── Hero scroll choreography ────────────────────────────────────────────
+  // The sequence is deliberately phased so no two beats compete for attention,
+  // and it finishes well before the sticky section releases so the closing
+  // "Who We Are" statement gets a long, still, readable hold:
+  //
+  //   0.00–0.16  intro headline fades out and drifts up
+  //   0.16–0.50  the fullscreen card shrinks to a small card
+  //   0.18–0.44  the five project photos fade in and fan out
+  //   0.44–0.60  the whole cluster lifts to make room below
+  //   0.52–0.66  "Who We Are" fades up and reaches FULL opacity
+  //   0.66–1.00  HOLD — everything is static and fully legible
+  //
+  // Keeping every range's end at or before 0.66 means the entire top third of
+  // the scroll (0.66→1.0) renders clamped final values, so the statement sits
+  // perfectly still while the reader takes it in.
+
+  // Intro text drifts up as the user starts scrolling. Its VERTICAL motion is
+  // scroll-linked; its opacity is not — see the note below.
+  const textY = useTransform(scrollYProgress, [0.04, 0.16], [0, -50]);
+
+  // The two text layers cross-fade on scroll THRESHOLDS rather than by a
+  // scroll-scrubbed opacity value. A scroll-linked `opacity` in this sticky
+  // section does not hold its end value near the section's release point — it
+  // drifts back toward its start, so the intro headline would creep back in and
+  // the "Who We Are" statement would fade out again just as it should sit still
+  // and readable. Transforms (translateY, width) hold correctly, so `y` stays
+  // scroll-linked and only opacity moves to a latched `animate` target. Because
+  // the thresholds are read from live progress, the cross-fade still reverses
+  // cleanly when the user scrolls back up.
+  const [introShown, setIntroShown] = useState(true);
+  const [statementShown, setStatementShown] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setIntroShown(v < 0.18);
+    setStatementShown(v >= 0.55);
+  });
 
   // Mouse tracking for parallax
   const mouseX = useMotionValue(0);
@@ -96,64 +129,65 @@ function HeroAnimation({
     };
   }, [mouseX, mouseY]);
 
-  // Parallax kicks in after card shrinks
-  const parallaxEnabled = useTransform(scrollYProgress, [0.55, 0.68], [0, 1]);
+  // Parallax kicks in once the card has finished shrinking.
+  const parallaxEnabled = useTransform(scrollYProgress, [0.44, 0.56], [0, 1]);
 
   const { cardWidth: cardW, cardHeight: cardH, borderRadius: cardBR } = dimensions;
 
-  // Central card shrinks from fullscreen to small card
-  const cardWidth  = useTransform(scrollYProgress, [0.25, 0.58], [windowSize.width,  cardW]);
-  const cardHeight = useTransform(scrollYProgress, [0.25, 0.58], [windowSize.height, cardH]);
-  const cardBorderRadius = useTransform(scrollYProgress, [0.25, 0.58], [0, cardBR]);
-  const imgScale = useTransform(scrollYProgress, [0.25, 0.58], [1.08, 1.0]);
+  // Central card shrinks from fullscreen to small card.
+  const cardWidth  = useTransform(scrollYProgress, [0.16, 0.50], [windowSize.width,  cardW]);
+  const cardHeight = useTransform(scrollYProgress, [0.16, 0.50], [windowSize.height, cardH]);
+  const cardBorderRadius = useTransform(scrollYProgress, [0.16, 0.50], [0, cardBR]);
+  const imgScale = useTransform(scrollYProgress, [0.16, 0.50], [1.08, 1.0]);
 
   // Card subtle parallax drift (mild on central card)
   const cardDriftX = useTransform([mouseXSpring, parallaxEnabled], ([mx, cap]) => (mx as number) * 10 * (cap as number));
   const cardDriftY = useTransform([mouseYSpring, parallaxEnabled], ([my, cap]) => (my as number) * 10 * (cap as number));
 
-  // Cluster shifts up to reveal corporate text
-  const clusterY = useTransform(scrollYProgress, [0.62, 0.82], [0, -140]);
+  // Cluster shifts up to make room for the statement below it.
+  const clusterY = useTransform(scrollYProgress, [0.44, 0.62], [0, -140]);
 
-  // Corporate statement fade in
-  const corporateOpacity = useTransform(scrollYProgress, [0.65, 0.80], [0, 1]);
-  const corporateY       = useTransform(scrollYProgress, [0.65, 0.80], [50, 0]);
+  // "Who We Are" statement drifts up into place (scroll-linked); its opacity is
+  // the latched `statementShown` target set above, so once it reaches full it
+  // stays there for the whole hold zone instead of slipping back to zero.
+  const corporateY = useTransform(scrollYProgress, [0.52, 0.66], [40, 0]);
 
   // --- Floating images: each has its own scroll range for position and opacity ---
   // They START at 0,0 (center, same as card) and MOVE OUT to their offsets
   // Opacity fades in quickly so they're clearly visible once they start moving
 
   // Image 0 — Top Right
-  const img0x = useTransform(scrollYProgress, [0.28, 0.55], [0, dimensions.offsets[0].x]);
-  const img0y = useTransform(scrollYProgress, [0.28, 0.55], [0, dimensions.offsets[0].y]);
-  const img0o = useTransform(scrollYProgress, [0.28, 0.40], [0, 1]);
+  const img0x = useTransform(scrollYProgress, [0.20, 0.48], [0, dimensions.offsets[0].x]);
+  const img0y = useTransform(scrollYProgress, [0.20, 0.48], [0, dimensions.offsets[0].y]);
+  const img0o = useTransform(scrollYProgress, [0.20, 0.34], [0, 1]);
   const img0DriftX = useTransform([img0x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 7 * (cap as number));
   const img0DriftY = useTransform([img0y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 7 * (cap as number));
 
   // Image 1 — Bottom Right
-  const img1x = useTransform(scrollYProgress, [0.30, 0.55], [0, dimensions.offsets[1].x]);
-  const img1y = useTransform(scrollYProgress, [0.30, 0.55], [0, dimensions.offsets[1].y]);
-  const img1o = useTransform(scrollYProgress, [0.30, 0.42], [0, 1]);
+  const img1x = useTransform(scrollYProgress, [0.22, 0.48], [0, dimensions.offsets[1].x]);
+  const img1y = useTransform(scrollYProgress, [0.22, 0.48], [0, dimensions.offsets[1].y]);
+  const img1o = useTransform(scrollYProgress, [0.22, 0.36], [0, 1]);
   const img1DriftX = useTransform([img1x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 11 * (cap as number));
   const img1DriftY = useTransform([img1y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 11 * (cap as number));
 
   // Image 2 — Bottom Left
-  const img2x = useTransform(scrollYProgress, [0.26, 0.53], [0, dimensions.offsets[2].x]);
-  const img2y = useTransform(scrollYProgress, [0.26, 0.53], [0, dimensions.offsets[2].y]);
-  const img2o = useTransform(scrollYProgress, [0.26, 0.38], [0, 1]);
+  const img2x = useTransform(scrollYProgress, [0.19, 0.46], [0, dimensions.offsets[2].x]);
+  const img2y = useTransform(scrollYProgress, [0.19, 0.46], [0, dimensions.offsets[2].y]);
+  const img2o = useTransform(scrollYProgress, [0.19, 0.32], [0, 1]);
   const img2DriftX = useTransform([img2x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 9 * (cap as number));
   const img2DriftY = useTransform([img2y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 9 * (cap as number));
 
   // Image 3 — Top Left
-  const img3x = useTransform(scrollYProgress, [0.32, 0.57], [0, dimensions.offsets[3].x]);
-  const img3y = useTransform(scrollYProgress, [0.32, 0.57], [0, dimensions.offsets[3].y]);
-  const img3o = useTransform(scrollYProgress, [0.32, 0.44], [0, 1]);
+  const img3x = useTransform(scrollYProgress, [0.24, 0.50], [0, dimensions.offsets[3].x]);
+  const img3y = useTransform(scrollYProgress, [0.24, 0.50], [0, dimensions.offsets[3].y]);
+  const img3o = useTransform(scrollYProgress, [0.24, 0.38], [0, 1]);
   const img3DriftX = useTransform([img3x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 14 * (cap as number));
   const img3DriftY = useTransform([img3y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 14 * (cap as number));
 
   // Image 4 — Top Center
-  const img4x = useTransform(scrollYProgress, [0.29, 0.54], [0, dimensions.offsets[4].x]);
-  const img4y = useTransform(scrollYProgress, [0.29, 0.54], [0, dimensions.offsets[4].y]);
-  const img4o = useTransform(scrollYProgress, [0.29, 0.41], [0, 1]);
+  const img4x = useTransform(scrollYProgress, [0.21, 0.47], [0, dimensions.offsets[4].x]);
+  const img4y = useTransform(scrollYProgress, [0.21, 0.47], [0, dimensions.offsets[4].y]);
+  const img4o = useTransform(scrollYProgress, [0.21, 0.35], [0, 1]);
   const img4DriftX = useTransform([img4x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 10 * (cap as number));
   const img4DriftY = useTransform([img4y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 10 * (cap as number));
 
@@ -242,7 +276,9 @@ function HeroAnimation({
 
       {/* ── Main text overlay — always above card (z-index 40) ── */}
       <motion.div
-        style={{ opacity: textOpacity, y: textY, zIndex: 40 }}
+        style={{ y: textY, zIndex: 40 }}
+        animate={{ opacity: introShown ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none select-none"
       >
         {/* Badge pill */}
@@ -308,7 +344,9 @@ function HeroAnimation({
 
       {/* ── Corporate statement fades in at the bottom ── */}
       <motion.div
-        style={{ opacity: corporateOpacity, y: corporateY, zIndex: 50 }}
+        style={{ y: corporateY, zIndex: 50 }}
+        animate={{ opacity: statementShown ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="absolute bottom-10 sm:bottom-14 left-0 right-0 mx-auto max-w-4xl px-8 text-center flex flex-col items-center pointer-events-auto select-none"
       >
         <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">{introChip}</span>
@@ -407,7 +445,7 @@ export default function Hero(props: HeroProps) {
   }, [rotatingWords.length]);
 
   return (
-    <section ref={containerRef} className="relative h-[280vh] bg-ras-sand">
+    <section ref={containerRef} className="relative h-[320vh] bg-ras-sand">
       {isMounted && (
         <HeroAnimation
           key={`hero-${windowSize.width < 640 ? "sm" : windowSize.width < 1024 ? "md" : "lg"}`}
