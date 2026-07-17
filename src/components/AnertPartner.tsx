@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import SectionEyebrow from "@/components/SectionEyebrow";
 
 /** Content comes from Homepage → partner spotlight (partner ref + copy). */
 export type AnertPartnerProps = {
@@ -55,9 +56,12 @@ export default function AnertPartner({
           {/* Content */}
           <div className="flex-1 text-center md:text-left">
             {chip && (
-              <span className="text-ras-gold text-xs font-bold uppercase tracking-[0.2em] mb-2 block">
+              <SectionEyebrow
+                tone={isDark ? "dark" : "light"}
+                className="text-xs tracking-[0.2em] mb-2"
+              >
                 {chip}
-              </span>
+              </SectionEyebrow>
             )}
             <h3 className={`font-display text-2xl md:text-3xl font-semibold tracking-tight mb-4 ${
               isDark ? "text-white" : "text-ras-charcoal"

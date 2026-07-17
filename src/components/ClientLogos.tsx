@@ -26,11 +26,11 @@ export default function ClientLogos({ heading, logos }: ClientLogosProps) {
           transition={{ duration: 0.7 }}
           className="text-center mb-14"
         >
-          <span className="text-ras-gold text-xs font-bold uppercase tracking-[0.25em] mb-3 block">
+          <span className="text-ras-goldInk text-xs font-bold uppercase tracking-[0.25em] mb-3 block">
             {heading || "Our Clients"}
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-semibold text-ras-charcoal tracking-tight">
-            Trusted <span className="text-ras-gold">By</span>
+            Trusted <span className="text-ras-goldInk">By</span>
           </h2>
         </motion.div>
       </div>

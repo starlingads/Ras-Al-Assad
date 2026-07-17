@@ -199,7 +199,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
         <section className="px-6 lg:px-8 py-28 bg-ras-sand/40">
           <div className="max-w-7xl mx-auto">
             <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto mb-20">
-              <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
+              <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">
                 {commitment.chip}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-extrabold text-ras-charcoal tracking-tight mb-6">
@@ -221,7 +221,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                   viewport={{ once: true }}
                   className="bg-white p-8 rounded-2xl shadow-sm border border-ras-grey/5 group hover:border-ras-gold/40 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-ras-gold/10 text-ras-gold flex items-center justify-center mb-6 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
+                  <div className="w-14 h-14 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-6 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
                     <LucideIcon name={point.icon} className="h-7 w-7" />
                   </div>
                   <h4 className="text-lg font-bold text-ras-charcoal mb-3">
@@ -303,7 +303,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                   <p className="text-sm font-bold text-white uppercase tracking-wider mb-1">
                     {stat.label}
                   </p>
-                  <p className="text-xs text-ras-light/50">{stat.description}</p>
+                  <p className="text-xs text-ras-greyOnDark">{stat.description}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -336,7 +336,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                   <div className="absolute inset-0 bg-gradient-to-t from-ras-charcoal/50 via-transparent to-transparent opacity-60" />
                   {windEnergy.imageTag && (
                     <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl border border-ras-sand/40">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-ras-gold">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-ras-goldInk">
                         {windEnergy.imageTag}
                       </span>
                     </div>
@@ -352,10 +352,10 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-6 space-y-6"
               >
-                <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-gold flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center">
                   <LucideIcon name="Wind" className="h-6 w-6" />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-ras-gold block">
+                <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk block">
                   {windEnergy.chip}
                 </span>
                 <h2 className="font-display text-2xl md:text-3xl font-extrabold text-ras-charcoal tracking-tight">
@@ -452,7 +452,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                       <p className="text-xs font-bold text-ras-gold uppercase tracking-wider">
                         H₂
                       </p>
-                      <p className="text-[10px] text-ras-light/50 mt-1">
+                      <p className="text-[10px] text-ras-greyOnDark mt-1">
                         Green Hydrogen
                       </p>
                     </div>
@@ -472,7 +472,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
         <section className="px-6 lg:px-8 py-28 bg-ras-sand/40">
           <div className="max-w-7xl mx-auto">
             <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
+              <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">
                 {uaeStrategy.chip}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-extrabold text-ras-charcoal tracking-tight mb-6">
@@ -503,7 +503,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                   </span>
 
                   <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-gold flex items-center justify-center mb-6 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-6 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
                       <LucideIcon name={card.icon} className="h-6 w-6" />
                     </div>
                     <h4 className="text-lg font-bold text-ras-charcoal mb-3">

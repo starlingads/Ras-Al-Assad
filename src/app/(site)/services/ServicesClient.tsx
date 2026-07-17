@@ -144,7 +144,7 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
 
                     {/* Brand floating category tag */}
                     <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl border border-ras-sand/40">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-ras-gold">RAAEW Engineering</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-ras-goldInk">RAAEW Engineering</span>
                     </div>
                   </motion.div>
                 </div>
@@ -158,10 +158,10 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="space-y-4"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-gold flex items-center justify-center mb-2">
+                    <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-2">
                       <LucideIcon name={service.icon} className="h-6 w-6" />
                     </div>
-                    <span className="text-xs font-bold uppercase tracking-widest text-ras-gold block">
+                    <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk block">
                       {service.tagline}
                     </span>
                     <h2 className="font-display text-2xl md:text-3xl font-extrabold text-ras-charcoal tracking-tight">
@@ -189,7 +189,7 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
                       <div className="pt-6">
                         <Link
                           href={service.cta.href}
-                          className="inline-flex items-center text-sm font-bold text-ras-gold hover:text-ras-charcoal transition-colors group"
+                          className="inline-flex items-center text-sm font-bold text-ras-goldInk hover:text-ras-charcoal transition-colors group"
                         >
                           {service.cta.label}
                           <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

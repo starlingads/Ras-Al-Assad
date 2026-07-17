@@ -144,7 +144,7 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
                       <Link
                         key={subItem.label}
                         href={subItem.href}
-                        className="px-4 py-2.5 rounded-lg text-sm text-ras-charcoal hover:bg-white/50 hover:text-ras-gold transition-all flex items-center justify-between group/item"
+                        className="px-4 py-2.5 rounded-lg text-sm text-ras-charcoal hover:bg-white/50 hover:text-ras-goldInk transition-all flex items-center justify-between group/item"
                       >
                         {subItem.label}
                         <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover/item:opacity-100 transition-opacity" />
@@ -214,7 +214,7 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
                             key={subItem.label}
                             href={subItem.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="text-lg font-medium text-ras-charcoal hover:text-ras-gold transition-colors"
+                            className="text-lg font-medium text-ras-charcoal hover:text-ras-goldInk transition-colors"
                           >
                             {subItem.label}
                           </Link>
@@ -225,7 +225,7 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
                     <Link
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-2xl font-semibold text-ras-charcoal hover:text-ras-gold transition-colors"
+                      className="text-2xl font-semibold text-ras-charcoal hover:text-ras-goldInk transition-colors"
                     >
                       {link.label}
                     </Link>

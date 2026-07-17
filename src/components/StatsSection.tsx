@@ -44,7 +44,7 @@ export default function StatsSection({
 
         {/* Section Heading */}
         <div className="max-w-3xl mb-16">
-          <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">
+          <span className="text-ras-goldInk text-xs font-bold uppercase tracking-widest mb-3 block">
             {chip}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-ras-charcoal tracking-tightest leading-tight mb-6">
@@ -76,12 +76,12 @@ export default function StatsSection({
                   className="relative group"
                 >
                   {/* Step Bubble Node — numbers render automatically */}
-                  <span className="absolute -left-[37px] top-1.5 w-[26px] h-[26px] bg-white border border-ras-gold/45 text-[10px] font-bold text-ras-goldDark rounded-full flex items-center justify-center shadow-sm group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
+                  <span className="absolute -left-[37px] top-1.5 w-[26px] h-[26px] bg-white border border-ras-gold/45 text-[10px] font-bold text-ras-goldInk rounded-full flex items-center justify-center shadow-sm group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
 
                   <div className="space-y-1">
-                    <h4 className="text-lg font-semibold text-ras-charcoal group-hover:text-ras-goldDark transition-colors duration-300">
+                    <h4 className="text-lg font-semibold text-ras-charcoal group-hover:text-ras-goldInk transition-colors duration-300">
                       {step.title}
                     </h4>
                     <p className="text-sm text-ras-grey leading-relaxed font-light">
@@ -105,13 +105,13 @@ export default function StatsSection({
               >
                 <div className="flex justify-between items-start">
                   <div className="p-3 bg-ras-sand/50 rounded-2xl border border-ras-gold/15 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
-                    <LucideIcon name={cred.icon} className="h-6 w-6 text-ras-gold" />
+                    <LucideIcon name={cred.icon} className="h-6 w-6 text-ras-goldInk" />
                   </div>
                   <CheckCircle2 className="h-5 w-5 text-ras-goldDark/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 <div className="space-y-1 mt-4">
-                  <h3 className="text-2xl font-bold text-ras-goldDark tracking-tight group-hover:text-ras-charcoal transition-colors">
+                  <h3 className="text-2xl font-bold text-ras-goldInk tracking-tight group-hover:text-ras-charcoal transition-colors">
                     {cred.value}
                   </h3>
                   <h4 className="text-sm font-semibold text-ras-charcoal uppercase tracking-wider text-[11px]">
@@ -138,7 +138,7 @@ export default function StatsSection({
             >
               &ldquo;{quote.text}&rdquo;
             </motion.p>
-            <span className="text-[10px] font-bold text-ras-gold uppercase tracking-[0.25em] mt-6 block">
+            <span className="text-[10px] font-bold text-ras-goldInk uppercase tracking-[0.25em] mt-6 block">
               {quote.author}
             </span>
           </div>

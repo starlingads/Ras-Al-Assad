@@ -176,12 +176,12 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">
               {hero.chip}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-ras-charcoal leading-tight mb-4">
               {hero.title}
-              {hero.titleAccent && <span className="text-ras-gold">{hero.titleAccent}</span>}
+              {hero.titleAccent && <span className="text-ras-goldInk">{hero.titleAccent}</span>}
               {hero.titleEnd}
             </h1>
             <p className="text-sm md:text-base text-ras-grey leading-relaxed">
@@ -195,26 +195,32 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-ras-gold to-ras-goldDark" />
               
               <div className="flex items-center space-x-3 mb-8">
-                <Calculator className="h-6 w-6 text-ras-gold" />
+                <Calculator className="h-6 w-6 text-ras-goldInk" />
                 <h3 className="text-lg font-bold text-ras-charcoal">Calculators Parameters</h3>
               </div>
 
               {/* Bill Range Slider */}
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-bold text-ras-charcoal">Monthly DEWA Bill</label>
-                  <span className="text-xl font-extrabold text-ras-gold">
+                  <label htmlFor="monthly-bill" className="text-sm font-bold text-ras-charcoal">Monthly DEWA Bill</label>
+                  <span className="text-xl font-extrabold text-ras-goldInk">
                     {bill.toLocaleString()} <span className="text-xs font-semibold text-ras-grey">AED</span>
                   </span>
                 </div>
                 
                 <input
+                  id="monthly-bill"
                   type="range"
                   min="2000"
                   max="150000"
                   step="2000"
                   value={bill}
                   onChange={(e) => setBill(Number(e.target.value))}
+                  // A range's value is announced as a bare number, so state the
+                  // currency and give the slider its own name — the visible
+                  // label sits in a flex row with the value and reads oddly out
+                  // of context.
+                  aria-valuetext={`${bill.toLocaleString()} AED per month`}
                   className="w-full h-2 bg-ras-sand rounded-lg appearance-none cursor-pointer accent-ras-gold"
                 />
                 
@@ -229,13 +235,13 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               {/* Additional Context Info */}
               <div className="mt-8 p-4 rounded-xl bg-ras-sand/40 border border-ras-grey/5 space-y-3">
                 <div className="flex items-start gap-2.5">
-                  <Sun className="h-4 w-4 text-ras-gold mt-0.5 flex-shrink-0" />
+                  <Sun className="h-4 w-4 text-ras-goldInk mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-ras-grey leading-normal">
                     Calculations are optimized for the UAE solar irradiation profile (Dubai) using grid-connection rates under the **Shams Dubai net-metering framework**.
                   </p>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <ShieldCheck className="h-4 w-4 text-ras-gold mt-0.5 flex-shrink-0" />
+                  <ShieldCheck className="h-4 w-4 text-ras-goldInk mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-ras-grey leading-normal">
                     Includes structural audit estimates, Tier-1 solar panel selection, inverter mounting, and full DEWA utility permits.
                   </p>
@@ -252,7 +258,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                     animate={{ opacity: 1 }}
                     className="p-4 bg-ras-sand/50 rounded-xl text-center space-y-2 border border-ras-gold/30"
                   >
-                    <p className="text-sm font-bold text-ras-gold">Proposal Requested Successfully!</p>
+                    <p className="text-sm font-bold text-ras-goldInk">Proposal Requested Successfully!</p>
                     <p className="text-xs text-ras-grey">Our engineering lead will reach out within 24 hours to present a CAD system layout and PPA options.</p>
                   </motion.div>
                 ) : (
@@ -319,8 +325,8 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               <div className="bg-white rounded-2xl p-6 shadow-md border border-ras-grey/5 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
                 <div>
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-bold text-ras-gold uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">System Size</span>
-                    <Sun className="h-5 w-5 text-ras-gold" />
+                    <span className="text-[10px] font-bold text-ras-goldInk uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">System Size</span>
+                    <Sun className="h-5 w-5 text-ras-goldInk" />
                   </div>
                   <h4 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Recommended Capacity</h4>
                   <p className="text-4xl font-extrabold text-ras-charcoal mt-2">
@@ -334,8 +340,8 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               <div className="bg-white rounded-2xl p-6 shadow-md border border-ras-grey/5 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
                 <div>
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-bold text-ras-gold uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">CAPEX Estimate</span>
-                    <Building className="h-5 w-5 text-ras-gold" />
+                    <span className="text-[10px] font-bold text-ras-goldInk uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">CAPEX Estimate</span>
+                    <Building className="h-5 w-5 text-ras-goldInk" />
                   </div>
                   <h4 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Estimated System Cost</h4>
                   <p className="text-3xl font-extrabold text-ras-charcoal mt-2">
@@ -351,8 +357,8 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               <div className="bg-white rounded-2xl p-6 shadow-md border border-ras-grey/5 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
                 <div>
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-bold text-ras-gold uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">Payback Timeline</span>
-                    <Clock className="h-5 w-5 text-ras-gold" />
+                    <span className="text-[10px] font-bold text-ras-goldInk uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">Payback Timeline</span>
+                    <Clock className="h-5 w-5 text-ras-goldInk" />
                   </div>
                   <h4 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Return on Investment</h4>
                   <p className="text-4xl font-extrabold text-ras-charcoal mt-2">
@@ -368,8 +374,8 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               <div className="bg-white rounded-2xl p-6 shadow-md border border-ras-grey/5 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
                 <div>
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-bold text-ras-gold uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">CO2 Offset</span>
-                    <Leaf className="h-5 w-5 text-ras-gold" />
+                    <span className="text-[10px] font-bold text-ras-goldInk uppercase tracking-widest bg-ras-gold/10 px-2 py-1 rounded">CO2 Offset</span>
+                    <Leaf className="h-5 w-5 text-ras-goldInk" />
                   </div>
                   <h4 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Carbon Savings / Year</h4>
                   <p className="text-4xl font-extrabold text-ras-charcoal mt-2">
@@ -515,7 +521,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                 Submit & View Estimate
               </button>
               
-              <p className="text-[10px] text-ras-grey/75 text-center leading-relaxed mt-4 pt-2 border-t border-ras-sand/40">
+              <p className="text-[10px] text-ras-greyOnDark text-center leading-relaxed mt-4 pt-2 border-t border-ras-sand/40">
                 Your information will be used solely to provide an indicative solar assessment. Final recommendations and pricing may vary based on site conditions and project requirements.
               </p>
             </form>

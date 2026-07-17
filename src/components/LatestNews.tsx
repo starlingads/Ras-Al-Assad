@@ -49,7 +49,7 @@ export default function LatestNews({
         {institutions.length > 0 && (
           <div className="mb-20">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">
+              <span className="text-ras-goldInk text-xs font-bold uppercase tracking-widest mb-3 block">
                 {institutionsChip}
               </span>
               <h2 className="text-4xl sm:text-5xl font-light text-ras-charcoal tracking-tightest leading-tight">
@@ -73,11 +73,11 @@ export default function LatestNews({
                       <span className="text-lg font-bold text-ras-charcoal tracking-tight">
                         {inst.name}
                       </span>
-                      <span className="px-2 py-0.5 bg-ras-sand/40 border border-ras-gold/20 rounded text-[9px] font-bold text-ras-goldDark uppercase tracking-wider">
+                      <span className="px-2 py-0.5 bg-ras-sand/40 border border-ras-gold/20 rounded text-[9px] font-bold text-ras-goldInk uppercase tracking-wider">
                         Verified
                       </span>
                     </div>
-                    <h4 className="text-xs font-bold text-ras-goldDark uppercase tracking-wider mb-2">
+                    <h4 className="text-xs font-bold text-ras-goldInk uppercase tracking-wider mb-2">
                       {inst.role}
                     </h4>
                     <p className="text-xs text-ras-grey leading-normal font-light">
@@ -85,7 +85,7 @@ export default function LatestNews({
                     </p>
                   </div>
                   <div className="flex items-center space-x-1.5 text-[10px] font-bold text-ras-charcoal/40 uppercase tracking-widest">
-                    <CheckCircle className="h-3 w-3 text-ras-gold" />
+                    <CheckCircle className="h-3 w-3 text-ras-goldInk" />
                     <span>DEWA Compliant</span>
                   </div>
                 </motion.div>
@@ -147,12 +147,12 @@ export default function LatestNews({
 
             <div className="max-w-4xl mx-auto space-y-8 relative z-10">
               <div className="flex justify-center mb-2">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-ras-gold/35 shadow-sm text-ras-goldDark">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-ras-gold/35 shadow-sm text-ras-goldInk">
                   <FileText className="h-5 w-5" />
                 </div>
               </div>
 
-              <h3 className="text-[10px] font-bold text-ras-goldDark uppercase tracking-[0.25em]">
+              <h3 className="text-[10px] font-bold text-ras-goldInk uppercase tracking-[0.25em]">
                 {mission.label}
               </h3>
 
@@ -162,7 +162,7 @@ export default function LatestNews({
 
               <div className="space-y-2 pt-4">
                 <h4 className="text-lg sm:text-xl font-extralight text-ras-charcoal tracking-tight leading-none uppercase">
-                  {mission.taglineStart} <span className="font-bold text-ras-goldDark">{mission.taglineBold}</span>
+                  {mission.taglineStart} <span className="font-bold text-ras-goldInk">{mission.taglineBold}</span>
                 </h4>
                 <p className="text-[9px] font-bold text-ras-grey uppercase tracking-[0.3em]">
                   {mission.subline}

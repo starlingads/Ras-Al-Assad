@@ -127,12 +127,12 @@ export default function TeamPage({ data }: { data: TeamPageData }) {
             <div className="absolute top-0 right-0 w-96 h-96 bg-ras-gold/5 rounded-full blur-[80px] group-hover:bg-ras-gold/10 transition-all duration-700 pointer-events-none" />
 
             <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
-              <Star className="h-8 w-8 text-ras-gold fill-ras-gold mx-auto" />
+              <Star className="h-8 w-8 text-ras-goldInk fill-ras-gold mx-auto" />
               <blockquote className="text-xl md:text-2xl font-light leading-relaxed italic text-ras-charcoal/85">
                 &quot;{quote.text}&quot;
               </blockquote>
               <div className="pt-2">
-                <p className="text-lg font-bold text-ras-gold leading-none">{quote.authorName}</p>
+                <p className="text-lg font-bold text-ras-goldInk leading-none">{quote.authorName}</p>
                 <p className="text-xs uppercase text-ras-grey tracking-wider mt-1.5">{quote.authorRole}</p>
               </div>
             </div>
@@ -172,16 +172,16 @@ export default function TeamPage({ data }: { data: TeamPageData }) {
                   {/* Name and Role */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ras-grey/10 pb-4">
                     <div>
-                      <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-ras-charcoal group-hover:text-ras-gold transition-colors">
+                      <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-ras-charcoal group-hover:text-ras-goldInk transition-colors">
                         {member.name}
                       </h3>
-                      <p className="text-ras-gold font-bold text-sm tracking-wide uppercase mt-1">
+                      <p className="text-ras-goldInk font-bold text-sm tracking-wide uppercase mt-1">
                         {member.role}
                       </p>
                     </div>
                     {/* Badge */}
                     {member.accreditation && (
-                      <div className="px-3.5 py-1.5 rounded-full bg-ras-sand/50 border border-ras-grey/10 flex items-center gap-1.5 text-xs text-ras-gold font-semibold self-start md:self-center">
+                      <div className="px-3.5 py-1.5 rounded-full bg-ras-sand/50 border border-ras-grey/10 flex items-center gap-1.5 text-xs text-ras-goldInk font-semibold self-start md:self-center">
                         <Award className="h-3.5 w-3.5" />
                         <span>{member.accreditation}</span>
                       </div>
@@ -200,7 +200,7 @@ export default function TeamPage({ data }: { data: TeamPageData }) {
                 {member.stats && (
                   <div className="flex items-center gap-4 mt-8 pt-6 border-t border-ras-grey/10 text-xs text-ras-grey font-bold uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <ShieldCheck className="h-4.5 w-4.5 text-ras-gold" />
+                      <ShieldCheck className="h-4.5 w-4.5 text-ras-goldInk" />
                       <span>{member.stats}</span>
                     </div>
                   </div>

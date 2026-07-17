@@ -110,7 +110,7 @@ export default function ProjectsSlider({ chip, heading, cta, projects }: Project
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <span className="text-ras-gold text-xs font-bold uppercase tracking-widest mb-3 block">
+          <span className="text-ras-goldInk text-xs font-bold uppercase tracking-widest mb-3 block">
             {chip}
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-ras-charcoal tracking-tightest leading-tight">
@@ -127,7 +127,7 @@ export default function ProjectsSlider({ chip, heading, cta, projects }: Project
           >
             <Link
               href={cta.href}
-              className="group inline-flex items-center space-x-2 text-ras-gold font-bold text-sm tracking-wide"
+              className="group inline-flex items-center space-x-2 text-ras-goldInk font-bold text-sm tracking-wide"
             >
               <span>{cta.label}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

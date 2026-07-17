@@ -111,7 +111,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">{data.missionVisionSection?.chip}</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">{data.missionVisionSection?.chip}</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">{data.missionVisionSection?.heading}</h2>
           </motion.div>
 
@@ -124,7 +124,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="w-14 h-14 rounded-xl bg-ras-gold/10 flex items-center justify-center mb-6">
-                <Target className="h-7 w-7 text-ras-gold" />
+                <Target className="h-7 w-7 text-ras-goldInk" />
               </div>
               <h3 className="text-xl font-bold text-ras-charcoal mb-4">Our Mission</h3>
               <p className="text-sm md:text-base text-ras-grey leading-relaxed">
@@ -140,7 +140,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="w-14 h-14 rounded-xl bg-ras-gold/10 flex items-center justify-center mb-6">
-                <Eye className="h-7 w-7 text-ras-gold" />
+                <Eye className="h-7 w-7 text-ras-goldInk" />
               </div>
               <h3 className="text-xl font-bold text-ras-charcoal mb-4">Our Vision</h3>
               <p className="text-sm md:text-base text-ras-grey leading-relaxed">
@@ -160,7 +160,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-2 block">{data.storyChip}</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-2 block">{data.storyChip}</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight mb-8">{data.storyHeading}</h2>
           </motion.div>
 
@@ -184,7 +184,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
             >
               {data.storyBadges.map((badge) => (
                 <div key={badge.title} className="flex gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-ras-sand flex items-center justify-center text-ras-gold">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-ras-sand flex items-center justify-center text-ras-goldInk">
                     <LucideIcon name={badge.icon} className="h-5 w-5" />
                   </div>
                   <div>
@@ -202,7 +202,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
       <section className="px-6 lg:px-8 py-24 bg-ras-sand/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">{data.principlesChip}</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">{data.principlesChip}</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">{data.principlesHeading}</h2>
           </div>
 
@@ -210,7 +210,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
             {data.principles.map((principle, idx) => (
               <div key={principle.title} className="bg-white p-8 rounded-2xl shadow-sm border border-ras-grey/5 flex flex-col justify-between group hover:border-ras-gold transition-all duration-300">
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-gold flex items-center justify-center mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-6">
                     <LucideIcon name={principle.icon} className="h-6 w-6" />
                   </div>
                   <h4 className="text-lg font-bold text-ras-charcoal mb-3">{principle.title}</h4>
@@ -237,7 +237,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-6 block">{data.partnerChip}</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-6 block">{data.partnerChip}</span>
             {data.partnerLogoUrl && (
               <div className="relative w-[180px] h-[80px] mb-6">
                 <Image
@@ -261,11 +261,15 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
       {data.accreditationStrip.length > 0 && (
         <section className="px-6 lg:px-8 py-16 bg-white">
           <div className="max-w-7xl mx-auto">
-            <div className="border-t border-ras-grey/10 pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-65 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            {/* The dim + grayscale treatment here was written for image logos,
+                but this strip renders text badges — grayscale has nothing to
+                desaturate, and opacity-65 only dimmed the labels to 2.7:1. The
+                muted gold and small caps carry the secondary weight already. */}
+            <div className="border-t border-ras-grey/10 pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
               {data.accreditationStrip.map((item) => (
                 <div key={item.title} className="flex flex-col items-center space-y-2">
                   <span className="text-xs font-black tracking-widest text-ras-charcoal uppercase">{item.title}</span>
-                  <span className="text-[9px] font-bold text-ras-gold uppercase">{item.subtitle}</span>
+                  <span className="text-[9px] font-bold text-ras-goldInk uppercase">{item.subtitle}</span>
                 </div>
               ))}
             </div>

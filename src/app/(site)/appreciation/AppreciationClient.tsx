@@ -118,7 +118,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">
               {overview.chip}
             </span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight mb-6">
@@ -141,7 +141,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
+            <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">
               {certificatesSection?.chip}
             </span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">
@@ -177,7 +177,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                 </div>
                 <div className="p-5 border-t border-ras-gold/10">
                   <div className="flex items-center gap-2">
-                    <Award className="h-4 w-4 text-ras-gold flex-shrink-0" />
+                    <Award className="h-4 w-4 text-ras-goldInk flex-shrink-0" />
                     <h3 className="text-sm font-bold text-ras-charcoal">
                       {cert.title}
                     </h3>
@@ -225,7 +225,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                   <h4 className="text-sm font-bold text-white">
                     {item.label}
                   </h4>
-                  <p className="text-xs text-ras-grey mt-1">{item.desc}</p>
+                  <p className="text-xs text-ras-greyOnDark mt-1">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -254,7 +254,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                 <h4 className="text-sm font-bold text-white">
                   {anertCard.heading}
                 </h4>
-                <p className="text-xs text-ras-grey mt-1 leading-relaxed">
+                <p className="text-xs text-ras-greyOnDark mt-1 leading-relaxed">
                   {anertCard.text}
                 </p>
               </div>
@@ -274,7 +274,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7 }}
             >
-              <span className="text-xs font-bold uppercase tracking-widest text-ras-gold mb-3 block">
+              <span className="text-xs font-bold uppercase tracking-widest text-ras-goldInk mb-3 block">
                 {moreToCome.chip}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-ras-charcoal tracking-tight">
@@ -298,10 +298,10 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                   <div className="w-12 h-12 rounded-full bg-ras-gold/10 flex items-center justify-center mb-4">
                     <Plus className="h-5 w-5 text-ras-gold/60" />
                   </div>
-                  <p className="text-xs font-semibold text-ras-grey/70 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-ras-grey uppercase tracking-wider">
                     Coming Soon
                   </p>
-                  <p className="text-[10px] text-ras-grey/50 mt-1">
+                  <p className="text-[10px] text-ras-grey mt-1">
                     More recognitions
                   </p>
                 </motion.div>
@@ -352,7 +352,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
               {pageCta.heading}
             </h2>
-            <p className="text-sm md:text-base text-ras-grey leading-relaxed max-w-xl mx-auto mb-8">
+            <p className="text-sm md:text-base text-ras-greyOnDark leading-relaxed max-w-xl mx-auto mb-8">
               {pageCta.text}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
