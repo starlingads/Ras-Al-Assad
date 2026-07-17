@@ -3,117 +3,26 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════
-   FONT DECLARATIONS — Neue Haas Grotesk
-   Primary: Display (headings, hero, buttons)
-   Secondary: Text (body copy, paragraphs)
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ─── Neue Haas Grotesk Display ─── */
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-45light-trial.otf') format('opentype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-55roman-trial.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-56italic-trial.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-65medium-trial.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-75bold-trial.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-76bolditalic-trial.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrotdisp-95black-trial.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ─── Neue Haas Grotesk Text ─── */
-@font-face {
-  font-family: 'Neue Haas Grotesk Text';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-55roman-trial.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Text';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-56italic-trial.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Text';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-65medium-trial.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Text';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-75bold-trial.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Text';
-  src: url('/fonts/neue-haas-grotesk-font-fanily/neuehaasgrottext-76bolditalic-trial.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CSS CUSTOM PROPERTIES
+   TYPOGRAPHY
+   --font-display / --font-text are injected by next/font in
+   (site)/layout.tsx, which self-hosts the WOFF2, preloads it, and
+   generates a size-adjusted local fallback so swapping the webfont
+   in does not shift layout.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --font-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-display: 'Neue Haas Grotesk Display', var(--font-outfit);
-  --font-text: 'Neue Haas Grotesk Text', var(--font-outfit);
+  --font-fallback: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+
+  /* Semantic z-index scale. Anything that stacks picks a step here rather
+     than inventing a number, so the order stays reasoned about in one place. */
+  --z-base: 0;
+  --z-map-marker: 10;
+  --z-sticky: 20;
+  --z-nav: 30;
+  --z-dropdown: 40;
+  --z-overlay: 50;
+  --z-modal: 60;
 }
 
 html {
@@ -122,12 +31,46 @@ html {
 }
 
 body {
-  font-family: var(--font-text);
-  background-color: #FCFCFC;
+  font-family: var(--font-text), var(--font-fallback);
+  background-color: #fcfcfc;
   color: #121212;
   letter-spacing: -0.01em;
   line-height: 1.5;
   overflow-x: clip;
+  text-rendering: optimizeLegibility;
+}
+
+/* Long-form prose reads better with fewer orphans; headings with even
+   line lengths. Cheap, and applies everywhere without per-component work. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOCUS VISIBILITY
+
+   Two-tone ring: the gold carries on dark surfaces (8.28:1 on
+   charcoal) and the charcoal halo carries on light ones (18.26:1).
+   One of the two always contrasts, so a single rule covers every
+   background on the site without per-section overrides.
+   ═══════════════════════════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid #c5a880;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px #121212;
+  border-radius: 3px;
+}
+
+/* Only suppress the default ring where we replace it above. */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -154,10 +97,14 @@ body {
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.24s;
 }
 
-.group:hover .mega-menu-content {
+.group:hover .mega-menu-content,
+.group:focus-within .mega-menu-content {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -176,12 +123,13 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 .map-marker {
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.map-marker:hover {
+.map-marker:hover,
+.map-marker:focus-visible {
   transform: scale(1.5);
-  z-index: 50;
+  z-index: var(--z-map-marker);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -190,4 +138,40 @@ body {
 
 .pre-footer-shape {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1312' height='1312' fill='none'%3E%3Cpath fill='%230F4338' fill-rule='evenodd' d='M548.571 676.861a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-41.715a2 2 0 0 1 2-2h544.571a2 2 0 0 1 2 2v41.715Zm763.429 0c0 1.104-.89 2-2 2H765.43a2 2 0 0 1-2-2v-41.715a2 2 0 0 1 2-2H1310c1.11 0 2 .896 2 2v41.715Zm-676.863-128.29a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h41.715a2 2 0 0 1 2 2v544.571a2 2 0 0 1-2 2h-41.715Zm.002 763.429c-1.104 0-2-.9-2-2V765.428a2 2 0 0 1 2-2h41.715a2 2 0 0 1 2 2L678.853 1310c0 1.1-.895 2-2 2h-41.714Z' clip-rule='evenodd'/%3E%3Cpath fill='%23FF5938' fill-rule='evenodd' d='M717.218 565.284a2 2 0 0 1 0-2.828l385.072-385.07a2.002 2.002 0 0 1 2.83 0l29.49 29.497c.78.781.78 2.047 0 2.828l-385.067 385.07a2 2 0 0 1-2.828 0l-29.497-29.497Z' clip-rule='evenodd'/%3E%3Cpath fill='%230F4338' fill-rule='evenodd' d='M177.386 1105.11a1.99 1.99 0 0 1 0-2.82l385.07-385.074a2 2 0 0 1 2.829 0l29.496 29.497a2 2 0 0 1 0 2.828l-385.07 385.069c-.781.78-2.047.78-2.828 0l-29.497-29.5Zm569.322-387.896a2 2 0 0 1 2.828 0l385.074 385.066c.78.79.78 2.05 0 2.83l-29.5 29.5c-.78.78-2.05.78-2.83 0L717.211 749.539a2 2 0 0 1 0-2.828l29.497-29.497ZM206.889 177.386a2 2 0 0 1 2.829 0l385.07 385.07a2 2 0 0 1 0 2.829l-29.497 29.496a2 2 0 0 1-2.828 0l-385.07-385.07a2 2 0 0 1 0-2.828l29.496-29.497Z' clip-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+
+   The site drives 161 animated properties across 21 components via
+   framer-motion. Components that animate transforms in JS also read
+   useReducedMotion() so their entrances resolve to the final state
+   rather than a frozen initial one; this block covers everything
+   declarative (CSS transitions, smooth scroll, Swiper autoplay).
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep the dropdown a crossfade rather than a slide. */
+  .mega-menu-content {
+    transform: none;
+  }
+
+  .map-marker:hover,
+  .map-marker:focus-visible {
+    transform: none;
+    outline: 2px solid #c5a880;
+  }
 }

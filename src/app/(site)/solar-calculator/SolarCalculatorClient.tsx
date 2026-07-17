@@ -215,7 +215,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                   step="2000"
                   value={bill}
                   onChange={(e) => setBill(Number(e.target.value))}
-                  className="w-full h-2 bg-ras-sand rounded-lg appearance-none cursor-pointer accent-ras-gold focus:outline-none"
+                  className="w-full h-2 bg-ras-sand rounded-lg appearance-none cursor-pointer accent-ras-gold"
                 />
                 
                 <div className="flex justify-between text-[10px] font-bold text-ras-grey uppercase tracking-wider">
@@ -265,7 +265,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                         placeholder="Your Name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                     </div>
                     <div>
@@ -276,7 +276,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                         placeholder="Work Email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -287,13 +287,14 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                         placeholder="Phone (e.g. 050...)"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                       <select
                         name="propertyType"
+                        aria-label="Property type"
                         value={formData.propertyType}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/50 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       >
                         <option value="Commercial Warehouse">Warehouse</option>
                         <option value="Industrial Factory">Industrial</option>
@@ -471,7 +472,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                   placeholder="e.g. 12000"
                   value={bill || ""}
                   onChange={(e) => setBill(Number(e.target.value))}
-                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                 />
               </div>
               <div className="space-y-1.5">
@@ -482,7 +483,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                   placeholder="Your full name"
                   value={contactModalData.name}
                   onChange={(e) => setContactModalData(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                 />
               </div>
               <div className="space-y-1.5">
@@ -493,7 +494,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                   placeholder="you@company.com"
                   value={contactModalData.email}
                   onChange={(e) => setContactModalData(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                 />
               </div>
               <div className="space-y-1.5">
@@ -504,7 +505,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                   placeholder="+971 50 123 4567"
                   value={contactModalData.phone}
                   onChange={(e) => setContactModalData(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                  className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                 />
               </div>
               <button

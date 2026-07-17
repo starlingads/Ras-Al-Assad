@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import "../globals.css";
 import Navbar, { type NavbarMenuItem } from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,10 +8,25 @@ import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { resolveCta, resolveLink } from "@/lib/links";
 
-const outfit = Outfit({
+/**
+ * The design pairs a Display cut with a Text cut. Inter Tight / Inter keep
+ * that same optical-size relationship, and both are variable fonts, so the
+ * whole weight axis ships in one file per family instead of the twelve static
+ * cuts this replaced.
+ *
+ * next/font self-hosts these at build time (no request to Google at runtime),
+ * emits a preload, and derives a size-adjusted local fallback so the swap does
+ * not shift layout.
+ */
+const display = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const text = Inter({
+  subsets: ["latin"],
+  variable: "--font-text",
   display: "swap",
 });
 
@@ -88,8 +103,14 @@ export default async function RootLayout({
     : null;
 
   return (
-    <html lang="en" className={`${outfit.variable}`}>
+    <html lang="en" className={`${display.variable} ${text.variable}`}>
       <body className="antialiased text-ras-charcoal bg-ras-light">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ras-charcoal focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-ras-light"
+        >
+          Skip to content
+        </a>
         <Navbar
           logoSrc={
             settings?.logo?.asset
@@ -100,7 +121,7 @@ export default async function RootLayout({
           menu={menu}
           cta={resolveCta(settings?.headerCta ?? null)}
         />
-        <main className="min-h-screen">
+        <main id="main" className="min-h-screen">
           {children}
         </main>
         <Footer

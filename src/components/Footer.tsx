@@ -194,7 +194,7 @@ export default function Footer({
         </div>
 
         {/* Footer bottom meta metadata */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 text-xs text-ras-light/45 relative z-10">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 text-xs text-ras-greyOnDark relative z-10">
 
           <div className="flex items-center space-x-2">
             <span>{copyrightLeft}</span>

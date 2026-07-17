@@ -111,8 +111,16 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
               >
                 <Link
                   href={link.href}
-                  className="flex items-center text-sm font-medium transition-colors hover:text-ras-gold tracking-tight relative pb-1"
-                  style={{ color: isLinkActive(link.href) ? '#C5A880' : (isTextWhite ? '#FCFCFC' : '#121212') }}
+                  className="flex items-center text-sm font-medium transition-colors hover:text-ras-goldInk tracking-tight relative pb-1"
+                  style={{
+                    // The active link is gold, but the bar sits on both dark
+                    // heroes and the white scrolled state. Brand gold only
+                    // clears AA on the dark one (8.28:1); on white it is
+                    // 2.2:1, so the light state uses the text-safe gold.
+                    color: isLinkActive(link.href)
+                      ? (isTextWhite ? '#C5A880' : '#82643B')
+                      : (isTextWhite ? '#FCFCFC' : '#121212'),
+                  }}
                 >
                   {link.label}
                   {link.dropdown && (
@@ -174,7 +182,7 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
           {/* Mobile Burger Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden z-[60] relative p-2 rounded-full focus:outline-none bg-white/10 backdrop-blur-sm"
+            className="lg:hidden z-[60] relative p-2 rounded-full bg-white/10 backdrop-blur-sm"
             style={{ color: (isTextWhite && !mobileMenuOpen) ? '#FCFCFC' : '#121212' }}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

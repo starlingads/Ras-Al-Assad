@@ -277,7 +277,7 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                         placeholder="John Doe"
                         value={formData.contactName}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                     </div>
 
@@ -291,7 +291,7 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                         placeholder="e.g. Acme Warehouses L.L.C"
                         value={formData.companyName}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                     </div>
                   </div>
@@ -307,7 +307,7 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                         placeholder="email@company.ae"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                     </div>
 
@@ -321,19 +321,20 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                         placeholder="e.g. +971 50 123 4567"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                        className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                       />
                     </div>
                   </div>
 
                   {/* System selection */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-ras-charcoal">Required Engineering Discipline</label>
+                    <label htmlFor="serviceType" className="text-xs font-bold text-ras-charcoal">Required Engineering Discipline</label>
                     <select
+                      id="serviceType"
                       name="serviceType"
                       value={formData.serviceType}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold"
+                      className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                     >
                       {serviceOptions.map((opt) => (
                         <option key={opt} value={opt}>{opt}</option>
@@ -351,7 +352,7 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                       placeholder="Outline your building locations, estimated roof area or required services..."
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:outline-none focus:border-ras-gold resize-none"
+                      className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk resize-none"
                     />
                   </div>
 
