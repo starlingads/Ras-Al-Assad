@@ -80,6 +80,12 @@ export async function generateMetadata(): Promise<Metadata> {
           }
         : {}),
     },
+    // Card *type* is a technical choice, not client content: with a 1200x630
+    // image the large card is always the right one, and Next fills the title,
+    // description and image from the resolved openGraph above.
+    twitter: {
+      card: seo?.ogImage?.asset ? "summary_large_image" : "summary",
+    },
     icons: settings?.favicon?.asset
       ? { icon: urlFor(settings.favicon).width(128).url() }
       : undefined,
