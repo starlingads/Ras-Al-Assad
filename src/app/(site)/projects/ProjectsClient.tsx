@@ -100,6 +100,7 @@ export default function ProjectsPage({ data }: { data: ProjectsPageData }) {
               src={hero.backgroundUrl}
               alt={hero.backgroundAlt || "Ras Al Assad landmark infrastructure portfolio"}
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover opacity-60"
               priority
             />
@@ -247,9 +248,9 @@ export default function ProjectsPage({ data }: { data: ProjectsPageData }) {
                       <MapPin className="h-3 w-3" />
                       <span>{(project.location ?? "").split(",")[0]}</span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-light tracking-tight leading-snug">
+                    <h2 className="text-xl sm:text-2xl font-light tracking-tight leading-snug">
                       {project.name}
-                    </h3>
+                    </h2>
                   </div>
 
                 </div>
@@ -292,6 +293,7 @@ export default function ProjectsPage({ data }: { data: ProjectsPageData }) {
                       src={selectedProject.coverUrl || selectedProject.imageUrl!}
                       alt={selectedProject.imageAlt || selectedProject.name}
                       fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover"
                     />
                   )}

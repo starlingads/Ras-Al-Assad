@@ -65,6 +65,7 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
               src={hero.backgroundUrl}
               alt={hero.backgroundAlt || "Ras Al Assad solar PV and electromechanical services"}
               fill
+              sizes="100vw"
               className="object-cover opacity-60"
               priority
             />
@@ -137,6 +138,7 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
                         src={service.imageUrl}
                         alt={service.imageAlt || service.title || "Service"}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                     )}
@@ -167,9 +169,9 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
                     <h2 className="font-display text-2xl md:text-3xl font-extrabold text-ras-charcoal tracking-tight">
                       {service.title}
                     </h2>
-                    <h4 className="text-sm font-semibold text-ras-grey uppercase tracking-wide">
+                    <h3 className="text-sm font-semibold text-ras-grey uppercase tracking-wide">
                       {service.subtitle}
-                    </h4>
+                    </h3>
                     {service.description && (
                       <PortableText value={service.description} components={descriptionComponents} />
                     )}
@@ -233,7 +235,7 @@ export default function ServicesPage({ data }: { data: ServicesPageData }) {
               {zeroCapital.benefits.map((benefit) => (
                 <div key={benefit.title} className="bg-white/5 border border-white/10 p-5 rounded-xl">
                   <LucideIcon name={benefit.icon} className="h-5 w-5 text-ras-gold mb-3" />
-                  <h5 className="font-bold text-sm">{benefit.title}</h5>
+                  <h3 className="font-bold text-sm">{benefit.title}</h3>
                   <p className="text-xs text-ras-light/70 mt-1">{benefit.description}</p>
                 </div>
               ))}

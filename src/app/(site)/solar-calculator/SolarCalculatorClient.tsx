@@ -196,7 +196,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
               
               <div className="flex items-center space-x-3 mb-8">
                 <Calculator className="h-6 w-6 text-ras-goldInk" />
-                <h3 className="text-lg font-bold text-ras-charcoal">Calculators Parameters</h3>
+                <h2 className="text-lg font-bold text-ras-charcoal">Calculators Parameters</h2>
               </div>
 
               {/* Bill Range Slider */}
@@ -250,7 +250,7 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
 
               {/* Property Details request */}
               <div className="mt-8 border-t border-ras-grey/10 pt-8">
-                <h4 className="text-sm font-bold text-ras-charcoal mb-4">Request Complete Feasibility Study</h4>
+                <h3 className="text-sm font-bold text-ras-charcoal mb-4">Request Complete Feasibility Study</h3>
                 
                 {submitted ? (
                   <motion.div 

@@ -67,6 +67,7 @@ export default function TeamPage({ data }: { data: TeamPageData }) {
               src={hero.backgroundUrl}
               alt={hero.backgroundAlt || "Ras Al Assad leadership and technical team"}
               fill
+              sizes="(max-width: 768px) 50vw, 25vw"
               className="object-cover opacity-60"
               priority
             />
@@ -160,6 +161,7 @@ export default function TeamPage({ data }: { data: TeamPageData }) {
                     src={member.imageUrl}
                     alt={member.name}
                     fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
                     className="object-cover object-top transition-transform duration-700 group-hover:scale-103"
                   />
                 )}
@@ -172,9 +174,9 @@ export default function TeamPage({ data }: { data: TeamPageData }) {
                   {/* Name and Role */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ras-grey/10 pb-4">
                     <div>
-                      <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-ras-charcoal group-hover:text-ras-goldInk transition-colors">
+                      <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-ras-charcoal group-hover:text-ras-goldInk transition-colors">
                         {member.name}
-                      </h3>
+                      </h2>
                       <p className="text-ras-goldInk font-bold text-sm tracking-wide uppercase mt-1">
                         {member.role}
                       </p>

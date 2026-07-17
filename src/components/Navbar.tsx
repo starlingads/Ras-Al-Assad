@@ -94,6 +94,10 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
                 src={logoSrc}
                 alt={logoAlt}
                 fill
+                // Without `sizes`, a `fill` image is assumed to be 100vw and
+                // the browser picks the largest srcset candidate — for a logo
+                // that never renders wider than 192px.
+                sizes="192px"
                 className="object-contain"
                 priority
               />
@@ -182,10 +186,16 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
           {/* Mobile Burger Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            // Icon-only, so there is no text node to name it. Without this it
+            // announces as bare "button" — on the one viewport where it is the
+            // only route to navigation.
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
             className="lg:hidden z-[60] relative p-2 rounded-full bg-white/10 backdrop-blur-sm"
             style={{ color: (isTextWhite && !mobileMenuOpen) ? '#FCFCFC' : '#121212' }}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
           </button>
         </div>
       </header>
@@ -194,6 +204,7 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

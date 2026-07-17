@@ -98,6 +98,7 @@ export default function Footer({
                   src={logoSrc}
                   alt={logoAlt}
                   fill
+                  sizes="144px"
                   className="object-contain px-1 py-0.5"
                 />
               </div>
@@ -136,9 +137,9 @@ export default function Footer({
 
             {/* Capabilities menu */}
             <div className="flex flex-col space-y-4">
-              <h5 className="font-semibold text-white tracking-tight border-b border-white/5 pb-2 text-sm uppercase tracking-wider">
+              <h3 className="font-semibold text-white tracking-tight border-b border-white/5 pb-2 text-sm uppercase tracking-wider">
                 {capabilityHeading || "Capabilities"}
-              </h5>
+              </h3>
               <ul className="flex flex-col space-y-2 text-sm text-ras-light/70">
                 {capabilities.map((link, idx) => (
                   <li key={idx}>
@@ -155,9 +156,9 @@ export default function Footer({
 
             {/* Quick Links menu */}
             <div className="flex flex-col space-y-4">
-              <h5 className="font-semibold text-white tracking-tight border-b border-white/5 pb-2 text-sm uppercase tracking-wider">
+              <h3 className="font-semibold text-white tracking-tight border-b border-white/5 pb-2 text-sm uppercase tracking-wider">
                 Company
-              </h5>
+              </h3>
               <ul className="flex flex-col space-y-2 text-sm text-ras-light/70">
                 {companyMenu.map((link, idx) => (
                   <li key={idx}>
@@ -175,10 +176,10 @@ export default function Footer({
             {/* Regulatory Accreditations info column */}
             {accreditationLabels.length > 0 && (
               <div className="flex flex-col space-y-4">
-                <h5 className="font-semibold text-white tracking-tight border-b border-white/5 pb-2 text-sm uppercase tracking-wider flex items-center gap-1.5">
+                <h3 className="font-semibold text-white tracking-tight border-b border-white/5 pb-2 text-sm uppercase tracking-wider flex items-center gap-1.5">
                   <Shield className="h-4 w-4 text-ras-gold" />
                   Accredited
-                </h5>
+                </h3>
                 <ul className="flex flex-col space-y-2 text-xs text-ras-light/60">
                   {accreditationLabels.map((item, idx) => (
                     <li key={idx} className="flex items-center gap-2">

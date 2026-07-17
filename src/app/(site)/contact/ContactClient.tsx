@@ -98,10 +98,10 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
 
               {/* Core Information Panel */}
               <div className="space-y-8 bg-white rounded-3xl p-8 shadow-md border border-ras-grey/5">
-                <h3 className="text-lg font-extrabold text-ras-charcoal flex items-center gap-2">
+                <h2 className="text-lg font-extrabold text-ras-charcoal flex items-center gap-2">
                   <Building className="h-5 w-5 text-ras-goldInk" />
                   Office Details
-                </h3>
+                </h2>
 
                 <div className="space-y-6">
                   {/* Address */}
@@ -111,7 +111,7 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Corporate Address</h4>
+                        <h3 className="text-xs font-bold text-ras-grey uppercase tracking-wider">Corporate Address</h3>
                         <p className="text-sm text-ras-charcoal mt-1 leading-normal font-semibold">
                           {address.line1},<br />
                           {[address.line2, address.poBox].filter(Boolean).join(", ")},<br />

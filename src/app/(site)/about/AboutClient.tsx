@@ -55,6 +55,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
               src={hero.backgroundUrl}
               alt={hero.backgroundAlt || "Ras Al Assad engineering excellence"}
               fill
+              sizes="100vw"
               className="object-cover opacity-60"
               priority
             />
@@ -188,7 +189,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
                     <LucideIcon name={badge.icon} className="h-5 w-5" />
                   </div>
                   <div>
-                    <h5 className="text-sm font-bold text-ras-charcoal">{badge.title}</h5>
+                    <h3 className="text-sm font-bold text-ras-charcoal">{badge.title}</h3>
                     <p className="text-xs text-ras-grey mt-0.5">{badge.description}</p>
                   </div>
                 </div>
@@ -213,7 +214,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
                   <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-6">
                     <LucideIcon name={principle.icon} className="h-6 w-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-ras-charcoal mb-3">{principle.title}</h4>
+                  <h3 className="text-lg font-bold text-ras-charcoal mb-3">{principle.title}</h3>
                   <p className="text-sm text-ras-grey leading-relaxed">
                     {principle.description}
                   </p>
@@ -244,6 +245,7 @@ export default function AboutPage({ data }: { data: AboutPageData }) {
                   src={data.partnerLogoUrl}
                   alt={data.partnerLogoAlt || data.partnerHeading || "Partner logo"}
                   fill
+                  sizes="160px"
                   className="object-contain"
                   unoptimized
                 />

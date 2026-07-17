@@ -148,6 +148,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
               src={hero.backgroundUrl}
               alt={hero.backgroundAlt || "Sustainable solar energy infrastructure by Ras Al Assad"}
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover opacity-60"
               priority
             />
@@ -224,9 +225,9 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                   <div className="w-14 h-14 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-6 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
                     <LucideIcon name={point.icon} className="h-7 w-7" />
                   </div>
-                  <h4 className="text-lg font-bold text-ras-charcoal mb-3">
+                  <h3 className="text-lg font-bold text-ras-charcoal mb-3">
                     {point.title}
-                  </h4>
+                  </h3>
                   <p className="text-sm text-ras-grey leading-relaxed">
                     {point.description}
                   </p>
@@ -330,6 +331,7 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                       src={windEnergy.imageUrl}
                       alt={windEnergy.imageAlt || "Wind energy turbines powering a cleaner future"}
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   )}
@@ -422,9 +424,9 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                       className="bg-white/[0.04] border border-white/10 rounded-xl p-5"
                     >
                       <LucideIcon name={item.icon} className="h-5 w-5 text-ras-gold mb-3" />
-                      <h5 className="font-bold text-sm text-white">
+                      <h3 className="font-bold text-sm text-white">
                         {item.title}
-                      </h5>
+                      </h3>
                       <p className="text-xs text-ras-light/60 mt-1">
                         {item.description}
                       </p>
@@ -506,9 +508,9 @@ export default function SustainabilityClient({ data }: { data: SustainabilityPag
                     <div className="w-12 h-12 rounded-xl bg-ras-gold/10 text-ras-goldInk flex items-center justify-center mb-6 group-hover:bg-ras-gold group-hover:text-white transition-colors duration-300">
                       <LucideIcon name={card.icon} className="h-6 w-6" />
                     </div>
-                    <h4 className="text-lg font-bold text-ras-charcoal mb-3">
+                    <h3 className="text-lg font-bold text-ras-charcoal mb-3">
                       {card.title}
-                    </h4>
+                    </h3>
                     <p className="text-sm text-ras-grey leading-relaxed">
                       {card.description}
                     </p>

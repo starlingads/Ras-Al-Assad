@@ -77,9 +77,9 @@ export default function LatestNews({
                         Verified
                       </span>
                     </div>
-                    <h4 className="text-xs font-bold text-ras-goldInk uppercase tracking-wider mb-2">
+                    <h3 className="text-xs font-bold text-ras-goldInk uppercase tracking-wider mb-2">
                       {inst.role}
-                    </h4>
+                    </h3>
                     <p className="text-xs text-ras-grey leading-normal font-light">
                       {inst.description}
                     </p>

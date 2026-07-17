@@ -281,9 +281,9 @@ export default function InteractiveMap({
                 </div>
 
                 <div className="flex-grow space-y-1">
-                  <h4 className="text-base font-semibold leading-tight tracking-tight">
+                  <h3 className="text-base font-semibold leading-tight tracking-tight">
                     {hoveredProject.name}
-                  </h4>
+                  </h3>
                   <p className="text-xs text-ras-greyOnDark">
                     {hoveredProject.location}
                   </p>

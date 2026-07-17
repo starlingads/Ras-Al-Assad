@@ -62,6 +62,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
               src={hero.backgroundUrl}
               alt={hero.backgroundAlt || "Award-winning engineering recognition — Ras Al Assad"}
               fill
+              sizes="(max-width: 768px) 100vw, 33vw"
               className="object-cover opacity-60"
               priority
             />
@@ -166,6 +167,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                     src={cert.url}
                     alt={cert.alt}
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
                   />
                   {/* hover overlay */}
@@ -222,9 +224,9 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                   <LucideIcon name={item.icon} className="h-5 w-5 text-ras-gold" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white">
+                  <h3 className="text-sm font-bold text-white">
                     {item.label}
-                  </h4>
+                  </h3>
                   <p className="text-xs text-ras-greyOnDark mt-1">{item.desc}</p>
                 </div>
               </motion.div>
@@ -246,6 +248,7 @@ export default function AppreciationClient({ data }: { data: AppreciationPageDat
                     src={anertCard.logoUrl}
                     alt={anertCard.logoAlt || anertCard.heading || "Partner logo"}
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-contain p-1"
                   />
                 </div>

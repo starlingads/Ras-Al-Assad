@@ -47,6 +47,7 @@ export default function AnertPartner({
                   src={logoSrc}
                   alt={logoAlt || heading || "Partner logo"}
                   fill
+                  sizes="160px"
                   className="object-contain p-3"
                 />
               </div>
