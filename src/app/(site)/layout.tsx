@@ -3,6 +3,7 @@ import { Inter, Inter_Tight } from "next/font/google";
 import "../globals.css";
 import Navbar, { type NavbarMenuItem } from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MotionProvider from "@/components/MotionProvider";
 import { sanityFetch } from "@/sanity/lib/live";
 import { LAYOUT_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
@@ -49,8 +50,7 @@ async function getLayoutData() {
 export async function generateMetadata(): Promise<Metadata> {
   const { settings } = await getLayoutData();
   const seo = settings?.defaultSeo;
-  const title =
-    seo?.title ?? "Ras Al Assad Electromechanical Works L.L.C";
+  const title = seo?.title ?? "Ras Al Assad Electromechanical Works L.L.C";
   // Site-wide defaults from Site Settings → SEO Defaults. Pages inherit
   // anything they do not set themselves (see pageMetadata).
   return {
@@ -65,7 +65,19 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       ...(seo?.description ? { description: seo.description } : {}),
       ...(seo?.ogImage?.asset
-        ? { images: [{ url: urlFor(seo.ogImage).width(1200).height(630).fit("crop").url(), width: 1200, height: 630 }] }
+        ? {
+            images: [
+              {
+                url: urlFor(seo.ogImage)
+                  .width(1200)
+                  .height(630)
+                  .fit("crop")
+                  .url(),
+                width: 1200,
+                height: 630,
+              },
+            ],
+          }
         : {}),
     },
     icons: settings?.favicon?.asset
@@ -111,55 +123,74 @@ export default async function RootLayout({
         >
           Skip to content
         </a>
-        <Navbar
-          logoSrc={
-            settings?.logo?.asset
-              ? urlFor(settings.logo).width(384).url()
-              : "/assets/Logos/RAS-Logo-Main.png"
-          }
-          logoAlt={settings?.siteName ?? "Ras Al Assad L.L.C"}
-          menu={menu}
-          cta={resolveCta(settings?.headerCta ?? null)}
-        />
-        <main id="main" className="min-h-screen">
-          {children}
-        </main>
-        <Footer
-          banner={
-            settings?.footerBanner
-              ? {
-                  chip: settings.footerBanner.chip,
-                  heading: settings.footerBanner.heading,
-                  headingAccent: settings.footerBanner.headingAccent,
-                  headingEnd: settings.footerBanner.headingEnd,
-                  cta: resolveCta(settings.footerBanner.cta ?? null),
-                }
-              : null
-          }
-          logoSrc={
-            settings?.footerLogo?.asset
-              ? urlFor(settings.footerLogo).width(288).url()
-              : "/assets/Logos/RAS-Logo-02.png"
-          }
-          logoAlt={settings?.siteName ?? "Ras Al Assad L.L.C"}
-          description={settings?.footerDescription}
-          addressText={addressText}
-          phone={settings?.phones?.[0]?.number ? { number: settings.phones[0].number } : null}
-          email={settings?.emails?.[0]?.email ? { email: settings.emails[0].email } : null}
-          capabilityHeading={settings?.capabilityHeading}
-          capabilities={serviceLinks}
-          companyMenu={(settings?.companyMenu ?? [])
-            .filter((item) => item.enabled !== false)
-            .map((item) => ({ label: item.label ?? "", href: resolveLink(item.link) }))}
-          accreditationLabels={
-            settings?.showAccreditations === false
-              ? []
-              : (accreditations ?? []).map((a) => a.shortLabel || a.name || "").filter(Boolean)
-          }
-          copyrightLeft={(settings?.copyrightText ?? "Copyright © {year}").replace("{year}", year)}
-          companyName={settings?.siteName ?? "Ras Al Assad Electromechanical Works L.L.C"}
-          tagline={settings?.footerTagline}
-        />
+        <MotionProvider>
+          <Navbar
+            logoSrc={
+              settings?.logo?.asset
+                ? urlFor(settings.logo).width(384).url()
+                : "/assets/Logos/RAS-Logo-Main.png"
+            }
+            logoAlt={settings?.siteName ?? "Ras Al Assad L.L.C"}
+            menu={menu}
+            cta={resolveCta(settings?.headerCta ?? null)}
+          />
+          <main id="main" className="min-h-screen">
+            {children}
+          </main>
+          <Footer
+            banner={
+              settings?.footerBanner
+                ? {
+                    chip: settings.footerBanner.chip,
+                    heading: settings.footerBanner.heading,
+                    headingAccent: settings.footerBanner.headingAccent,
+                    headingEnd: settings.footerBanner.headingEnd,
+                    cta: resolveCta(settings.footerBanner.cta ?? null),
+                  }
+                : null
+            }
+            logoSrc={
+              settings?.footerLogo?.asset
+                ? urlFor(settings.footerLogo).width(288).url()
+                : "/assets/Logos/RAS-Logo-02.png"
+            }
+            logoAlt={settings?.siteName ?? "Ras Al Assad L.L.C"}
+            description={settings?.footerDescription}
+            addressText={addressText}
+            phone={
+              settings?.phones?.[0]?.number
+                ? { number: settings.phones[0].number }
+                : null
+            }
+            email={
+              settings?.emails?.[0]?.email
+                ? { email: settings.emails[0].email }
+                : null
+            }
+            capabilityHeading={settings?.capabilityHeading}
+            capabilities={serviceLinks}
+            companyMenu={(settings?.companyMenu ?? [])
+              .filter((item) => item.enabled !== false)
+              .map((item) => ({
+                label: item.label ?? "",
+                href: resolveLink(item.link),
+              }))}
+            accreditationLabels={
+              settings?.showAccreditations === false
+                ? []
+                : (accreditations ?? [])
+                    .map((a) => a.shortLabel || a.name || "")
+                    .filter(Boolean)
+            }
+            copyrightLeft={(
+              settings?.copyrightText ?? "Copyright © {year}"
+            ).replace("{year}", year)}
+            companyName={
+              settings?.siteName ?? "Ras Al Assad Electromechanical Works L.L.C"
+            }
+            tagline={settings?.footerTagline}
+          />
+        </MotionProvider>
       </body>
     </html>
   );
