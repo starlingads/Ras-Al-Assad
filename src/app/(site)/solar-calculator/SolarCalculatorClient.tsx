@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Calculator, 
@@ -45,12 +45,6 @@ export type SolarCalculatorData = {
 export default function SolarCalculatorPage({ data }: { data: SolarCalculatorData }) {
   const { hero, assumptions, leadGateEnabled, disclaimer } = data;
   const [bill, setBill] = useState<number>(12000);
-  const [systemSize, setSystemSize] = useState<number>(0);
-  const [capitalCost, setCapitalCost] = useState<number>(0);
-  const [savingsYear, setSavingsYear] = useState<number>(0);
-  const [savings20Years, setSavings20Years] = useState<number>(0);
-  const [payback, setPayback] = useState<number>(0);
-  const [co2, setCo2] = useState<number>(0);
 
   // Contact modal state
   const [showContactModal, setShowContactModal] = useState(leadGateEnabled);
@@ -70,42 +64,53 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
     notes: ""
   });
 
-  useEffect(() => {
-    // Dubai solar calculation metrics — every factor is client-editable in
-    // the Studio (Solar Calculator → Calculation Numbers).
-    const {
-      tariffAedPerKwh,
-      selfConsumptionFactor,
-      yieldKwhPerKwpYear,
-      costAedPerKwp,
-      savingsRate,
-      savingsHorizonYears,
-      co2TonnesPerKwp,
-    } = assumptions;
+  /**
+   * Every figure below is derived from `bill` and the Studio's assumptions —
+   * there is no external system to synchronise with, so this is a computation,
+   * not an effect. It previously ran as an effect that called six setStates,
+   * which meant every drag of the bill slider rendered twice: once for the new
+   * bill, then again for the six results. Deriving it removes that cascade on
+   * the one page with a continuous input, where responsiveness is felt.
+   */
+  const { systemSize, capitalCost, savingsYear, savings20Years, payback, co2 } =
+    useMemo(() => {
+      // Dubai solar calculation metrics — every factor is client-editable in
+      // the Studio (Solar Calculator → Calculation Numbers).
+      const {
+        tariffAedPerKwh,
+        selfConsumptionFactor,
+        yieldKwhPerKwpYear,
+        costAedPerKwp,
+        savingsRate,
+        savingsHorizonYears,
+        co2TonnesPerKwp,
+      } = assumptions;
 
-    // System size in kWp needed to offset the usable share of consumption.
-    const size = Math.round((bill / tariffAedPerKwh) * 12 * selfConsumptionFactor / yieldKwhPerKwpYear);
+      // System size in kWp needed to offset the usable share of consumption.
+      const size = Math.round((bill / tariffAedPerKwh) * 12 * selfConsumptionFactor / yieldKwhPerKwpYear);
 
-    // Average capital expenditure for an installation at this scale.
-    const cost = size * costAedPerKwp;
+      // Average capital expenditure for an installation at this scale.
+      const cost = size * costAedPerKwp;
 
-    // Annual savings as the configured share of the bill.
-    const annualSavings = Math.round(bill * 12 * savingsRate);
-    const savings20 = annualSavings * savingsHorizonYears;
+      // Annual savings as the configured share of the bill.
+      const annualSavings = Math.round(bill * 12 * savingsRate);
+      const savings20 = annualSavings * savingsHorizonYears;
 
-    // Return on investment payback period
-    const paybackPeriod = Number((cost / annualSavings).toFixed(1));
+      // Return on investment payback period
+      const paybackPeriod = Number((cost / annualSavings).toFixed(1));
 
-    // CO₂ reduction per installed kWp per year in the Gulf grid mix.
-    const co2Reduction = Math.round(size * co2TonnesPerKwp);
+      // CO₂ reduction per installed kWp per year in the Gulf grid mix.
+      const co2Reduction = Math.round(size * co2TonnesPerKwp);
 
-    setSystemSize(size);
-    setCapitalCost(cost);
-    setSavingsYear(annualSavings);
-    setSavings20Years(savings20);
-    setPayback(paybackPeriod > 0 ? paybackPeriod : 0);
-    setCo2(co2Reduction);
-  }, [bill, assumptions]);
+      return {
+        systemSize: size,
+        capitalCost: cost,
+        savingsYear: annualSavings,
+        savings20Years: savings20,
+        payback: paybackPeriod > 0 ? paybackPeriod : 0,
+        co2: co2Reduction,
+      };
+    }, [bill, assumptions]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
