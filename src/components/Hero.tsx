@@ -7,6 +7,7 @@ import {
   useScroll,
   useTransform,
   useMotionValueEvent,
+  useReducedMotion,
   AnimatePresence,
   MotionValue,
   useMotionValue,
@@ -85,10 +86,25 @@ function HeroAnimation({
   // Keeping every range's end at or before 0.66 means the entire top third of
   // the scroll (0.66→1.0) renders clamped final values, so the statement sits
   // perfectly still while the reader takes it in.
+  //
+  // Every transform below is driven off a SPRING-SMOOTHED copy of the scroll
+  // progress rather than the raw value. Raw scroll-linked motion is rigidly
+  // pinned to the scrollbar and reads as mechanical; a light spring gives the
+  // sequence weight and glide — the sub-frame interpolation that makes a
+  // reference like Virya Energy feel cinematic rather than scrubbed. Under
+  // prefers-reduced-motion we fall back to the raw value (no added easing).
+  const reduce = useReducedMotion();
+  const smoothed = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 32,
+    mass: 0.55,
+    restDelta: 0.0004,
+  });
+  const p = reduce ? scrollYProgress : smoothed;
 
   // Intro text drifts up as the user starts scrolling. Its VERTICAL motion is
   // scroll-linked; its opacity is not — see the note below.
-  const textY = useTransform(scrollYProgress, [0.04, 0.16], [0, -50]);
+  const textY = useTransform(p, [0.04, 0.16], [0, -50]);
 
   // The two text layers cross-fade on scroll THRESHOLDS rather than by a
   // scroll-scrubbed opacity value. A scroll-linked `opacity` in this sticky
@@ -101,7 +117,7 @@ function HeroAnimation({
   // cleanly when the user scrolls back up.
   const [introShown, setIntroShown] = useState(true);
   const [statementShown, setStatementShown] = useState(false);
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
+  useMotionValueEvent(p, "change", (v) => {
     setIntroShown(v < 0.18);
     setStatementShown(v >= 0.55);
   });
@@ -130,66 +146,72 @@ function HeroAnimation({
   }, [mouseX, mouseY]);
 
   // Parallax kicks in once the card has finished shrinking.
-  const parallaxEnabled = useTransform(scrollYProgress, [0.44, 0.56], [0, 1]);
+  const parallaxEnabled = useTransform(p, [0.44, 0.56], [0, 1]);
 
   const { cardWidth: cardW, cardHeight: cardH, borderRadius: cardBR } = dimensions;
 
   // Central card shrinks from fullscreen to small card.
-  const cardWidth  = useTransform(scrollYProgress, [0.16, 0.50], [windowSize.width,  cardW]);
-  const cardHeight = useTransform(scrollYProgress, [0.16, 0.50], [windowSize.height, cardH]);
-  const cardBorderRadius = useTransform(scrollYProgress, [0.16, 0.50], [0, cardBR]);
-  const imgScale = useTransform(scrollYProgress, [0.16, 0.50], [1.08, 1.0]);
+  const cardWidth  = useTransform(p, [0.16, 0.50], [windowSize.width,  cardW]);
+  const cardHeight = useTransform(p, [0.16, 0.50], [windowSize.height, cardH]);
+  const cardBorderRadius = useTransform(p, [0.16, 0.50], [0, cardBR]);
+  const imgScale = useTransform(p, [0.16, 0.50], [1.08, 1.0]);
 
   // Card subtle parallax drift (mild on central card)
   const cardDriftX = useTransform([mouseXSpring, parallaxEnabled], ([mx, cap]) => (mx as number) * 10 * (cap as number));
   const cardDriftY = useTransform([mouseYSpring, parallaxEnabled], ([my, cap]) => (my as number) * 10 * (cap as number));
 
   // Cluster shifts up to make room for the statement below it.
-  const clusterY = useTransform(scrollYProgress, [0.44, 0.62], [0, -140]);
+  const clusterY = useTransform(p, [0.44, 0.62], [0, -140]);
 
   // "Who We Are" statement drifts up into place (scroll-linked); its opacity is
   // the latched `statementShown` target set above, so once it reaches full it
   // stays there for the whole hold zone instead of slipping back to zero.
-  const corporateY = useTransform(scrollYProgress, [0.52, 0.66], [40, 0]);
+  const corporateY = useTransform(p, [0.52, 0.66], [40, 0]);
 
   // --- Floating images: each has its own scroll range for position and opacity ---
   // They START at 0,0 (center, same as card) and MOVE OUT to their offsets
   // Opacity fades in quickly so they're clearly visible once they start moving
 
   // Image 0 — Top Right
-  const img0x = useTransform(scrollYProgress, [0.20, 0.48], [0, dimensions.offsets[0].x]);
-  const img0y = useTransform(scrollYProgress, [0.20, 0.48], [0, dimensions.offsets[0].y]);
-  const img0o = useTransform(scrollYProgress, [0.20, 0.34], [0, 1]);
+  const img0x = useTransform(p, [0.20, 0.48], [0, dimensions.offsets[0].x]);
+  const img0y = useTransform(p, [0.20, 0.48], [0, dimensions.offsets[0].y]);
+  const img0o = useTransform(p, [0.20, 0.34], [0, 1]);
   const img0DriftX = useTransform([img0x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 7 * (cap as number));
   const img0DriftY = useTransform([img0y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 7 * (cap as number));
 
   // Image 1 — Bottom Right
-  const img1x = useTransform(scrollYProgress, [0.22, 0.48], [0, dimensions.offsets[1].x]);
-  const img1y = useTransform(scrollYProgress, [0.22, 0.48], [0, dimensions.offsets[1].y]);
-  const img1o = useTransform(scrollYProgress, [0.22, 0.36], [0, 1]);
+  const img1x = useTransform(p, [0.22, 0.48], [0, dimensions.offsets[1].x]);
+  const img1y = useTransform(p, [0.22, 0.48], [0, dimensions.offsets[1].y]);
+  const img1o = useTransform(p, [0.22, 0.36], [0, 1]);
   const img1DriftX = useTransform([img1x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 11 * (cap as number));
   const img1DriftY = useTransform([img1y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 11 * (cap as number));
 
   // Image 2 — Bottom Left
-  const img2x = useTransform(scrollYProgress, [0.19, 0.46], [0, dimensions.offsets[2].x]);
-  const img2y = useTransform(scrollYProgress, [0.19, 0.46], [0, dimensions.offsets[2].y]);
-  const img2o = useTransform(scrollYProgress, [0.19, 0.32], [0, 1]);
+  const img2x = useTransform(p, [0.19, 0.46], [0, dimensions.offsets[2].x]);
+  const img2y = useTransform(p, [0.19, 0.46], [0, dimensions.offsets[2].y]);
+  const img2o = useTransform(p, [0.19, 0.32], [0, 1]);
   const img2DriftX = useTransform([img2x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 9 * (cap as number));
   const img2DriftY = useTransform([img2y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 9 * (cap as number));
 
   // Image 3 — Top Left
-  const img3x = useTransform(scrollYProgress, [0.24, 0.50], [0, dimensions.offsets[3].x]);
-  const img3y = useTransform(scrollYProgress, [0.24, 0.50], [0, dimensions.offsets[3].y]);
-  const img3o = useTransform(scrollYProgress, [0.24, 0.38], [0, 1]);
+  const img3x = useTransform(p, [0.24, 0.50], [0, dimensions.offsets[3].x]);
+  const img3y = useTransform(p, [0.24, 0.50], [0, dimensions.offsets[3].y]);
+  const img3o = useTransform(p, [0.24, 0.38], [0, 1]);
   const img3DriftX = useTransform([img3x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 14 * (cap as number));
   const img3DriftY = useTransform([img3y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 14 * (cap as number));
 
   // Image 4 — Top Center
-  const img4x = useTransform(scrollYProgress, [0.21, 0.47], [0, dimensions.offsets[4].x]);
-  const img4y = useTransform(scrollYProgress, [0.21, 0.47], [0, dimensions.offsets[4].y]);
-  const img4o = useTransform(scrollYProgress, [0.21, 0.35], [0, 1]);
+  const img4x = useTransform(p, [0.21, 0.47], [0, dimensions.offsets[4].x]);
+  const img4y = useTransform(p, [0.21, 0.47], [0, dimensions.offsets[4].y]);
+  const img4o = useTransform(p, [0.21, 0.35], [0, 1]);
   const img4DriftX = useTransform([img4x, mouseXSpring, parallaxEnabled], ([x, mx, cap]) => (x as number) + (mx as number) * 10 * (cap as number));
   const img4DriftY = useTransform([img4y, mouseYSpring, parallaxEnabled], ([y, my, cap]) => (y as number) + (my as number) * 10 * (cap as number));
+
+  // Depth: the photos grow from 82% as they fan out, so they read as coming
+  // toward the viewer rather than sliding on a flat plane — the parallax layer
+  // separation the reference site gets from its 3D transforms, kept cheap here
+  // with a single scale on the (already GPU-composited) images.
+  const floatScale = useTransform(p, [0.20, 0.46], [0.82, 1]);
 
   // Aspect ratios and z-order are design constants; the photos come from the CMS.
   const floatingImgs = [
@@ -220,6 +242,7 @@ function HeroAnimation({
             style={{
               x: img.driftX,
               y: img.driftY,
+              scale: floatScale,
               opacity: img.opacity,
               width: img.w,
               height: img.w / img.ar,
