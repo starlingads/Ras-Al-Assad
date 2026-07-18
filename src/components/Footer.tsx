@@ -77,7 +77,7 @@ export default function Footer({
               <div className="relative z-10 flex-shrink-0">
                 <Link
                   href={banner.cta.href}
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-ras-gold hover:bg-white hover:text-ras-charcoal text-ras-charcoal font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group/btn"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-ras-gold hover:bg-white hover:text-ras-charcoal text-ras-charcoal font-bold rounded-full transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] group/btn"
                 >
                   <span>{banner.cta.label}</span>
                   <ArrowRight className="h-5 w-5 group-hover/btn:translate-x-1.5 transition-transform duration-300" />

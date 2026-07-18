@@ -176,7 +176,7 @@ export default function Navbar({ logoSrc, logoAlt, menu, cta }: NavbarProps) {
             {cta && (
               <Link
                 href={cta.href}
-                className="px-5 py-2.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-ras-charcoal hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
+                className="px-5 py-2.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-ras-charcoal hover:text-white hover:shadow-lg hover:scale-105 active:scale-95"
               >
                 {cta.label}
               </Link>

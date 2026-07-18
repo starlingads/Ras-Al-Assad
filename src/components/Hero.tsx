@@ -314,7 +314,7 @@ function HeroAnimation({
           {primaryCta && (
             <Link
               href={primaryCta.href}
-              className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full hover:bg-white transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
+              className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full shadow-lg transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.97] w-full sm:w-auto text-center"
             >
               {primaryCta.label}
             </Link>
@@ -322,24 +322,28 @@ function HeroAnimation({
           {secondaryCta && (
             <Link
               href={secondaryCta.href}
-              className="px-8 py-3.5 bg-white/90 backdrop-blur-sm text-ras-charcoal border border-white/25 text-sm font-semibold rounded-full hover:bg-white hover:text-ras-charcoal transition-all duration-300 w-full sm:w-auto text-center shadow-lg"
+              className="px-8 py-3.5 bg-white/90 backdrop-blur-sm text-ras-charcoal border border-white/25 text-sm font-semibold rounded-full shadow-lg transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.97] w-full sm:w-auto text-center"
             >
               {secondaryCta.label}
             </Link>
           )}
         </div>
 
-        <motion.div
+        <motion.button
+          type="button"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center cursor-pointer pointer-events-auto"
+          className="group flex flex-col items-center cursor-pointer pointer-events-auto"
+          aria-label={scrollHint || "Scroll to explore"}
           onClick={() => window.scrollTo({ top: window.innerHeight * 1.5, behavior: "smooth" })}
         >
-          <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-white/60 mb-2">{scrollHint}</span>
-          <div className="p-2.5 bg-white/10 border border-white/20 rounded-full">
+          <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-white/75 mb-2 transition-colors duration-300 group-hover:text-white">
+            {scrollHint}
+          </span>
+          <span className="grid place-items-center h-9 w-9 rounded-full bg-white/10 border border-white/25 backdrop-blur-sm transition-[background-color,border-color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-white/20 group-hover:border-ras-gold/50 group-hover:translate-y-0.5">
             <ArrowDown className="h-4 w-4 text-ras-gold" />
-          </div>
-        </motion.div>
+          </span>
+        </motion.button>
       </motion.div>
 
       {/* ── Corporate statement fades in at the bottom ── */}

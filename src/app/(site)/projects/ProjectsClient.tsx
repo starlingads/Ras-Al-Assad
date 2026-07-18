@@ -153,10 +153,10 @@ export default function ProjectsPage({ data }: { data: ProjectsPageData }) {
             <button
               key={cat.slug}
               onClick={() => handleCategoryChange(cat.slug)}
-              className={`px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
+              className={`px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95 ${
                 selectedCategory === cat.slug
-                  ? "bg-ras-gold text-ras-charcoal shadow-lg hover:shadow-ras-gold/20 scale-102"
-                  : "bg-ras-charcoal/5 border border-ras-charcoal/15 text-ras-charcoal hover:bg-ras-charcoal/10 hover:border-ras-charcoal/30"
+                  ? "bg-ras-gold text-ras-charcoal shadow-[0_6px_20px_-6px_rgba(197,168,128,0.7)]"
+                  : "bg-ras-charcoal/5 border border-ras-charcoal/15 text-ras-charcoal hover:bg-ras-charcoal/10 hover:border-ras-charcoal/30 hover:-translate-y-0.5"
               }`}
             >
               {cat.name}
