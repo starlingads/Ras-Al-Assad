@@ -7,6 +7,7 @@ import { register } from "swiper/element/bundle";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { LucideIcon } from "@/components/LucideIcon";
+import SliderControls from "@/components/ui/SliderControls";
 
 if (typeof window !== "undefined") {
   register();
@@ -40,6 +41,7 @@ export default function ProjectsSlider({ chip, heading, cta, projects }: Project
     const params = {
       slidesPerView: 1.1,
       spaceBetween: 16,
+      navigation: false, // replaced by the bespoke <SliderControls/>
       breakpoints: {
         640: {
           slidesPerView: 2.1,
@@ -54,21 +56,6 @@ export default function ProjectsSlider({ chip, heading, cta, projects }: Project
           spaceBetween: 32,
         }
       },
-      injectStyles: [
-        `
-        .swiper-button-next, .swiper-button-prev {
-          background-color: white;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          color: #C5A880;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .swiper-button-next::after, .swiper-button-prev::after {
-          font-size: 20px;
-        }
-        `
-      ]
     };
 
     // Wait a brief tick for Swiper Custom Elements to be registered and DOM to be ready
@@ -118,22 +105,24 @@ export default function ProjectsSlider({ chip, heading, cta, projects }: Project
           </h2>
         </motion.div>
 
-        {cta && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex items-center gap-6"
+        >
+          {cta && (
             <Link
               href={cta.href}
               className="group inline-flex items-center space-x-2 text-ras-goldInk font-bold text-sm tracking-wide"
             >
               <span>{cta.label}</span>
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1" />
             </Link>
-          </motion.div>
-        )}
+          )}
+          <SliderControls swiperRef={swiperRef} tone="light" className="hidden md:flex" />
+        </motion.div>
       </div>
 
       {/* Projects Swiper Wrapper */}
@@ -143,7 +132,6 @@ export default function ProjectsSlider({ chip, heading, cta, projects }: Project
             ref={swiperRef}
             init="false"
             class="mySwiper"
-            navigation="true"
           >
             {projects.map((project, idx) => (
               <swiper-slide key={idx}>
