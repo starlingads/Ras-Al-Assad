@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/postbuild-standalone.mjs",
     "start": "next start",
+    "start:standalone": "node .next/standalone/server.js",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "typegen": "sanity schema extract --path=schema.json && sanity typegen generate"
