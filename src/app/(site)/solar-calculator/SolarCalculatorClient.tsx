@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { HONEYPOT_FIELD, honeypotInputProps } from "@/lib/forms";
 import { motion } from "framer-motion";
 import { 
   Calculator, 
@@ -56,6 +57,15 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
 
   // Form submission state
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
+  // Stamped after mount, not during render: Date.now() is impure and would be
+  // re-read on every re-render under concurrent rendering.
+  const renderedAt = useRef(0);
+  useEffect(() => {
+    renderedAt.current = Date.now();
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -117,9 +127,42 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/enquiry/solar-calculator", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // The figures travel with the enquiry so the sales team sees the exact
+        // estimate the visitor was looking at when they got in touch.
+        body: JSON.stringify({
+          ...formData,
+          monthlyBill: bill.toLocaleString(),
+          systemSize: `${systemSize} kWp`,
+          capitalCost: capitalCost.toLocaleString(),
+          payback: String(payback),
+          co2: String(co2),
+          [HONEYPOT_FIELD]: honeypot,
+          form_rendered_at: renderedAt.current,
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (!res.ok || !json.ok) {
+        setError(json.error || "Something went wrong. Please try again.");
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   // Lock background scroll when modal is open
@@ -313,11 +356,29 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                         <option value="Residential Villa">Luxury Villa</option>
                       </select>
                     </div>
+
+                    {/* Spam trap — visually and programmatically hidden. */}
+                    <input
+                      {...honeypotInputProps}
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+
+                    {error && (
+                      <p
+                        role="alert"
+                        className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-800"
+                      >
+                        {error}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
-                      className="w-full py-3 bg-ras-gold hover:bg-ras-charcoal hover:text-white text-ras-charcoal text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 shadow-md"
+                      disabled={sending}
+                      className="w-full py-3 bg-ras-gold hover:bg-ras-charcoal hover:text-white text-ras-charcoal text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-md disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.99]"
                     >
-                      Secure Free Site Audit
+                      {sending ? "Sending…" : "Secure Free Site Audit"}
                     </button>
                   </form>
                 )}

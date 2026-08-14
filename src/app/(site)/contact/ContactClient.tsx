@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { HONEYPOT_FIELD, honeypotInputProps } from "@/lib/forms";
 import {
   Phone,
   Mail,
@@ -53,14 +54,52 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
     message: ""
   });
 
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  // Bots fill hidden fields; humans never see this one. Paired with the render
+  // timestamp, it is checked server-side (see src/server/mail/validation.ts).
+  const [honeypot, setHoneypot] = useState("");
+  // Stamped after mount, not during render: Date.now() is impure and would be
+  // re-read on every re-render under concurrent rendering.
+  const renderedAt = useRef(0);
+  useEffect(() => {
+    renderedAt.current = Date.now();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/enquiry/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          [HONEYPOT_FIELD]: honeypot,
+          form_rendered_at: renderedAt.current,
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (!res.ok || !json.ok) {
+        setError(json.error || "Something went wrong. Please try again.");
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const { hero, address, phones, emails, hours, departments, legalLines, form, mapEmbedUrl } = data;
@@ -356,12 +395,29 @@ export default function ContactPage({ data }: { data: ContactPageData }) {
                     />
                   </div>
 
+                  {/* Spam trap — visually and programmatically hidden. */}
+                  <input
+                    {...honeypotInputProps}
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+
+                  {error && (
+                    <p
+                      role="alert"
+                      className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+                    >
+                      {error}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full py-4 bg-ras-gold hover:bg-ras-charcoal hover:text-white text-ras-charcoal text-xs font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2"
+                    disabled={sending}
+                    className="w-full py-4 bg-ras-gold hover:bg-ras-charcoal hover:text-white text-ras-charcoal text-xs font-bold uppercase tracking-widest rounded-xl transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-md flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.99]"
                   >
-                    Submit engineering request
-                    <Send className="h-4 w-4" />
+                    {sending ? "Sending…" : "Submit engineering request"}
+                    <Send className={`h-4 w-4 ${sending ? "animate-pulse" : ""}`} />
                   </button>
                 </form>
               )}
