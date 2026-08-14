@@ -313,7 +313,7 @@ export const siteSettings = defineType({
       type: "url",
       title: "Website address",
       group: "seo",
-      description: "The public address of this website, e.g. https://ras-al-assad.vercel.app",
+      description: "The public address of this website, e.g. https://rasalassad.ae",
     }),
     defineField({
       name: "titleTemplate",

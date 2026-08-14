@@ -2,7 +2,12 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { ORGANIZATION_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
-const FALLBACK_SITE_URL = "https://ras-al-assad.vercel.app";
+/**
+ * Live domain, not a hosting-provider URL. This value ends up in the
+ * Organization structured data Google reads, so a stale provider URL here
+ * misattributes the business to the wrong domain.
+ */
+const FALLBACK_SITE_URL = "https://rasalassad.ae";
 
 /** "Mon – Fri" → ["Monday","Tuesday",…] for schema.org openingHoursSpecification. */
 const DAY_NAMES = [

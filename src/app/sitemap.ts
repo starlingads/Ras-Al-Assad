@@ -16,7 +16,23 @@ const ROUTE_BY_TYPE: Record<string, string> = {
   solarCalculatorPage: "/solar-calculator",
 };
 
-const FALLBACK_SITE_URL = "https://ras-al-assad.vercel.app";
+/**
+ * Only used if Site Settings has no siteUrl at all. It is the live domain, not
+ * a hosting-provider URL — a provider-specific fallback silently publishes the
+ * wrong canonical domain if the CMS field is ever cleared.
+ */
+const FALLBACK_SITE_URL = "https://rasalassad.ae";
+
+/**
+ * Regenerate hourly.
+ *
+ * Without this the sitemap is generated once at build time and then frozen:
+ * every later CMS change — a page renamed, a page marked "Hide from search
+ * engines", the site URL corrected — would never reach search engines until
+ * the next deploy. That is invisible until someone checks the live file, which
+ * is exactly how the wrong domain survived the migration here.
+ */
+export const revalidate = 3600;
 
 /**
  * Pages marked "Hide from search engines" in their SEO tab are excluded by
