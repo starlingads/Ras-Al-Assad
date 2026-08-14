@@ -23,6 +23,26 @@ and at runtime**. Without the first two, the build fails immediately with
 | `NEXT_PUBLIC_SANITY_DATASET` | `production` | public dataset |
 | `NEXT_PUBLIC_SANITY_API_VERSION` | `2026-07-01` | optional; defaults to this |
 | `SANITY_API_READ_TOKEN` | *(from sanity.io/manage)* | only needed if you enable draft preview; the public site does not require it |
+| `SMTP_HOST` | `smtp.office365.com` | Microsoft 365 SMTP |
+| `SMTP_PORT` | `587` | STARTTLS. Exchange Online offers no implicit-TLS 465 |
+| `SMTP_USER` | `info@rasalassad.ae` | must be a licensed mailbox with SMTP AUTH enabled |
+| `SMTP_PASSWORD` | *(App Password)* | **secret.** If MFA/Security Defaults are on, a normal password is always rejected — use an App Password |
+| `MAIL_FROM` | `info@rasalassad.ae` | must equal SMTP_USER, or an address it has SendAs rights on |
+| `MAIL_TO` | `info@rasalassad.ae` | where enquiries are delivered |
+
+### Verifying SMTP from the server
+
+Outbound SMTP is a per-network thing: passing on a laptop proves nothing about
+production. Run this **on the Hostinger server**, after setting the variables:
+
+```bash
+node scripts/verify-smtp.mjs                      # TCP + STARTTLS + AUTH
+node scripts/verify-smtp.mjs --send you@email.com # plus one real test message
+```
+
+It performs the real Exchange Online handshake and, on failure, prints the exact
+Microsoft 365 or network change required (SMTP AUTH toggle, App Password,
+SendAs rights, blocked port 587) rather than a workaround.
 
 The exact non-secret values live in `.env.example`. `.env.local` is git-ignored
 and never leaves your machine — you must re-enter these in Hostinger.
