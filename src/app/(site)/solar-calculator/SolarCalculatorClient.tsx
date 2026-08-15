@@ -60,6 +60,8 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState("");
+  /** Separate trap for the lead-gate popup; same field name, own state. */
+  const [leadHoneypot, setLeadHoneypot] = useState("");
   // Stamped after mount, not during render: Date.now() is impure and would be
   // re-read on every re-render under concurrent rendering.
   const renderedAt = useRef(0);
@@ -191,8 +193,8 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
 
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Prefill sidebar form with captured lead data
+
+    // Prefill sidebar form with captured lead data (unchanged).
     setFormData(prev => ({
       ...prev,
       name: contactModalData.name,
@@ -200,12 +202,33 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
       phone: contactModalData.phone
     }));
 
-    // Future integration hook: log data
-    console.log("Lead captured for database/email sync:", {
-      name: contactModalData.name,
-      email: contactModalData.email,
-      phone: contactModalData.phone,
-      bill: bill
+    // Notify the office. This is a marketing lead — the visitor has handed
+    // over their details but has not asked for anything yet, so it must reach
+    // sales immediately rather than waiting for them to also submit the audit
+    // form. Previously this was only console.logged, so every lead that did
+    // not go on to complete the sidebar form was lost.
+    //
+    // Deliberately NOT awaited: the modal gates access to the calculator, and
+    // an SMTP round trip takes a second or two. Blocking the open on mail
+    // delivery would punish the visitor for a backend cost they did not incur.
+    // `keepalive` lets the request finish even if they navigate away, and any
+    // failure is logged server-side rather than shown — they have done their
+    // part.
+    void fetch("/api/enquiry/solar-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      keepalive: true,
+      body: JSON.stringify({
+        name: contactModalData.name,
+        email: contactModalData.email,
+        phone: contactModalData.phone,
+        monthlyBill: bill ? bill.toLocaleString() : "",
+        [HONEYPOT_FIELD]: leadHoneypot,
+        form_rendered_at: renderedAt.current,
+      }),
+    }).catch(() => {
+      // Network failure: nothing useful to show here without blocking entry to
+      // the calculator. The sidebar audit form remains the backstop.
     });
 
     // Close modal
@@ -580,11 +603,18 @@ export default function SolarCalculatorPage({ data }: { data: SolarCalculatorDat
                   className="w-full px-4 py-3 bg-ras-sand/35 border border-ras-grey/10 rounded-xl text-sm focus:border-ras-goldInk"
                 />
               </div>
+              {/* Spam trap — visually and programmatically hidden. */}
+              <input
+                {...honeypotInputProps}
+                value={leadHoneypot}
+                onChange={(e) => setLeadHoneypot(e.target.value)}
+              />
+
               <button
                 type="submit"
-                className="w-full py-3.5 bg-ras-gold hover:bg-ras-charcoal hover:text-white text-ras-charcoal text-xs font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md"
+                className="w-full py-3.5 bg-ras-gold hover:bg-ras-charcoal hover:text-white text-ras-charcoal text-xs font-bold uppercase tracking-widest rounded-xl transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-md active:scale-[0.99]"
               >
-                Submit & View Estimate
+                Submit &amp; View Estimate
               </button>
               
               <p className="text-[10px] text-ras-greyOnDark text-center leading-relaxed mt-4 pt-2 border-t border-ras-sand/40">
