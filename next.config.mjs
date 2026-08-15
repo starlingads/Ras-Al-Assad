@@ -27,6 +27,19 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+    // AVIF first, WebP fallback. AVIF runs roughly 20-30% smaller than WebP at
+    // the same visual quality, which comes straight off LCP on mobile data.
+    // Browsers that don't accept AVIF are served WebP via content negotiation,
+    // so this is transparent.
+    formats: ["image/avif", "image/webp"],
+    // Sanity asset URLs are content-addressed — the SHA is in the filename, so
+    // a given URL can never point at different bytes. Without this, the
+    // optimizer re-downloads the multi-MB original from Sanity and re-encodes
+    // it with sharp far more often than it needs to. On Hostinger that work
+    // happens in the single Node process that is also serving pages, so every
+    // avoidable re-encode is contention on the critical path. One year is safe
+    // precisely because the URL changes whenever the image does.
+    minimumCacheTTL: 31536000,
   },
   async redirects() {
     return [

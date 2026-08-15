@@ -388,6 +388,130 @@ function HeroAnimation({
   );
 }
 
+/**
+ * Server-rendered first frame of the hero.
+ *
+ * WHY THIS EXISTS — this is the LCP fix. `HeroAnimation` is gated behind
+ * `isMounted`, so before this component the whole hero was absent from the
+ * server HTML: the markup shipped as an empty `<section class="h-[320vh]">`.
+ * That made the hero image undiscoverable by the browser's preload scanner,
+ * and the `priority` prop on its <Image> inert — Next only emits
+ * `<link rel="preload" as="image">` for images that render during SSR. The
+ * image could not even begin downloading until the JS bundle had arrived and
+ * hydrated, which serialised the whole chain and put mobile LCP at ~4.5s
+ * against a 1.6s FCP.
+ *
+ * This renders the exact frame the animation shows at scroll progress 0, so
+ * the swap on mount is visually identical:
+ *   cardWidth/cardHeight -> viewport (full-bleed)   cardBorderRadius -> 0
+ *   imgScale             -> 1.08                    text overlay opacity -> 1
+ * Sizing is pure CSS (h-screen / inset-0) rather than the animation's measured
+ * `windowSize`, so it is correct at any viewport with no JS and cannot shift
+ * layout — CLS stays 0.
+ *
+ * It is replaced by `HeroAnimation` in the same React commit, and the image
+ * URL is identical, so the animated copy paints from cache with no flash.
+ * KEEP IN SYNC with the frame-0 values above if the choreography changes.
+ */
+function HeroPoster({
+  headlineLine1,
+  headlineLine2,
+  subheadline,
+  scrollHint,
+  primaryCta,
+  secondaryCta,
+  mainImage,
+  rotatingWords,
+  rotatingSuffix,
+}: HeroProps) {
+  return (
+    <div
+      className="sticky top-0 w-full h-screen overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(197,168,128,0.10), #F7F4EF 70%)",
+      }}
+    >
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="absolute inset-0 overflow-hidden"
+          style={{ zIndex: 20, boxShadow: "0 32px 80px rgba(0,0,0,0.28)" }}
+        >
+          {/* scale(1.08) mirrors imgScale at progress 0 */}
+          <div className="absolute inset-0 scale-[1.08]">
+            {mainImage && (
+              <Image
+                src={mainImage.url}
+                alt={mainImage.alt}
+                fill
+                priority
+                fetchPriority="high"
+                className="object-cover"
+                sizes="100vw"
+              />
+            )}
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
+        </div>
+      </div>
+
+      <div
+        className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none select-none"
+        style={{ zIndex: 40 }}
+      >
+        <div className="h-8 mb-6 flex items-center justify-center">
+          <span className="inline-flex items-center space-x-2 px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-xs font-bold tracking-widest text-ras-gold uppercase">
+            <span className="relative w-2.5 h-2.5 flex items-center justify-center">
+              <span className="absolute w-2.5 h-2.5 rounded-full bg-ras-gold/30" />
+              <span className="relative w-1.5 h-1.5 rounded-full bg-ras-gold" />
+            </span>
+            <span>{[rotatingWords[0], rotatingSuffix].filter(Boolean).join(" ")}</span>
+          </span>
+        </div>
+
+        <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extralight tracking-tightest leading-[1.1] mb-6 text-white max-w-4xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
+          {headlineLine1} <br />
+          <span className="font-bold text-ras-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+            {headlineLine2}
+          </span>
+        </h1>
+
+        <p className="text-base sm:text-lg text-white font-light max-w-2xl mb-10 leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
+          {subheadline}
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 pointer-events-auto">
+          {primaryCta && (
+            <Link
+              href={primaryCta.href}
+              className="px-8 py-3.5 bg-ras-gold text-ras-charcoal text-sm font-semibold rounded-full shadow-lg transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.97] w-full sm:w-auto text-center"
+            >
+              {primaryCta.label}
+            </Link>
+          )}
+          {secondaryCta && (
+            <Link
+              href={secondaryCta.href}
+              className="px-8 py-3.5 bg-white/90 backdrop-blur-sm text-ras-charcoal border border-white/25 text-sm font-semibold rounded-full shadow-lg transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.97] w-full sm:w-auto text-center"
+            >
+              {secondaryCta.label}
+            </Link>
+          )}
+        </div>
+
+        <div className="flex flex-col items-center">
+          <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-white/75 mb-2">
+            {scrollHint}
+          </span>
+          <span className="grid place-items-center h-9 w-9 rounded-full bg-white/10 border border-white/25 backdrop-blur-sm">
+            <ArrowDown className="h-4 w-4 text-ras-gold" />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Hero(props: HeroProps) {
   const { rotatingWords } = props;
   const [wordIndex, setWordIndex] = useState(0);
@@ -473,6 +597,9 @@ export default function Hero(props: HeroProps) {
 
   return (
     <section ref={containerRef} className="relative h-[320vh] bg-ras-sand">
+      {/* Server-rendered frame 0 — carries the LCP image into the HTML so the
+          browser can preload it immediately. Swapped out on mount. */}
+      {!isMounted && <HeroPoster {...props} />}
       {isMounted && (
         <HeroAnimation
           key={`hero-${windowSize.width < 640 ? "sm" : windowSize.width < 1024 ? "md" : "lg"}`}
