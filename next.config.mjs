@@ -41,6 +41,48 @@ const nextConfig = {
     // precisely because the URL changes whenever the image does.
     minimumCacheTTL: 31536000,
   },
+  // `X-Powered-By: Next.js` tells an attacker exactly what to target and buys
+  // nothing in return.
+  poweredByHeader: false,
+  // Production was serving none of these. Each is scoped so it cannot break
+  // the embedded Studio or the site's own behaviour.
+  //
+  // Deliberately NOT setting Content-Security-Policy here. A real CSP for this
+  // app has to allow Next's inline bootstrap scripts, styled-components and
+  // Framer Motion's injected inline styles, the Sanity Studio bundle, and
+  // blob:/data: workers — shipping one blind would very likely white-screen
+  // /studio. It wants its own pass with report-only first. Hostinger's CDN
+  // already sends `upgrade-insecure-requests`.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          // 2 years, matching the preload-list requirement. Safe: HTTPS is
+          // already enforced by a 301 at the edge and there is no http-only
+          // subdomain in play.
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          // Stops the browser second-guessing declared MIME types, which is
+          // the vector that turns an uploaded file into executable script.
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // SAMEORIGIN rather than DENY: Sanity's Presentation tool renders the
+          // live site inside an iframe within /studio, and that is same-origin.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          // Send the full URL to ourselves, only the origin cross-site — keeps
+          // query strings out of third-party referer logs.
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // Nothing in this site uses these APIs, so deny them outright.
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       // The /en tree duplicated every page. Collapse it onto the canonical
